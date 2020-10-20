@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Application stop</title>
+
+    <!-- CSS file for design -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- CSS and JS file linked to leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+</head>
+
+<body>
+    <div id="mapid"></div>
+    <div id="result"></div>
+
+    <script>
+
+        // INITIALISE LA MAP
+        var mymap = L.map('mapid').setView([45.756104, 4.841173], 13);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
+        }).addTo(mymap);
+
+        // AJOUTE LES MARKERS (simule la dbb)
+        var marker_duplex = L.marker([45.756104, 4.841173]).addTo(mymap);
+        var marker_mel = L.marker([45.753291, 4.839601]).addTo(mymap);
+        var marker_nini = L.marker([45.747837, 4.86675]).addTo(mymap);
+        var marker_lafayette = L.marker([45.763635, 4.842079]).addTo(mymap);
+        var marker_Est = L.marker([45.818556, 4.725779]).addTo(mymap);
+
+        marker_duplex.bindPopup("Ici c'est le duplex !!!");
+        marker_lafayette.bindPopup("Bienvenue chez pépachou !");
+        marker_mel.bindPopup("C'est le jolie petit studio de mel ici !");
+        marker_nini.bindPopup("Viens te reposer chez les nini !");
+
+        // CREE UN POPUP AVEC LES COORDONNEES DU POINT QUAND ON CLIQUE
+        var popup = L.popup();
+
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(mymap);
+        }
+        mymap.on('click', onMapClick);
+
+        // EXEMPLE DE CALCUL DE DISTANCE
+        let divResult = document.getElementById('result');
+        let distance = getDistanceInKm(marker_mel.getLatLng(), marker_lafayette.getLatLng());
+        divResult.innerHTML = distance;
+
+        function getDistanceInKm(from, to) {
+            return (from.distanceTo(to)).toFixed(0) / 1000;
+        }
+
+    </script>
+</body>
+
+</html>
