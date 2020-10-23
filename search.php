@@ -9,7 +9,7 @@ catch(Exception $e)
 }
 
 //$req = $bdd->prepare('SELECT ville_nom, ville_latitude_deg, ville_longitude_deg FROM villes_france_free WHERE ville_nom_simple = ?');
-$req = $bdd->prepare('SELECT ville_latitude_deg, ville_longitude_deg FROM villes_france_free WHERE ville_nom_simple = ?');
+$req = $bdd->prepare('SELECT ville_nom, ville_latitude_deg, ville_longitude_deg FROM villes_france_free WHERE ville_nom_simple = ?');
 $req->execute(array($_POST['ville']));
 
 $donnee = $req->fetch();
@@ -24,7 +24,7 @@ $donnee = $req->fetch();
 
 $JSON = json_encode($donnee,true);
 
-header("Content-type: application/json; charset=utf-8");
+@header("Content-type: application/json; charset=utf-8");
 
 echo $JSON;
 ?>
