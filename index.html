@@ -21,10 +21,10 @@
 
 </head>
 
-<body 
-onKeyPress="if (event.keyCode == 13) requestByAjax()">
+<body>
     <div id="search-bar">
-        <input id="ville" name="ville" class="" type="text" placeholder="Search" aria-label="Search">
+        <input id="ville" name="ville" class="" type="text" placeholder="Search" aria-label="Search"
+            onKeyPress="if (event.keyCode == 13) requestByAjax()">
         <button id="search_ville" type="button"><img src="ressources/images/search-icon.png" alt=""
                 height="12px"></button>
     </div>
@@ -37,30 +37,6 @@ onKeyPress="if (event.keyCode == 13) requestByAjax()">
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
     <script>
-        // EVENT BOUTON CLICK (pour lancer ajax)
-        $(document).ready(function () {
-            $("#search_ville").click(function(){requestByAjax()});
-        });
-
-        // FUNCTION AJAX
-        function requestByAjax() {
-            console.log($("#ville").val());
-            $.ajax({
-                url: 'search.php',
-                type: 'POST',
-                data: { ville: $("#ville").val() },
-                success: function (LatLon_json) {
-                    console.log(typeof LatLon_json);
-                    console.log(LatLon_json);
-                    $("#coordonnees").html(LatLon_json.ville_nom);
-                    mymap.setView([LatLon_json.ville_latitude_deg, LatLon_json.ville_longitude_deg], 13);
-                },
-                error: function (response, error) {
-                    $("#coordonnees").html("Ca a pas marché Roger");
-                    console.log('ko');                            //$("#coordonnees").html(response);  
-                }
-            });
-        };
 
         // INITIALISE LA MAP
         var mymap = L.map('mapid').setView([45.756104, 4.841173], 13);
@@ -73,17 +49,52 @@ onKeyPress="if (event.keyCode == 13) requestByAjax()">
             accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
         }).addTo(mymap);
 
-        // AJOUTE LES MARKERS (simule la dbb)
-        var marker_duplex = L.marker([45.756104, 4.841173]).addTo(mymap);
-        var marker_mel = L.marker([45.753291, 4.839601]).addTo(mymap);
-        var marker_nini = L.marker([45.747837, 4.86675]).addTo(mymap);
-        var marker_lafayette = L.marker([45.763635, 4.842079]).addTo(mymap);
-        var marker_Est = L.marker([45.818556, 4.725779]).addTo(mymap);
+        // AJOUTE LES MARKERS (simule la bdd)
+        // var marker_duplex = L.marker([45.756104, 4.841173]).addTo(mymap);
+        // var marker_mel = L.marker([45.753291, 4.839601]).addTo(mymap);
+        // var marker_nini = L.marker([45.747837, 4.86675]).addTo(mymap);
+        // var marker_lafayette = L.marker([45.763635, 4.842079]).addTo(mymap);
+        // var marker_Est = L.marker([45.818556, 4.725779]).addTo(mymap);
+        // var marker_Sud = L.marker([45.734708, 4.818141]).addTo(mymap);
 
-        marker_duplex.bindPopup("Ici c'est le duplex !!!");
-        marker_lafayette.bindPopup("Bienvenue chez pépachou !");
-        marker_mel.bindPopup("C'est le jolie petit studio de mel ici !");
-        marker_nini.bindPopup("Viens te reposer chez les nini !");
+        // marker_duplex.bindPopup("<h4>Bienvenue</h4><p>au <strong>Duplex</strong> ;)</p>");
+        // marker_lafayette.bindPopup("Bienvenue chez pépachou !");
+        // marker_mel.bindPopup("C'est le jolie petit studio de mel ici !");
+        // marker_nini.bindPopup("Viens te reposer chez les nini !");
+
+        // console.log(marker_Sud.getLatLng());
+
+        //mymap.whenReady(getMarkers());
+
+        let markers = [];
+        function getMarkers() {
+            $.ajax({
+                url: 'getMarkers.php',
+                type: 'GET',
+                success: function (markers_json) {
+                    $.each(markers_json, function (index, json) {
+                        markers[json.id] = L.marker([json.latitude, json.longitude]).addTo(mymap);
+                    });
+                    $.each(markers, function (index, element) {
+                        if (element) {
+                            console.log(index);
+                            console.log(element);
+                        }
+                    });
+                },
+                error: function (response, error) {
+                    $("#coordonnees").html("Ca a pas marché Roger");
+                    console.log('ko');
+                }
+            });
+        };
+
+        getMarkers();
+
+        //Fonction de mise en page des popups (A FAIRE)
+        function PopupView(popup) {
+
+        };
 
         // CREE UN POPUP AVEC LES COORDONNEES DU POINT QUAND ON CLIQUE
         var popup = L.popup();
@@ -96,10 +107,35 @@ onKeyPress="if (event.keyCode == 13) requestByAjax()">
         }
         mymap.on('click', onMapClick);
 
+        // EVENT BOUTON CLICK (pour lancer ajax)
+        $(document).ready(function () {
+            $("#search_ville").click(function () { requestByAjax() });
+        });
+
+        // FUNCTION AJAX
+        function requestByAjax() {
+            console.log($("#ville").val());
+            $.ajax({
+                url: 'search.php',
+                type: 'POST',
+                data: { ville: $("#ville").val() },
+                success: function (LatLon_json) {
+                    // console.log(typeof LatLon_json);
+                    // console.log(LatLon_json);
+                    $("#coordonnees").html(LatLon_json.ville_nom);
+                    mymap.setView([LatLon_json.ville_latitude_deg, LatLon_json.ville_longitude_deg], 13);
+                },
+                error: function (response, error) {
+                    $("#coordonnees").html("Ca a pas marché Roger");
+                    console.log('ko');
+                }
+            });
+        };
+
         // EXEMPLE DE CALCUL DE DISTANCE
-        let divResult = document.getElementById('result');
+        /*let divResult = document.getElementById('result');
         let distance = getDistanceInKm(marker_mel.getLatLng(), marker_lafayette.getLatLng());
-        divResult.innerHTML = distance;
+        divResult.innerHTML = distance;*/
 
         function getDistanceInKm(from, to) {
             return (from.distanceTo(to)).toFixed(0) / 1000;

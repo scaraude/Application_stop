@@ -8,12 +8,15 @@ catch(Exception $e)
         die('Erreur : '.$e->getMessage());
 }
 
-$req = $bdd->prepare('SELECT ville_nom, ville_latitude_deg, ville_longitude_deg FROM villes_france_free WHERE ville_nom_simple = ?');
-$req->execute(array($_POST['ville']));
+$req = $bdd->query('SELECT * FROM spot_de_stop WHERE 1');
 
-$donnee = $req->fetch();
+$points = array();
 
-$JSON = json_encode($donnee,true);
+while ($donnee = $req->fetch()){
+    array_push($points, $donnee);
+}
+
+$JSON = json_encode($points,true);
 
 header("Content-type: application/json; charset=utf-8");
 
