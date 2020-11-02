@@ -45,10 +45,13 @@ $(document).ready(function () {
     var popup = L.popup();
 
     function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(mymap);
+
+        window.location.assign('CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
+        // console.log('CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
+        // popup
+        //     .setLatLng(e.latlng)
+        //     .setContent("You clicked the map at " + e.latlng.toString())
+        //     .openOn(mymap);
     }
     mymap.on('click', onMapClick);
 
