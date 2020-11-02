@@ -16,6 +16,8 @@ while ($donnee = $req->fetch()){
     array_push($points, $donnee);
 }
 
+$req->closeCursor();
+
 $JSON = json_encode($points,true);
 
 header("Content-type: application/json; charset=utf-8");

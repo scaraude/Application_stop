@@ -3,6 +3,11 @@
     width: 550px;
 }
 
-#search-bar{
+#search-bar {
     height: 25px;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
 }
