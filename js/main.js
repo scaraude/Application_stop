@@ -16,19 +16,19 @@ $(document).ready(function () {
 
     function getMarkers() {
         $.ajax({
-            url: 'getMarkers.php',
+            url: 'php/getMarkers.php',
             type: 'GET',
             success: function (markers_json) {
                 $.each(markers_json, function (index, json) {
                     markers[json.id] = L.marker([json.latitude, json.longitude])
                                         .addTo(mymap)
                                         .on('click', function () { 
-                                                window.location.assign("InfoMarker.php?id=" + json.id);
+                                                window.location.assign("php/InfoMarker.php?id=" + json.id);
                                             });
                 });
             },
             error: function (response, error) {
-                $("#coordonnees").html("Ca a pas marché Roger");
+                $("#coordonnees").html("Ca a pas marché Roger marker");
                 console.log('ko');
             }
         });
@@ -46,7 +46,7 @@ $(document).ready(function () {
 
     function onMapClick(e) {
 
-        window.location.assign('CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
+        window.location.assign('php/CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
         // console.log('CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
         // popup
         //     .setLatLng(e.latlng)
@@ -65,7 +65,7 @@ $(document).ready(function () {
     function requestByAjax() {
         console.log($("#ville").val());
         $.ajax({
-            url: 'search.php',
+            url: 'php/search.php',
             type: 'POST',
             data: { ville: $("#ville").val() },
             success: function (LatLon_json) {
@@ -73,7 +73,7 @@ $(document).ready(function () {
                 mymap.setView([LatLon_json.ville_latitude_deg, LatLon_json.ville_longitude_deg], 13);
             },
             error: function (response, error) {
-                $("#coordonnees").html("Ca a pas marché Roger");
+                $("#coordonnees").html("Ca a pas marché Roger ville");
                 console.log('ko');
             }
         });

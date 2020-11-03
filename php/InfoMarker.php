@@ -37,7 +37,7 @@ if ($donnee) {
 
     <div>
         <a href="ModifMarker.php?id=<?php echo $_GET['id']?>"><button>Modifier</button></a>
-        <a href="index.html"><button>Retour à la map</button></a>
+        <a href="../index.html"><button>Retour à la map</button></a>
     </div>
 
 <?php

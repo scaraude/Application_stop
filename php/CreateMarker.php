@@ -45,5 +45,5 @@
 
 <div>
     <!-- <a href="InfoMarker"><button>Revenir en arrière</button></a> -->
-    <a href="index.html"><button>Retour à la map</button></a>
+    <a href="../index.html"><button>Retour à la map</button></a>
 </div>
