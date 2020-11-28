@@ -6,7 +6,6 @@ const db = require('./config/db-connection');
 //routes
 const spotRoutes = require('./router/spot');
 
-// const stuffRoutes = require('./router/stuff');
 // const userRoutes = require('./router/user');
 // const configuration = require('./middleware/websiteConf');
 
