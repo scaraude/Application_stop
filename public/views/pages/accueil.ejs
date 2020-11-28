@@ -1,0 +1,22 @@
+<%- include('../partials/head'); %>
+
+<header>
+    <%- include('../partials/menu'); %>
+</header>
+
+<main>
+    <div id="search-bar">
+        <input id="ville" name="ville" class="" type="text" placeholder="Search" aria-label="Search">
+        <button id="search_ville" type="button"><img src="images/search-icon.png" alt=""
+                height="12px"></button>
+    </div>
+
+    <div class="card" id="mapcont">
+        <div class="card-body" id="mapid">
+        </div>
+      </div>
+    <div id="result"></div>
+    <div id="coordonnees"></div>
+</main>
+<%- include('../pages/map/m_creation'); %>
+<%- include('../partials/footer'); %>
