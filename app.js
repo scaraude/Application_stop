@@ -1,25 +1,27 @@
 const express = require('express');
 const path = require('path');
-//config
-const db = require('./config/db-connection');
 
-//routes
+//import config
+const db = require('./config/db-connection');
+const config = require('./config/config');
+
+// import routes
 const spotRoutes = require('./router/spot');
 const userRoutes = require('./router/user');
-// const configuration = require('./middleware/websiteConf');
+const commentRoutes = require('./router/comment');
 
 const app = express();
 
 // set the view engine to ejs
-app.set('view engine', 'ejs');
+app.set('view engine', config.view_engine);
 app.set('views', path.join(__dirname, 'public/views')); 
 
-// app.use(configuration.autorizeCORS);
-
+// parse request
 app.use(express.json());
 
-app.use(express.static('public'));//jsuis pas trop sure de comprendre à quoi ça sert...
+app.use(express.static('public'));
 
+// Routes Views
 app.get('/', (req, res) => {
     res.render('pages/accueil', { root: __dirname });
 })
@@ -30,5 +32,6 @@ app.get('/connexion', (req, res) => {
 
 app.use('/api/spots', spotRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/comment', commentRoutes);
 
 module.exports = app;

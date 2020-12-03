@@ -1,5 +1,7 @@
 const User = require('../models/User');
 
+const config = require('../config/config');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -33,8 +35,8 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             {userId : user._id},
-                            'RANDOM_TRUC',
-                            { expiresIn: '24h'}
+                            config.token_key,
+                            { expiresIn: config.token_delay}
                         )
                     });
                 })

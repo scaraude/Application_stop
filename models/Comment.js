@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
  * score: { type: Number, required: true , min : 0, max : 3},
  * comment : String
 */
-const userSchema = mongoose.Schema({
+const commentSchema = mongoose.Schema({
     userId : {type: String, required : true},
-    updated: { type: Date, default: Date.now },
+    spotId : {type: String, required : true},
     score: { type: Number, required: true , min : 0, max : 3},
-    comment : String
+    text : { type: String, maxLength: 256}
 }, {timestamps: true});
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Comment', commentSchema);
