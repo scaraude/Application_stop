@@ -5,9 +5,7 @@ const db = require('./config/db-connection');
 
 //routes
 const spotRoutes = require('./router/spot');
-
-// const stuffRoutes = require('./router/stuff');
-// const userRoutes = require('./router/user');
+const userRoutes = require('./router/user');
 // const configuration = require('./middleware/websiteConf');
 
 const app = express();
@@ -23,15 +21,14 @@ app.use(express.json());
 app.use(express.static('public'));//jsuis pas trop sure de comprendre à quoi ça sert...
 
 app.get('/', (req, res) => {
-    // res.sendFile('pages/index', { root: __dirname });
     res.render('pages/accueil', { root: __dirname });
 })
 
 app.get('/connexion', (req, res) => {
-    // res.sendFile('pages/index', { root: __dirname });
     res.render('pages/user/login', { root: __dirname });
 })
 
 app.use('/api/spots', spotRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
