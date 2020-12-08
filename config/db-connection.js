@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://LudoSD:26051996@cluster0.xmutg.mongodb.net/HitchHikeDB?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://HHAdmin:lJTtycStJfw8OANQ@cluster0.t6jtg.mongodb.net/HitchHikeDB?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

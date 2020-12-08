@@ -24,7 +24,6 @@ const spotSchema = mongoose.Schema({
     access: String,
     advice: String, 
     mostValuableCommentId : String,
-    //updated: { type: Date, default: Date.now }
 }, {timestamps: true});
 
 module.exports = mongoose.model('Spot', spotSchema);
