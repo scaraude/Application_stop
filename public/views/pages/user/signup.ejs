@@ -1,0 +1,54 @@
+<%- include('../../partials/head'); %>
+
+<%- include('../../partials/menu'); %>
+
+<div class="row justify-content-center m-5 pb-5">
+    <div class="col-sm-8 col-md-6 col-xl-4">
+        <div class="row">
+            <div class="col text-right mb-2">Déjà membre ? <a href="/login">&nbspConnecte-toi</a></div>
+        </div>
+        <div class="card-group">
+            <div class="card p-4">
+                <div>
+                    <h1 class="text-center">Pas encore inscrit ?</h1>
+                    <p class="text-muted text-center">Rejoins-nous !</p>
+                    <form method="post" action="/api/auth/signup" class="subs" id="subs"  oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")'>
+                        <div class="input-group mb-3 mt-5">
+                            <div class="input-group-prepend"><span class="input-group-text fas fa-user">
+                                </span></div>
+                            <input class="form-control" type="text" placeholder="Prénom" id="pseudo"
+                                name="pseudo" required autofocus>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text fas fa-at">
+                                </span></div>
+                            <input class="form-control" type="email" placeholder="Adresse email" id="email"
+                                name="email" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text fas fa-lock"
+                                    style="font-weight: 900;">
+                                </span></div>
+                            <input id="password" name="password" class="form-control" type="password"
+                                placeholder="Mot de passe" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text fas fa-lock"
+                                    style="font-weight: 900;">
+                                </span></div>
+                            <input id="password2" name="password2" class="form-control" type="password"
+                                placeholder="Confirmer mot de passe" required>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col">
+                                <input class="btn btn-primary btn-block" type="submit" value="S'inscrire"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../../partials/footer'); %> 

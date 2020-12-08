@@ -18,6 +18,7 @@ app.set('views', path.join(__dirname, 'public/views'));
 
 // parse request
 app.use(express.json());
+app.use(express.urlencoded({extended : true}));
 
 app.use(express.static('public'));
 
@@ -26,17 +27,18 @@ app.get('/', (req, res) => {
     res.render('pages/accueil', { root: __dirname });
 })
 
-app.get('/connexion', (req, res) => {
+app.get('/login', (req, res) => {
     res.render('pages/user/login', { root: __dirname });
 })
 
-app.get('/inscription', (req, res) => {
-    // res.sendFile('pages/index', { root: __dirname });
-    res.render('pages/user/inscription', { root: __dirname });
+app.get('/signup', (req, res) => {
+    res.render('pages/user/signup', { root: __dirname });
 })
 
 app.use('/api/spots', spotRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/comment', commentRoutes);
+
+
 
 module.exports = app;
