@@ -32,6 +32,11 @@ app.get('/connexion', (req, res) => {
     res.render('pages/user/login', { root: __dirname });
 })
 
+app.get('/inscription', (req, res) => {
+    // res.sendFile('pages/index', { root: __dirname });
+    res.render('pages/user/inscription', { root: __dirname });
+})
+
 app.use('/api/spots', spotRoutes);
 
 module.exports = app;

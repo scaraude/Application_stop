@@ -1,45 +1,48 @@
-
-// INITIALISE LA MAP
-const mymap = L.map('mapid').setView([45.756104, 4.841173], 12);
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
-}).addTo(mymap);
-
+// if ($('#mapid').length){
+    const mymap = L.map('mapid').setView([45.756104, 4.841173], 12);
+// }
 
 $(document).ready(function () {
-    // CHOPPE LES MARKERS DANS LA BDD
-    let markers = [];
 
-    function getMarkers() {
-        $.ajax({
-            url: '/api/spots',
-            type: 'GET',
-            success: function (markers_json) {
-                console.log(markers_json);
-                $.each(markers_json, function (index, json) {
-                    console.log(index);
-                    console.log(json.id);
-                    console.log(json.latitude);
-                    markers[json.id] = L.marker([json.latitude, json.longitude])
-                        .addTo(mymap)
-                        .on('click', function () {
-                            //window.location.assign("php/InfoMarker.php?id=" + json.id);
-                        });
-                });
-            },
-            error: function (response, error) {
-                $("#coordonnees").html("Ca a pas marché Roger marker");
-                console.log('ko');
-            }
-        });
-    };
+    if ($('#mapid').length){
+        // INITIALISE LA MAP
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
+        }).addTo(mymap);
 
-    getMarkers();
+        // CHOPPE LES MARKERS DANS LA BDD
+        let markers = [];
+
+        function getMarkers() {
+            $.ajax({
+                url: '/api/spots',
+                type: 'GET',
+                success: function (markers_json) {
+                    console.log(markers_json);
+                    $.each(markers_json, function (index, json) {
+                        console.log(index);
+                        console.log(json.gps.lat);
+                        markers[index] = L.marker([json.gps.lat,json.gps.lon])
+                            .addTo(mymap)
+                            .on('click', function () {
+                                //window.location.assign("php/InfoMarker.php?id=" + json.id);
+                            });
+                    });
+                },
+                error: function (response, error) {
+                    $("#coordonnees").html("Ca a pas marché Roger marker");
+                    console.log('ko');
+                }
+            });
+        };
+        getMarkers();
+        mymap.on('click', onMapClick);
+    }
 
     //Fonction de mise en page des popups (A FAIRE)
     function PopupView(popup) {
@@ -59,12 +62,14 @@ $(document).ready(function () {
         //     .setLatLng(e.latlng)
         //     .setContent("You clicked the map at " + e.latlng.toString())
         //     .openOn(mymap);
+
+            // Add marker to map at click location; add popup window
+        var newMarker = new L.marker(e.latlng).addTo(mymap);
+
     }
-    mymap.on('click', onMapClick);
 
     $('#primaryModalConfirm').on('click', '#createmarker', function(e) {
         console.log('create');
-    
     });
 
 
@@ -81,7 +86,6 @@ $(document).ready(function () {
     $("#search_ville").click(function () { changeMapView() });
     //$("#ville").keypress(function (event) { if (event.keyCode == 13) changeMapView(); });
 
-    
     // FUNCTION AJAX
     $("#ville").on('input', function () {
         let val = this.value;
