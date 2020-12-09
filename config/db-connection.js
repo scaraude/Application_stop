@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://HHAdmin:lJTtycStJfw8OANQ@cluster0.t6jtg.mongodb.net/HitchHikeDB?retryWrites=true&w=majority',
+const mongoURL = process.env.DB_URI.replace('<user>', process.env.DB_USER)
+                                   .replace('<password>', process.env.DB_PASSWORD)
+                                   .replace('<dbname>', process.env.DB_NAME);
+
+mongoose.connect(mongoURL,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
