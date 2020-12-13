@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const Cookies = require("cookies");
 
 // connection with DB
 require('./config/db-connection');
@@ -23,17 +24,18 @@ app.use(express.static('public'));
 
 app.use(morgan('dev'));
 
+
 // Routes Views
 app.get('/', (req, res) => {
-    res.render('pages/accueil', { root: __dirname });
+    res.render('pages/accueil');
 })
 
 app.get('/login', (req, res) => {
-    res.render('pages/user/login', { root: __dirname });
+    res.render('pages/user/login');
 })
 
 app.get('/signup', (req, res) => {
-    res.render('pages/user/signup', { root: __dirname });
+    res.render('pages/user/signup');
 })
 
 // API 

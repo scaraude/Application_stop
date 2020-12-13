@@ -3,7 +3,8 @@ const Spot = require('../models/Spot');
 exports.createSpot = (req, res, next) => {
     delete req.body._id;
     const spot = new Spot({
-        ...req.body
+        ...req.body,
+        userId : req.user.userId,
     });
     spot.save()
         .then(spot => res.status(201).json({message : "objet enregistré :" , spot : spot}))
@@ -29,6 +30,7 @@ exports.getOneSpot = (req, res, next) => {
 };
 
 exports.getAllSpots = (req, res, next) => {
+    console.log(req.user)
     Spot.find()
         .then(spots => res.status(200).json(spots))
         .catch(error => res.status(400).json({ error }));

@@ -4,7 +4,8 @@ exports.createComment = (req, res, next) => {
     delete req.body._id;
     const comment = new Comment({
         ...req.body,
-        spotId: req.params.spotId
+        spotId: req.params.spotId,
+        userId: req.user.userId,
     });
     comment.save()
         .then(comment => res.status(201).json({message : "Commentaire enregistré :" , comment : comment}))
@@ -30,8 +31,6 @@ exports.getOneComment = (req, res, next) => {
 };
 
 exports.getAllCommentsOneSpot = (req, res, next) => {
-    console.log(req.params);
-    console.log(req.params.spotId);
     Comment.find({spotId: req.params.spotId})
         .then(comments => res.status(200).json(comments))
         .catch(error => res.status(400).json({ error }));
