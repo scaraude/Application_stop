@@ -19,7 +19,7 @@ app.set('views', path.join(__dirname, 'public/views'));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 
-app.use(express.static('public'));
+app.use(express.static('public')); 
 
 app.use(morgan('dev'));
 

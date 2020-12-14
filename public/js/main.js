@@ -1,47 +1,40 @@
 // if ($('#mapid').length){
-    const mymap = L.map('mapid').setView([45.756104, 4.841173], 12);
+    let mapHandler = ''; // const map = L.map('map').setView([45.756104, 4.841173], 12);
 // }
 
 $(document).ready(function () {
 
-    if ($('#mapid').length){
+    if ($('#map').length){
+
+        //... initialize leaflet map and dataLayer ...
         // INITIALISE LA MAP
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
-        }).addTo(mymap);
+        // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        //     maxZoom: 18,
+        //     id: 'mapbox/streets-v11',
+        //     tileSize: 512,
+        //     zoomOffset: -1,
+        //     accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
+        // }).addTo(map);
 
-        // CHOPPE LES MARKERS DANS LA BDD
-        let markers = [];
+        // map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));	//base layer
+        // function searchByAjax(val, callResponse)//callback for 3rd party ajax requests
+        // {
+        //     return $.ajax({
+        //         url: 'https://geo.api.gouv.fr/communes?nom=' + val + '&fields=nom,centre,departement&boost=population&limit=5',
+        //         type: 'GET',
+        //         success: function(json) {
+        //             callResponse(json);
+        //         }
+        //     });
+        // }
 
-        function getMarkers() {
-            $.ajax({
-                url: '/api/spots',
-                type: 'GET',
-                success: function (markers_json) {
-                    console.log(markers_json);
-                    $.each(markers_json, function (index, json) {
-                        console.log(index);
-                        console.log(json.gps.lat);
-                        markers[index] = L.marker([json.gps.lat,json.gps.lon])
-                            .addTo(mymap)
-                            .on('click', function () {
-                                //window.location.assign("php/InfoMarker.php?id=" + json.id);
-                            });
-                    });
-                },
-                error: function (response, error) {
-                    $("#coordonnees").html("Ca a pas marché Roger marker");
-                    console.log('ko');
-                }
-            });
-        };
-        getMarkers();
-        mymap.on('click', onMapClick);
+        // map.addControl( new L.Control.Search({sourceData: searchByAjax, text:'Rechercher...', markerLocation: true,zoom: 12, marker: false}) );
+
+        initialize();
+        // getMarkers();
+        // map.on('click', onMapClick);
+        
     }
 
     //Fonction de mise en page des popups (A FAIRE)
@@ -61,10 +54,10 @@ $(document).ready(function () {
         // popup
         //     .setLatLng(e.latlng)
         //     .setContent("You clicked the map at " + e.latlng.toString())
-        //     .openOn(mymap);
+        //     .openOn(map);
 
             // Add marker to map at click location; add popup window
-        var newMarker = new L.marker(e.latlng).addTo(mymap);
+        var newMarker = new L.marker(e.latlng).addTo(map);
 
     }
 
@@ -80,7 +73,7 @@ $(document).ready(function () {
     function changeMapView(){
         const result = autocomplete_items.find(item => item.nom === ville_hold);
         if (result)
-            mymap.setView([result.centre.coordinates[1], result.centre.coordinates[0]], 13);
+            map.setView([result.centre.coordinates[1], result.centre.coordinates[0]], 13);
     }
 
     $("#search_ville").click(function () { changeMapView() });
@@ -117,7 +110,7 @@ $(document).ready(function () {
     //         data: { ville: $("#ville").val() },
     //         success: function (LatLon_json) {
     //             $("#coordonnees").html(LatLon_json.ville_nom);
-    //             mymap.setView([LatLon_json.ville_latitude_deg, LatLon_json.ville_longitude_deg], 13);
+    //             map.setView([LatLon_json.ville_latitude_deg, LatLon_json.ville_longitude_deg], 13);
     //         },
     //         error: function (response, error) {
     //             $("#coordonnees").html("Ca a pas marché Roger ville");
@@ -234,3 +227,20 @@ $(document).ready(function () {
         });
     }
 });
+
+function initialize() {
+    mapHandler = new MapHandler("map");   
+}
+
+function locate (){
+    mapHandler.locate();
+}
+
+
+function addIcons()
+{
+    mapHandler.addIconToMap('car', [51.5, -0.09], 'Voiture', 'Paris');
+    mapHandler.addIconToMap('boat', [51.495, -0.083], 'Bateau', 'Paris');
+    mapHandler.addIconToMap('plane', [51.49, -0.1], 'Avion', 'Paris');
+}
+
