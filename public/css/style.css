@@ -1,3 +1,7 @@
+
+@use "@material/textfield";
+@include textfield.core-styles;
+
 body {
     padding: 0;
     margin: 0;
@@ -202,6 +206,3 @@ input[type=submit] {
   .leaflet-right {
     transition: right 0.5s; }
 
-@use "@material/textfield";
-
-@include textfield.core-styles;
