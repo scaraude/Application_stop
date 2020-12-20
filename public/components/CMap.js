@@ -21,46 +21,52 @@ class Map
         });
         this.map.addControl(sidebar);
 
-        L.marker([45.75, 4.84],{draggable: false,        // Make the icon dragable
-            title: 'Plop'} ).addTo(this.map)
-        .openPopup().on('click',markerOnClick);
 
         function markerOnClick(evt)
         {
-            console.log('plop'+evt.latlng);
-            sidebar.setContent('test <b>test</b> test'+'<br> <br>'+evt.latlng);
+            // console.log('plop'+evt.latlng);
+            sidebar.setContent('Informations du Spot :'+'<br> <br>'+evt.latlng+'<br> <br>'+JSON.stringify(evt.target.myJsonData));
             // Mettre le formulaire de la sidebar pour créer un point 
             sidebar.toggle();
         }
 
-        // setTimeout(function () {
-        //     sidebar.show();
-        // }, 100);
-
+        
         this.map.on('click', function () {
             sidebar.hide();
         })
 
-        sidebar.on('show', function () {
-            console.log('Sidebar will be visible.');
-        });
-
-        sidebar.on('shown', function () {
-            console.log('Sidebar is visible.');
-        });
-
-        sidebar.on('hide', function () {
-            console.log('Sidebar will be hidden.');
-        });
-
-        sidebar.on('hidden', function () {
-            console.log('Sidebar is hidden.');
-        });
-
-        L.DomEvent.on(sidebar.getCloseButton(), 'click', function () {
-            console.log('Close button clicked.');
-        });
         sidebar.toggle();
+
+        //Fonction pour récupérer les spots dans la BDD
+
+        let markers = [];
+
+        function getMarkers(curmap) {
+            $.ajax({
+                url: '/api/spots',
+                type: 'GET',
+                success: function (markers_json) {
+                    // console.log(markers_json)
+                    markers_json.forEach(function(data){
+                        console.log(data);
+                        console.log(typeof(data));
+                        var lat = data.gps.lat;
+                        var lng = data.gps.lon;
+                        var markers = L.marker([parseFloat(lat), parseFloat(lng)],{draggable: false,        // Make the icon dragable
+                            title: data.title} )
+                        .addTo(curmap).openPopup().on('click',markerOnClick).myJsonData = data;
+                    });
+            
+                },
+                error: function (response, error) {
+                    $("#coordonnees").html("Ca a pas marché Roger marker");
+                    console.log('ko');
+                }
+            });
+        };
+
+
+        getMarkers(this.map);
 
         // //For test
         // var ggRoadmap = new L.Google('ROADMAP');
@@ -103,29 +109,8 @@ class Map
 
         this.map.addControl( new L.Control.Search({sourceData: searchByAjax, text:'Rechercher...', markerLocation: true,zoom: 12, marker: false}) );
 
-        // // CHOPPE LES MARKERS DANS LA BDD
-        // let markers = [];
-
-        // function getMarkers() {
-            // $.ajax({
-            //     url: '/api/spots',
-            //     type: 'GET',
-            //     success: function (markers_json) {
-            //         console.log(markers_json);
-            //         $.each(markers_json, function (index, json) {
-            //             // console.log(index);
-            //             // console.log(json.gps.lat);
-            //             markers[index] = L.marker([json.gps.lat,json.gps.lon])
-            //                 .addTo(this.map);
-            //         });
-            //     },
-            //     error: function (response, error) {
-            //         $("#coordonnees").html("Ca a pas marché Roger marker");
-            //         console.log('ko');
-            //     }
-            // });
-        // };
-    }
+        
+    } // End constructor 
 
     locate(){
         this.map.locate({setView : true});
@@ -164,3 +149,7 @@ function onLocationFound(e) {
 function onLocationError(e) {
     alert(e.message);
 }
+
+
+
+

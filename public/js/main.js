@@ -1,7 +1,7 @@
 // if ($('#mapid').length){
     let mapHandler = ''; // const map = L.map('map').setView([45.756104, 4.841173], 12);
 // }
-mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));
+// mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));
 
 $(document).ready(function () {
 
