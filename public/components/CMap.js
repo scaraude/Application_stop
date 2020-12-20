@@ -27,7 +27,9 @@ class Map
             // console.log('plop'+evt.latlng);
             sidebar.setContent('Informations du Spot :'+'<br> <br>'+evt.latlng+'<br> <br>'+JSON.stringify(evt.target.myJsonData));
             // Mettre le formulaire de la sidebar pour créer un point 
+            if (!sidebar.isVisible()) {
             sidebar.toggle();
+            }
         }
 
         
