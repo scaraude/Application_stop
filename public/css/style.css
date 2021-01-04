@@ -87,6 +87,12 @@ input[type=submit] {
     max-height:40px;
 }
 
+/* navbar */
+.profile-picture{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
 /*login signup*/
 .fa-at{
     font-weight: 600;

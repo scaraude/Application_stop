@@ -1,16 +1,44 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+const bcrypt = require('bcrypt');
 
-/**pseudo : {type: String, required : true,},
- * email : {type: String, required : true, unique : true},
- * password: {type: String, required : true}
-*/
 const userSchema = mongoose.Schema({
-    pseudo : {type: String, required : true,},
-    email : {type: String, required : true, unique : true},
-    password: {type: String, required : true}
-}, {timestamps: true});
+    email: String,
+    password: String,
 
-userSchema.plugin(uniqueValidator);
+    facebook: String,
+    tokens: Array,
+    profile: {
+        name: String,
+        gender: String,
+        location: String,
+        picture: String
+      }
+}, { timestamps: true });
+
+
+/**
+ * Password hash middleware.
+ */
+userSchema.pre('save', function save(next) {
+    const user = this;
+    if (!user.isModified('password')) { return next(); }
+    bcrypt.genSalt(10, (err, salt) => {
+        if (err) { return next(err); }
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) { return next(err); }
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+/**
+* Helper method for validating user's password.
+*/
+userSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+        cb(err, isMatch);
+    });
+};
 
 module.exports = mongoose.model('User', userSchema);

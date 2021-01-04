@@ -12,12 +12,12 @@
                 <div>
                     <h1 class="text-center">Pas encore inscrit ?</h1>
                     <p class="text-muted text-center">Rejoins-nous !</p>
-                    <form method="post" action="/api/auth/signup" class="subs" id="subs"  oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")'>
+                    <form method="post" action="/signup" class="subs" id="subs"  oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match." : "")'>
                         <div class="input-group mb-3 mt-5">
                             <div class="input-group-prepend"><span class="input-group-text fas fa-user">
                                 </span></div>
-                            <input class="form-control" type="text" placeholder="Prénom" id="pseudo"
-                                name="pseudo" required autofocus>
+                            <input class="form-control" type="text" placeholder="Prénom" id="name"
+                                name="name" required autofocus>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text fas fa-at">
@@ -36,7 +36,7 @@
                             <div class="input-group-prepend"><span class="input-group-text fas fa-lock"
                                     style="font-weight: 900;">
                                 </span></div>
-                            <input id="password2" name="password2" class="form-control" type="password"
+                            <input id="confirmPassword" name="confirmPassword" class="form-control" type="password"
                                 placeholder="Confirmer mot de passe" required>
                         </div>
                         <div class="row mt-5">

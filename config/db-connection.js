@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
-const mongoURL = process.env.DB_URI.replace('<user>', process.env.DB_USER)
-                                   .replace('<password>', process.env.DB_PASSWORD)
-                                   .replace('<dbname>', process.env.DB_NAME);
-
-mongoose.connect(mongoURL,
+mongoose.connect(process.env.MONGODB_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

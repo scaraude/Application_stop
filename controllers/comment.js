@@ -1,7 +1,6 @@
 const Comment = require('../models/Comment');
 
 exports.createComment = (req, res, next) => {
-    delete req.body._id;
     const comment = new Comment({
         ...req.body,
         spotId: req.params.spotId,

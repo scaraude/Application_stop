@@ -1,46 +1,63 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-const Cookies = require("cookies");
+const errorHandler = require('errorhandler');
+const session = require('express-session');
+const flash = require('express-flash');
+const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
 
 // connection with DB
 require('./config/db-connection');
-
+// import authentification strategies
+require('./config/passport');
 // import routes
-const spotRoutes = require('./router/spot');
-const userRoutes = require('./router/user');
-const commentRoutes = require('./router/comment');
+const router = require('./routes/router');
 
 const app = express();
 
 app.set('view engine', process.env.VIEW_ENGINE);
-app.set('views', path.join(__dirname, 'public/views')); 
+app.set('views', path.join(__dirname, '/views')); 
 
 // parse request
 app.use(express.json());
-app.use(express.urlencoded({extended : false}));
+app.use(express.urlencoded({extended : true}));
 
-app.use(express.static('public')); 
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
+    store: new MongoStore({
+        url: process.env.MONGODB_URI,
+        autoReconnect: true,
+    })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
+
+app.use(express.static('public'));
 
 app.use(morgan('dev'));
 
+app.use(router);
 
-// Routes Views
-app.get('/', (req, res) => {
-    res.render('pages/accueil');
-})
-
-app.get('/login', (req, res) => {
-    res.render('pages/user/login');
-})
-
-app.get('/signup', (req, res) => {
-    res.render('pages/user/signup');
-})
-
-// API 
-app.use('/api/spots', spotRoutes);
-app.use('/api/auth', userRoutes);
-app.use('/api/comment', commentRoutes);
+/**
+ * Error Handler.
+ */
+if (process.env.NODE_ENV === 'dev') {
+    // only use in development
+    app.use(errorHandler());
+} else {
+    app.use((err, req, res, next) => {
+        console.error(err);
+        res.status(500).send('Server Error');
+    });
+}
 
 module.exports = app;
