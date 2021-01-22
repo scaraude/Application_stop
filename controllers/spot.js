@@ -6,19 +6,19 @@ exports.createSpot = (req, res, next) => {
         userId : req.user.userId,
     });
     spot.save()
-        .then(spot => res.status(201).json({message : "objet enregistré :" , spot : spot}))
+        .then(spot => res.status(201).json({message : "Nouveau spot enregistré :" , spot : spot}))
         .catch(error => res.status(400).json({ error }));
 };
 
 exports.modifySpot = (req, res, next) => {
     Spot.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(info => res.status(200).json({ message: 'Modif enregistrée !', nbOfModifiedFields : info.n }))
+        .then(info => res.status(200).json({ message: 'Modification enregistrée !', nbOfModifiedFields : info.n }))
         .catch(error => res.status(400).json({ error }));
 };
 
 exports.deleteSpot = (req, res, next) => {
     Spot.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
+        .then(() => res.status(200).json({ message: 'Spot supprimé !' }))
         .catch(error => res.status(400).json({ error }));
 };
 

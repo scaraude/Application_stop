@@ -13,7 +13,7 @@ exports.createComment = (req, res, next) => {
 
 exports.modifyComment = (req, res, next) => {
     Comment.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(info => res.status(200).json({ message: 'Modif enregistrée !', nbOfModifiedFields : info.n }))
+        .then(info => res.status(200).json({ message: 'Modification enregistrée !', nbOfModifiedFields : info.n }))
         .catch(error => res.status(400).json({ error }));
 };
 
