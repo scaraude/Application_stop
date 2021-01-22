@@ -3,12 +3,12 @@ class CarIcon extends AbstractIcon
     constructor(tabXY){
         super(tabXY);
 
-        this.iconUrl = 'ressources/icons/car-icon.png';
-        this.shadowUrl = 'ressources/icons/shadow-icon.png';
+        this.iconUrl = 'images/icons/car-icon.png';
+        this.shadowUrl = 'images/icons/shadow-icon.png';
 
         this.carIcon = L.icon({
             iconUrl: this.iconUrl,
-            shadowUrl: this.shadowUrl,
+            // shadowUrl: this.shadowUrl,
         
             iconSize:     this.iconSize, // size of the icon
             shadowSize:   this.shadowSize, // size of the shadow

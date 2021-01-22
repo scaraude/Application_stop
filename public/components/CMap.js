@@ -1,15 +1,29 @@
 class Map 
 {
     constructor(mapId){
+        
+        // var osmLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        //     maxZoom: 18,
+        //     id: 'mapbox/streets-v11',
+        //     tileSize: 512,
+        //     zoomOffset: -1,
+        //     accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
+        // });
+
+        
+
         this.map = L.map(mapId).setView([45.756104, 4.841173], 12);
-        var osmLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
             accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
-        });
+        }).addTo(this.map);
+
 
         var sidebar = L.control.sidebar('sidebarpanel', {
             closeButton: true,
@@ -39,24 +53,23 @@ class Map
                 sidebar.toggle();
             }
         }
+
+        var self = this;
         
         this.map.on('click', function (e) {
             sidebar.hide();
-            //Ajouter un marker à la BDD
-            // var mp = new L.Marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-            // // defineYourWaypointOnClick(e,this.map);
-            // var container = L.DomUtil.create('div');
-            // //////////////////////////////////////////////////////////////////////////////////////////////
-            // ///////////modified here
-            // var startBtn = createButton('Start from this location', container);
-            // var marker = new L.marker(e.latlng).bindPopup('You clicked the map at ' + e.latlng.toString() + '<br>' + startBtn).addTo(map);
-        })
+            var popLocation= e.latlng;
+            var popup = L.popup();
+            
+            popup.setLatLng(popLocation)
+            .setContent('<p>Ajouter un marker ?</p> <br/><button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>')
+            .openOn(self.map); 
+        });
 
         sidebar.toggle();
 
         //Fonction pour récupérer les spots dans la BDD
-
-        let markers = [];
+        // let markers = [];
 
         function getMarkers(curmap) {
             $.ajax({
@@ -69,7 +82,7 @@ class Map
                         // console.log(typeof(data));
                         var lat = data.gps.lat;
                         var lng = data.gps.lon;
-                        var markers = L.marker([parseFloat(lat), parseFloat(lng)],{draggable: false,        // Make the icon dragable
+                        L.marker([parseFloat(lat), parseFloat(lng)],{draggable: false,        // Make the icon dragable
                             title: data.title} )
                         .addTo(curmap).openPopup().on('click',markerOnClick).myJsonData = data;
                     });
@@ -82,8 +95,6 @@ class Map
         };
 
         getMarkers(this.map);
-
-        this.map.addLayer(osmLayer); // Le layer par défaut
 
 
     } // End constructor 

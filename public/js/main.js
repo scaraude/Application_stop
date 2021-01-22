@@ -7,34 +7,12 @@ $(document).ready(function () {
 
     if ($('#map').length){
 
-        //... initialize leaflet map and dataLayer ...
-        // INITIALISE LA MAP
-        // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        //     maxZoom: 18,
-        //     id: 'mapbox/streets-v11',
-        //     tileSize: 512,
-        //     zoomOffset: -1,
-        //     accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
-        // }).addTo(map);
-
-        // map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));	//base layer
-        // function searchByAjax(val, callResponse)//callback for 3rd party ajax requests
-        // {
-        //     return $.ajax({
-        //         url: 'https://geo.api.gouv.fr/communes?nom=' + val + '&fields=nom,centre,departement&boost=population&limit=5',
-        //         type: 'GET',
-        //         success: function(json) {
-        //             callResponse(json);
-        //         }
-        //     });
-        // }
-
-        // map.addControl( new L.Control.Search({sourceData: searchByAjax, text:'Rechercher...', markerLocation: true,zoom: 12, marker: false}) );
+        //... initialize leaflet map
 
         initialize();
+        addIcons();
         // getMarkers();
-        // map.on('click', onMapClick);
+
         
     }
 

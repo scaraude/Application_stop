@@ -3,12 +3,12 @@ class BoatIcon extends AbstractIcon
     constructor(tabXY){
         super(tabXY);
 
-        this.iconUrl = 'ressources/icons/boat-icon.png';
-        this.shadowUrl = 'ressources/icons/shadow-icon.png';
+        this.iconUrl = 'images/icons/boat-icon.png';
+        this.shadowUrl = 'images/icons/shadow-icon.png';
 
         this.boatIcon = L.icon({
             iconUrl: this.iconUrl,
-            shadowUrl: this.shadowUrl,
+            // shadowUrl: this.shadowUrl,
         
             iconSize:     this.iconSize, // size of the icon
             shadowSize:   this.shadowSize, // size of the shadow
