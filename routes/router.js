@@ -36,10 +36,14 @@ router.get('/api/comment/:spotId', commentCtrl.getAllCommentsOneSpot);
 router.get('/api/comment/', commentCtrl.getAllComments);    //amené a être supp
 
 // API Spot
-router.post('/api/spots/', spotCtrl.createSpot);
+router.post('/api/spots/create', spotCtrl.createSpot);
 router.put('/api/spots/:id', spotCtrl.modifySpot);
 router.delete('/api/spots/:id', spotCtrl.deleteSpot);
 router.get('/api/spots/:id', spotCtrl.getOneSpot);
 router.get('/api/spots/',spotCtrl.getAllSpots);
+
+//Map 
+router.get('/popup',spotCtrl.popUp);
+router.get('/formside',spotCtrl.formSidebar);
 
 module.exports = router;

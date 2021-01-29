@@ -54,16 +54,44 @@ class Map
             }
         }
 
+        $("div").on("click", '.sidebar-open-button', function () {
+            var ID = $("#popupcontent").attr("data");
+            // openSidebar(ID);
+            var content = ID + '<div id="formcremark" > </div>';
+
+            sidebar.setContent('<p>'+content+'</p>');
+            //On va chercher le formulaire
+
+            $('#formcremark').load('/formside', function() {
+                $('#lat').val( $("#popuplat").attr("data"));
+                $('#long').val( $("#popuplong").attr("data"));
+             });
+
+            // Mettre le formulaire de la sidebar pour créer un point 
+            if (!sidebar.isVisible()) {
+                sidebar.toggle();
+            }
+
+        });
+
         var self = this;
         
         this.map.on('click', function (e) {
             sidebar.hide();
             var popLocation= e.latlng;
+            var lat=e.latlng.lat;
+            var long=e.latlng.lng;
             var popup = L.popup();
-            
+
+            // var content = '<p>Ajouter un marker ?</p> <br/><button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>';
+            var content ='<div id="popupcontent" data="'+popLocation+'"> </div><div id="popuplat" data="'+lat+'"> </div> <div id="popuplong" data="'+long+'"> </div>';
+            console.log(content);
             popup.setLatLng(popLocation)
-            .setContent('<p>Ajouter un marker ?</p> <br/><button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>')
+            .setContent(content)
             .openOn(self.map); 
+
+            $('#popupcontent').load('/popup');
+            // console.log(content);
         });
 
         sidebar.toggle();
