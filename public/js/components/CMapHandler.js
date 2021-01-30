@@ -43,6 +43,10 @@ class MapHandler
 
     }
 
+    setView(lat, lon, zoom) {
+        this.map.setView(lat, lon, zoom)
+    }
+
 
 
 }

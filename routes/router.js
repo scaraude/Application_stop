@@ -13,7 +13,7 @@ const spotCtrl = require('../controllers/spot');
 // Home 
 router.get('/', homeController.getHome);
 
-// Auth
+// Basic auth
 router.get('/login', userController.getLogin);
 router.post('/login', userController.postLogin);
 router.get('/logout', userController.logout);
@@ -21,9 +21,13 @@ router.get('/signup', userController.getSignup);
 router.post('/signup', userController.postSignup);
 router.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 
-// Facebook auth
+// Social auth
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
 router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect(req.session.returnTo || '/');
+});
+router.get('/auth/twitter', passport.authenticate('twitter'));
+router.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
 });
 

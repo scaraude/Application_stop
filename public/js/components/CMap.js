@@ -27,7 +27,7 @@ class Map
 
         var sidebar = L.control.sidebar('sidebarpanel', {
             closeButton: true,
-            position: 'left'
+            position: 'right'
         });
         this.map.addControl(sidebar);
 
@@ -66,7 +66,7 @@ class Map
             .openOn(self.map); 
         });
 
-        sidebar.toggle();
+        //sidebar.toggle();
 
         //Fonction pour récupérer les spots dans la BDD
         // let markers = [];
@@ -99,6 +99,9 @@ class Map
 
     } // End constructor 
 
+    setView(lat, lon, zoom) {
+        this.map.setView([lat,lon], zoom)
+    }
     locate(){
         this.map.locate({setView : true});
         this.map.on('locationfound', onLocationFound);
