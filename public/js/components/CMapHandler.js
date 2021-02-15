@@ -39,8 +39,31 @@ class MapHandler
         }
     }
 
-    selectICon(){
+    selectStart(){
+        //Traitement a faire
+        //this.map.setStart(place);
+        if (this.map.getDestination() != null){
+            this.routingBtwnSelectedPoints();
+        }
+        //this.map.closePopUps();
+    }
 
+    selectDestination(){
+        //this.map.setDestination(place);
+        if (this.map.getStart() != null){
+            this.routingBtwnSelectedPoints();
+        }
+        //this.map.closePopUps();
+    }
+
+    routingBtwnSelectedPoints(){
+        if (this.map.getDestination() == null){
+            alert("Vous devez selectionner une destination");
+        }else if (this.map.getStart() == null){
+            alert("Vous devez selectionner une un point de départ");
+        }else{
+        this.map.routing();
+        }
     }
 
 

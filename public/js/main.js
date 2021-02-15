@@ -40,6 +40,33 @@ $(document).ready(function () {
 
     }
 
+    $('body').on("click", '#itiStart', function(e){
+        $.ajax({
+            success : function(data){
+                //return the variable here
+                startPoint = e;
+                mapHandler.selectStart();
+                //console.log(startPoint.latlng);
+            }
+
+        });
+
+    });
+
+    $('body').on("click", '#itiDest', function(e){
+        $.ajax({
+            success : function(data){
+                //return the variable here
+                destPoint = e;
+                mapHandler.selectDestination();
+                //console.log(startPoint.latlng);
+                
+            }
+
+        });
+
+    }); 
+
     $('#primaryModalConfirm').on('click', '#createmarker', function(e) {
         console.log('create');
     });
@@ -221,5 +248,8 @@ function addIcons()
     mapHandler.addIconToMap('car', [51.5, -0.09], 'Voiture', 'Paris');
     mapHandler.addIconToMap('boat', [51.495, -0.083], 'Bateau', 'Paris');
     mapHandler.addIconToMap('plane', [51.49, -0.1], 'Avion', 'Paris');
+    mapHandler.addIconToMap('plane', [45.730467863994924, 4.942265656619297], 'Avion', 'Partout');
+    mapHandler.addIconToMap('boat', [45.68113380853047, 4.846930883524107], 'Bateau', 'Marseille');
+    mapHandler.addIconToMap('car', [45.73542546933871, 4.8188446484872625], 'Voiture', 'Paris');
 }
 
