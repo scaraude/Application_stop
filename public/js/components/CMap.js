@@ -1,17 +1,6 @@
 class Map 
 {
-    constructor(mapId){
-        
-        // var osmLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        //     maxZoom: 18,
-        //     id: 'mapbox/streets-v11',
-        //     tileSize: 512,
-        //     zoomOffset: -1,
-        //     accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
-        // });
-
-        
+    constructor(mapId){   
 
         this.map = L.map(mapId).setView([45.756104, 4.841173], 12);
 
@@ -24,44 +13,19 @@ class Map
             accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
         }).addTo(this.map);
 
-
         var sidebar = L.control.sidebar('sidebarpanel', {
             closeButton: true,
-            position: 'left'
+            position: 'right'
         });
         this.map.addControl(sidebar);
-
-
-        function markerOnClick(evt)
-        {
-            // console.log('plop'+evt.latlng);
-            var content ='Informations du Spot :'+'<br> <br>'+evt.latlng+'<br> <br>';
-            //+JSON.stringify(evt.target.myJsonData)
-
-            var obj = evt.target.myJsonData;
-            for (var key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    var val = obj[key];
-                    // console.log(key+'-'+val);
-                    content+='<strong>'+key+': </strong> '+val+'<br> <br>'
-                }
-            }
-
-            sidebar.setContent(content);
-            // Mettre le formulaire de la sidebar pour créer un point 
-            if (!sidebar.isVisible()) {
-                sidebar.toggle();
-            }
-        }
+        this.map.sidebar = sidebar;
 
         $("div").on("click", '.sidebar-open-button', function () {
             var ID = $("#popupcontent").attr("data");
-            // openSidebar(ID);
             var content = ID + '<div id="formcremark" > </div>';
 
             sidebar.setContent('<p>'+content+'</p>');
             //On va chercher le formulaire
-
             $('#formcremark').load('/formside', function() {
                 $('#lat').val( $("#popuplat").attr("data"));
                 $('#long').val( $("#popuplong").attr("data"));
@@ -74,56 +38,23 @@ class Map
 
         });
 
-        var self = this;
-        
-        this.map.on('click', function (e) {
+        this.map.addEventListener('click', (e) => {
             sidebar.hide();
             var popLocation= e.latlng;
             var lat=e.latlng.lat;
             var long=e.latlng.lng;
             var popup = L.popup();
-
-            // var content = '<p>Ajouter un marker ?</p> <br/><button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>';
             var content ='<div id="popupcontent" data="'+popLocation+'"> </div><div id="popuplat" data="'+lat+'"> </div> <div id="popuplong" data="'+long+'"> </div>';
             console.log(content);
             popup.setLatLng(popLocation)
             .setContent(content)
-            .openOn(self.map); 
+            .openOn(this.map); 
 
             $('#popupcontent').load('/popup');
-            // console.log(content);
         });
 
         sidebar.toggle();
-
-        //Fonction pour récupérer les spots dans la BDD
-        // let markers = [];
-
-        function getMarkers(curmap) {
-            $.ajax({
-                url: '/api/spots',
-                type: 'GET',
-                success: function (markers_json) {
-                    // console.log(markers_json)
-                    markers_json.forEach(function(data){
-                        // console.log(data);
-                        // console.log(typeof(data));
-                        var lat = data.gps.lat;
-                        var lng = data.gps.lon;
-                        L.marker([parseFloat(lat), parseFloat(lng)],{draggable: false,        // Make the icon dragable
-                            title: data.title} )
-                        .addTo(curmap).openPopup().on('click',markerOnClick).myJsonData = data;
-                    });
-                },
-                error: function (response, error) {
-                    $("#coordonnees").html("Ca a pas marché Roger marker");
-                    console.log('ko');
-                }
-            });
-        };
-
         getMarkers(this.map);
-
 
     } // End constructor 
 
@@ -148,9 +79,7 @@ class Map
         L.marker(iconToAdd.position, {icon: iconToAdd.getLeafIcon()}).addTo(this.map);
     }
 
-
-
-}
+} //End of class
 
 function onLocationFound(e) {
     var radius = e.accuracy;
@@ -164,6 +93,71 @@ function onLocationFound(e) {
 function onLocationError(e) {
     alert(e.message);
 }
+
+//Fonction pour récupérer les spots dans la BDD
+function getMarkers(curmap) {
+       $.ajax({
+           url: '/api/spots',
+           type: 'GET',
+           success: function (markers_json) {
+               markers_json.forEach(function(data){
+                   var lat = data.gps.lat;
+                   var lng = data.gps.lon;
+                   L.marker([parseFloat(lat), parseFloat(lng)],{draggable: false,
+                       title: data.title} )
+                   .addTo(curmap).openPopup().addEventListener('click', (e) => {
+                       // console.log('plop'+evt.latlng);
+                        var content ='Informations du Spot :'+'<br> <br>'+e.latlng+'<br> <br>';
+                        //+JSON.stringify(evt.target.myJsonData)
+
+                        var obj = e.target.myJsonData;
+                        for (var key in obj) {
+                            if (obj.hasOwnProperty(key)) {
+                                var val = obj[key];
+                                // console.log(key+'-'+val);
+                                content+='<strong>'+key+': </strong> '+val+'<br> <br>'
+                            }
+                        }
+
+                        curmap.sidebar.setContent(content);
+                        // Mettre le formulaire de la sidebar pour créer un point 
+                        if (!curmap.sidebar.isVisible()) {
+                            curmap.sidebar.toggle();
+                        }
+                    }
+                   ).myJsonData = data;
+               });
+           },
+           error: function (response, error) {
+               $("#coordonnees").html("Ca a pas marché Roger marker");
+               console.log('ko');
+           }
+       });
+}
+
+function markerOnClick(evt,map){
+            // console.log('plop'+evt.latlng);
+            var content ='Informations du Spot :'+'<br> <br>'+evt.latlng+'<br> <br>';
+            //+JSON.stringify(evt.target.myJsonData)
+
+            var obj = evt.target.myJsonData;
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    var val = obj[key];
+                    // console.log(key+'-'+val);
+                    content+='<strong>'+key+': </strong> '+val+'<br> <br>'
+                }
+            }
+
+            map.sidebar.setContent(content);
+            // Mettre le formulaire de la sidebar pour créer un point 
+            if (!map.sidebar.isVisible()) {
+                map.sidebar.toggle();
+            }
+}
+
+
+
 
 
 
