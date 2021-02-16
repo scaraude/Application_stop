@@ -6,6 +6,8 @@ class MapHandler
         this.map = new Map(mapId);
         //this.iconList = new Liste (AbstractIcon);
         this.nbIconSelected = 0;
+        this.destSelected = false;
+        this.startSelected = false;
     }
 
     locate(){
@@ -40,20 +42,27 @@ class MapHandler
     }
 
     selectStart(){
-        //Traitement a faire
-        //this.map.setStart(place);
-        if (this.map.getDestination() != null){
-            this.routingBtwnSelectedPoints();
+        console.log("Get Start");
+        console.log(this.map.getStart());
+        this.startSelected = true;
+        if(this.destSelected){
+            if (this.map.getDestination() != null){
+                this.routingBtwnSelectedPoints();
+            }
         }
-        //this.map.closePopUps();
+        this.map.closePopUps();
     }
 
     selectDestination(){
-        //this.map.setDestination(place);
-        if (this.map.getStart() != null){
-            this.routingBtwnSelectedPoints();
+        console.log("Get Dest");
+        console.log(this.map.getDestination());
+        this.destSelected = true;
+        if (this.startSelected){
+            if (this.map.getStart() != null){
+                this.routingBtwnSelectedPoints();
+            }
         }
-        //this.map.closePopUps();
+        this.map.closePopUps();
     }
 
     routingBtwnSelectedPoints(){

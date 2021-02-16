@@ -1,5 +1,5 @@
-var destinationIcon = null;
-var startPoint = null;
+//var destinationIcon = null;
+//var startPoint = null;
 
 class Map 
 {
@@ -13,6 +13,8 @@ class Map
         //     zoomOffset: -1,
         //     accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
         // });
+        this.destinationIcon = null;
+        this.startPoint = null;
 
         this.map = L.map(mapId).setView([45.756104, 4.841173], 12);
 
@@ -57,15 +59,15 @@ class Map
 
         var self = this;
         
-        this.map.on('click', function (e) {
-        //this.map.on('click', (e) => {
+        //this.map.on('click', function (e) {
+        this.map.on('click', (e) => {
             sidebar.hide();
-            var popLocation= e.latlng;
+            var popLocation = e.latlng;
             var popup = L.popup();
 
-            startPoint = e; 
+            this.startPoint = e; 
             console.log("Start Point :");
-            console.log(startPoint.latlng);
+            console.log(this.startPoint.latlng);
             popup.setLatLng(popLocation)
             .setContent(`   <p>Ajouter un marker ?</p> <br/>
                             <button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>
@@ -136,25 +138,27 @@ class Map
                             <button type="button" id="itiStart" class="btn btn-primary sidebar-open-button">Partir d'ici</button>
                         `);
         marker.addTo(this.map);
-        marker.on('click', function(e) {
-                destinationIcon = e.target;
-                console.log("DestPoint :");
-                console.log(destinationIcon.getLatLng());
+        //marker.on('click', function(e) {
+        marker.on('click', (e) => {
+            this.destinationIcon = e.target;
+            console.log("DestPoint :");
+            console.log(this.destinationIcon.getLatLng());
         });
     }
 
     routing(){
-        
-        console.log(startPoint.latlng);
-        console.log(destinationIcon.getLatLng());
+        console.log("Route Start :");
+        console.log(this.startPoint.latlng);
+        console.log("Route Dest :");
+        console.log(this.destinationIcon.getLatLng());
         if (this.routingControl != null){
             this.map.removeControl(this.routingControl);
         }
 
         this.routingControl = L.Routing.control({
             waypoints: [
-                startPoint.latlng,
-                destinationIcon.getLatLng()
+                this.startPoint.latlng,
+                this.destinationIcon.getLatLng()
             ],
             routeWhileDragging: true
         }).addTo(this.map);
@@ -165,20 +169,20 @@ class Map
     }
 
     getDestination(){
-        return destinationIcon;
+        return this.destinationIcon;
     }
 
     setDestination(icon){
-        destinationIcon = icon;
+        this.destinationIcon = icon;
     }
 
     getStart(){
-        return startPoint;
+        return this.startPoint;
     }
 
     setStart(point)
     {
-        startPoint = point;
+        this.startPoint = point;
     }
 
 
