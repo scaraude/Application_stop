@@ -32,17 +32,17 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', { failureR
 });
 
 // API Comment
-router.post('/api/comment/:spotId', commentCtrl.createComment);    
-router.put('/api/comment/:id', commentCtrl.modifyComment); 
-router.delete('/api/comment/:id', commentCtrl.deleteComment);  
+router.post('/api/comment/:spotId', passportConfig.isAuthenticated, commentCtrl.createComment);    
+router.put('/api/comment/:id', passportConfig.isAuthenticated, passportConfig.isCommentOwner, commentCtrl.modifyComment); 
+router.delete('/api/comment/:id', passportConfig.isAuthenticated, passportConfig.isCommentOwner, commentCtrl.deleteComment);  
 router.get('/api/comment/one/:id', commentCtrl.getOneComment); 
 router.get('/api/comment/:spotId', commentCtrl.getAllCommentsOneSpot);    
 router.get('/api/comment/', commentCtrl.getAllComments);    //amené a être supp
 
 // API Spot
-router.post('/api/spots/', spotCtrl.createSpot);
-router.put('/api/spots/:id', spotCtrl.modifySpot);
-router.delete('/api/spots/:id', spotCtrl.deleteSpot);
+router.post('/api/spots/', passportConfig.isAuthenticated, spotCtrl.createSpot);
+router.put('/api/spots/:id', passportConfig.isAuthenticated, passportConfig.isSpotOwner, spotCtrl.modifySpot);
+router.delete('/api/spots/:id', passportConfig.isAuthenticated, passportConfig.isSpotOwner, spotCtrl.deleteSpot);
 router.get('/api/spots/:id', spotCtrl.getOneSpot);
 router.get('/api/spots/',spotCtrl.getAllSpots);
 

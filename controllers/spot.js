@@ -1,9 +1,10 @@
 const Spot = require('../models/Spot');
+const APIgoogle = require('./APIgoogle')
 
 exports.createSpot = (req, res, next) => {
     const spot = new Spot({
         ...req.body,
-        userId : req.user.userId,
+        userId : req.user._id,
     });
     spot.save()
         .then(spot => res.status(201).json({message : "Nouveau spot enregistré :" , spot : spot}))

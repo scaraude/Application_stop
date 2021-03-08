@@ -51,7 +51,7 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 /**
- * Authorization Ownership Required middleware.
+ * Ownership Required middleware.
  */
 exports.isSpotOwner = (req, res, next) => {
   Spot.findOne({ _id: req.params.id })
@@ -61,7 +61,7 @@ exports.isSpotOwner = (req, res, next) => {
       next()
     }else{
       req.flash('errors', {msg: 'Unauthorize access'})
-      res.redirect('/');
+      res.status(403).redirect('/');
     }
   })
   .catch((error) => {
@@ -78,7 +78,7 @@ exports.isCommentOwner = (req, res, next) => {
       next()
     }else{
       req.flash('errors', {msg: 'Unauthorize access'})
-      res.redirect('/');
+      res.status(403).redirect('/');
     }
   })
   .catch((error) => {
@@ -97,10 +97,10 @@ passport.use(new FacebookStrategy({
   profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {
-  if (req.user) {
+  if (req.user) { // if user is logged
     User.findOne({ facebook: profile.id }, (err, existingUser) => {
       if (err) { return done(err); }
-      if (existingUser) {
+      if (existingUser) { 
         req.flash('errors', { msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
         done(err);
       } else {

@@ -45,17 +45,16 @@ $(document).ready(function () {
       (item) =>
         item.nom.toLowerCase() === input.val().toLowerCase()
     );
-    if (result)
+    if (result){
       mapHandler.setView(
         parseFloat(result.centre.coordinates[1]), parseFloat(result.centre.coordinates[0]), 13
       );
       input.val('');
       autocomplete(document.getElementById("search-input")); // appel de la fonction pour fermer la liste de suggestion
-  }
+  }}
 
   $("#search-input").keydown((event) => {
     if (event.keyCode == 13) {
-      console.log(event.keyCode);
       $("#search-form").submit();
     }
   });
@@ -78,7 +77,6 @@ $(document).ready(function () {
           let autocomplete_list = [];
           autocomplete_items = info_json;
           $.each(autocomplete_items, function (index, json) {
-            console.log(json)
             autocomplete_list[index] = json.nom;
           });
           autocomplete(
