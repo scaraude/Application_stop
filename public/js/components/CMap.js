@@ -1,3 +1,6 @@
+//var destinationIcon = null;
+//var startPoint = null;
+
 class Map 
 {
     constructor(mapId){
@@ -10,8 +13,8 @@ class Map
         //     zoomOffset: -1,
         //     accessToken: 'pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w'
         // });
-
-        
+        this.destinationIcon = null;
+        this.startPoint = null;
 
         this.map = L.map(mapId).setView([45.756104, 4.841173], 12);
 
@@ -56,13 +59,21 @@ class Map
 
         var self = this;
         
-        this.map.on('click', function (e) {
+        //this.map.on('click', function (e) {
+        this.map.on('click', (e) => {
             sidebar.hide();
-            var popLocation= e.latlng;
+            var popLocation = e.latlng;
             var popup = L.popup();
-            
+
+            this.startPoint = e; 
+            console.log("Start Point :");
+            console.log(this.startPoint.latlng);
             popup.setLatLng(popLocation)
-            .setContent('<p>Ajouter un marker ?</p> <br/><button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>')
+            .setContent(`   <p>Ajouter un marker ?</p> <br/>
+                            <button type="button" class="btn btn-primary sidebar-open-button">Saisir les informations</button>
+                            <p>Utiliser ce lieu comme point de départ de l'itinéraire</p> <br/>
+                            <button type="button" id="itiStart" class="btn btn-primary sidebar-open-button">Partir d'ici</button>
+                        `)
             .openOn(self.map); 
         });
 
@@ -109,8 +120,9 @@ class Map
     }
 
     addIcon(iconToAdd){
+    //addIcon(iconToAdd, iconPosition){
         //L.marker(iconToAdd.position, {icon: iconToAdd.getLeafIcon()}).addTo(this.map).bindPopup(iconToAdd.descritpion);
-        var greenIcon = L.icon({
+        /*var greenIcon = L.icon({
             iconUrl: 'leaf-green.png',
             shadowUrl: 'leaf-shadow.png',
         
@@ -119,8 +131,61 @@ class Map
             iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });*/
+        //L.marker(iconToAdd.position, {icon: iconToAdd.getLeafIcon()}).addTo(this.map);
+        var marker = L.marker(iconToAdd.position, {icon: iconToAdd.getLeafIcon()});
+        marker.bindPopup(`
+                            <p>Aller à ce point ?</p>
+                            <button type="button" id="itiDest" class="btn btn-primary sidebar-open-button">Aller ici</button>
+                            <p>Utiliser ce lieu comme point de départ de l'itinéraire</p>
+                            <button type="button" id="itiStart" class="btn btn-primary sidebar-open-button">Partir d'ici</button>
+                        `);
+        marker.addTo(this.map);
+        //marker.on('click', function(e) {
+        marker.on('click', (e) => {
+            this.destinationIcon = e.target;
+            console.log("DestPoint :");
+            console.log(this.destinationIcon.getLatLng());
         });
-        L.marker(iconToAdd.position, {icon: iconToAdd.getLeafIcon()}).addTo(this.map);
+    }
+
+    routing(){
+        console.log("Route Start :");
+        console.log(this.startPoint.latlng);
+        console.log("Route Dest :");
+        console.log(this.destinationIcon.getLatLng());
+        if (this.routingControl != null){
+            this.map.removeControl(this.routingControl);
+        }
+
+        this.routingControl = L.Routing.control({
+            waypoints: [
+                this.startPoint.latlng,
+                this.destinationIcon.getLatLng()
+            ],
+            routeWhileDragging: true
+        }).addTo(this.map);
+        
+    }
+    closePopUps(){
+        this.map.closePopup();
+    }
+
+    getDestination(){
+        return this.destinationIcon;
+    }
+
+    setDestination(icon){
+        this.destinationIcon = icon;
+    }
+
+    getStart(){
+        return this.startPoint;
+    }
+
+    setStart(point)
+    {
+        this.startPoint = point;
     }
 
 

@@ -90,6 +90,71 @@ $(document).ready(function () {
       });
     } else {
       autocomplete(document.getElementById("search-input")); // appel de la fonction pour fermer la liste de suggestion
+
+    //Fonction de mise en page des popups (A FAIRE)
+    function PopupView(popup) {
+
+    };
+
+    // CREE UN POPUP AVEC LES COORDONNEES DU POINT QUAND ON CLIQUE
+    //var popup = L.popup();
+
+    function onMapClick(e) {
+
+        //On affiche la modal 
+        $('#primaryModalConfirm').modal('show');
+        //window.location.assign('php/CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
+        // console.log('CreateMarker.php?lat=' + e.latlng.lat + "&lng=" + e.latlng.lng);
+        // popup
+        //     .setLatLng(e.latlng)
+        //     .setContent("You clicked the map at " + e.latlng.toString())
+        //     .openOn(map);
+
+            // Add marker to map at click location; add popup window
+        var newMarker = new L.marker(e.latlng).addTo(map);
+
+    }
+
+    $('body').on("click", '#itiStart', function(e){
+        $.ajax({
+            success : function(data){
+                //return the variable here
+                startPoint = e;
+                mapHandler.selectStart();
+                //console.log(startPoint.latlng);
+            }
+
+        });
+
+    });
+
+    $('body').on("click", '#itiDest', function(e){
+        $.ajax({
+            success : function(data){
+                //return the variable here
+                destPoint = e;
+                mapHandler.selectDestination();
+                //console.log(startPoint.latlng);
+                
+            }
+
+        });
+
+    }); 
+
+    $('#primaryModalConfirm').on('click', '#createmarker', function(e) {
+        console.log('create');
+    });
+
+
+    let autocomplete_items = [];
+    let ville_hold;
+
+    // EVENT BOUTON CLICK (pour lancer ajax)
+    function changeMapView(){
+        const result = autocomplete_items.find(item => item.nom === ville_hold);
+        if (result)
+            map.setView([result.centre.coordinates[1], result.centre.coordinates[0]], 13);
     }
   });
 
@@ -212,8 +277,20 @@ function locate() {
   mapHandler.locate();
 }
 
+<<<<<<< HEAD
 function addIcons() {
   mapHandler.addIconToMap("car", [51.5, -0.09], "Voiture", "Paris");
   mapHandler.addIconToMap("boat", [51.495, -0.083], "Bateau", "Paris");
   mapHandler.addIconToMap("plane", [51.49, -0.1], "Avion", "Paris");
+=======
+
+function addIcons()
+{
+    mapHandler.addIconToMap('car', [51.5, -0.09], 'Voiture', 'Paris');
+    mapHandler.addIconToMap('boat', [51.495, -0.083], 'Bateau', 'Paris');
+    mapHandler.addIconToMap('plane', [51.49, -0.1], 'Avion', 'Paris');
+    mapHandler.addIconToMap('plane', [45.730467863994924, 4.942265656619297], 'Avion', 'Partout');
+    mapHandler.addIconToMap('boat', [45.68113380853047, 4.846930883524107], 'Bateau', 'Marseille');
+    mapHandler.addIconToMap('car', [45.73542546933871, 4.8188446484872625], 'Voiture', 'Paris');
+>>>>>>> flo
 }
