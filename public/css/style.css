@@ -256,3 +256,9 @@ input[type=submit] {
   .leaflet-right {
     transition: right 0.5s; }
 
+
+  .leaflet-popup-content {
+      width: 200px;
+      height: 100px;
+      /* overflow-y: scroll; */
+  }

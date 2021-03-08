@@ -40,10 +40,14 @@ router.get('/api/comment/:spotId', commentCtrl.getAllCommentsOneSpot);
 router.get('/api/comment/', commentCtrl.getAllComments);    //amené a être supp
 
 // API Spot
-router.post('/api/spots/', passportConfig.isAuthenticated, spotCtrl.createSpot);
+router.post('/api/spots/create', passportConfig.isAuthenticated, spotCtrl.createSpot);
 router.put('/api/spots/:id', passportConfig.isAuthenticated, passportConfig.isSpotOwner, spotCtrl.modifySpot);
 router.delete('/api/spots/:id', passportConfig.isAuthenticated, passportConfig.isSpotOwner, spotCtrl.deleteSpot);
 router.get('/api/spots/:id', spotCtrl.getOneSpot);
 router.get('/api/spots/',spotCtrl.getAllSpots);
+
+//Map 
+router.get('/popup',spotCtrl.popUp);
+router.get('/formside',spotCtrl.formSidebar);
 
 module.exports = router;

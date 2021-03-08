@@ -3,8 +3,17 @@ const APIgoogle = require('./APIgoogle')
 
 exports.createSpot = (req, res, next) => {
     const spot = new Spot({
-        ...req.body,
-        userId : req.user._id,
+        // ...req.body,
+        userId : req.user.userId,
+        // userId : 'LCA001',
+        title: req.body.title ,
+        rating: req.body.rating,
+        gps: {lat : req.body.lat, lon : req.body.lon},
+        destinations: req.body.destinations,
+        direction: req.body.direction,
+        roads: [req.body.roads],
+        access: req.body.access,
+        advice: req.body.advice
     });
     spot.save()
         .then(spot => res.status(201).json({message : "Nouveau spot enregistré :" , spot : spot}))
@@ -33,4 +42,11 @@ exports.getAllSpots = (req, res, next) => {
     Spot.find()
         .then(spots => res.status(200).json(spots))
         .catch(error => res.status(400).json({ error }));
+};
+
+exports.popUp = (req, res) => {
+    res.render('pages/map/popup');
+};
+exports.formSidebar = (req, res) => {
+    res.render('pages/map/formside');
 };
