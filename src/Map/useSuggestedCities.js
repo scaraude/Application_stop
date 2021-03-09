@@ -17,7 +17,7 @@ export default function useSuggestedCities(inputValue) {
 
     (async () => {
       const response = await fetch(
-        `https://geo.api.gouv.fr/communes?nom=${inputValue}&fields=nom,centre,departement&boost=population&limit=5`
+        `https://geo.api.gouv.fr/communes?nom=${inputValue}&fields=nom,centre,departement,codesPostaux&boost=population&limit=5`
       );
 
       const cities = await response.json();

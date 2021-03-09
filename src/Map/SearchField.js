@@ -38,7 +38,7 @@ const SearchField = () => {
       lat: value.centre.coordinates[1],
       lon: value.centre.coordinates[0],
     };
-    map.setView(newLatLon, 16);
+    map.setView(newLatLon, 14);
     setInputValue("");
     setValue(null);
   }, [value]);
@@ -84,7 +84,7 @@ const SearchField = () => {
           }}
         />
       )}
-      renderOption={(option) => <React.Fragment><span>{option.nom}</span><span style={{marginLeft: "auto", fontStyle: "italic", fontSize: "0.9rem"}}>{option.departement.nom} - {option.departement.code}</span></React.Fragment>}
+      renderOption={(option) => <React.Fragment><span>{option.nom}</span><span style={{marginLeft: "auto", fontStyle: "italic", fontSize: "0.9rem"}}>{option.departement.nom} - {option.codesPostaux[0]}</span></React.Fragment>}
     />
   );
 };

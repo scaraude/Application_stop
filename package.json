@@ -52,7 +52,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "webpack serve --mode=development",
+    "start": "webpack serve --mode=development --port 3000",
     "build": "webpack --mode=production"
   },
   "author": "",
