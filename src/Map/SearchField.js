@@ -6,6 +6,8 @@ import { useMap } from "react-leaflet";
 
 import useSuggestedCities from "./useSuggestedCities";
 
+// import searchIcon from './search-icon2.png'
+
 const SearchField = () => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -36,7 +38,7 @@ const SearchField = () => {
       lat: value.centre.coordinates[1],
       lon: value.centre.coordinates[0],
     };
-    map.setView(newLatLon, 13);
+    map.setView(newLatLon, 16);
     setInputValue("");
     setValue(null);
   }, [value]);
@@ -61,7 +63,7 @@ const SearchField = () => {
         setValue(newValue);
       }}
       getOptionSelected={(option, value) => option.nom === value.nom}
-      getOptionLabel={(option) => option.nom}
+      getOptionLabel={(option) => option.nom} //normalement on peut virer, mais si on le fait ca fait tout planter...
       options={options}
       loading={loading}
       renderInput={(params) => (
@@ -82,6 +84,7 @@ const SearchField = () => {
           }}
         />
       )}
+      renderOption={(option) => <React.Fragment><span>{option.nom}</span><span style={{marginLeft: "auto", fontStyle: "italic", fontSize: "0.9rem"}}>{option.departement.nom} - {option.departement.code}</span></React.Fragment>}
     />
   );
 };
