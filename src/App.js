@@ -1,9 +1,13 @@
 import React from "react";
 
 import Map from "./Map/Map";
+import NavBar from "./NavBar/NavBar";
 
 const App = () => (
-  <Map/>
+  <React.Fragment>
+    <NavBar/>
+    <Map/>
+  </React.Fragment>
 );
 
 export default App;
