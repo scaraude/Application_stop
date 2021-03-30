@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Drawer } from "@material-ui/core";
 import {
   MapContainer,
   TileLayer,
@@ -28,8 +29,11 @@ const SearchFieldHolder = styled.div`
 `;
 
 const Map = () => {
+  const [currentSpot, setCurrentSpot] = useState(null);
+
   const spots = useGetAllSpots();
   console.log("spots :>> ", spots);
+
   return (
     <StyledContainer>
       <MapContainer
@@ -50,14 +54,26 @@ const Map = () => {
           <SearchField />
         </SearchFieldHolder>
 
-        {spots.map((spot) => 
-            <Marker key={spot._id} position={[spot.gps.lat, spot.gps.lon]}>
-              <Popup>
-                <h3>{spot.title}</h3>
-                {spot.advice}
-              </Popup>
-            </Marker>
-        )}
+        {spots.map((spot) => (
+          <Marker
+            key={spot._id}
+            id={spot._id}
+            position={[spot.gps.lat, spot.gps.lon]}
+            eventHandlers={{
+              click: () => {
+                setCurrentSpot(spot);
+              },
+            }}
+          />
+        ))}
+
+        <Drawer
+          anchor="right"
+          open={currentSpot ? true : false}
+          onClose={() => setCurrentSpot(null)}
+        >
+          {currentSpot && <h3>{currentSpot.title}</h3>}
+        </Drawer>
 
         <ZoomControl position="bottomright" />
       </MapContainer>

@@ -18,7 +18,7 @@ export default function useGetAllSpots() {
       );
       setSpots(await response.json());
     })();
-
+    
   }, []);
 
   return spots;
