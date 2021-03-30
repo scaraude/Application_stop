@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { MapContainer, TileLayer,ZoomControl, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  ZoomControl,
+  Marker,
+  Popup,
+} from "react-leaflet";
 
 import SearchField from "./SearchField";
+import useGetAllSpots from "./useGetAllSpots";
 
 const StyledContainer = styled.div`
   position: absolute;
@@ -21,6 +28,8 @@ const SearchFieldHolder = styled.div`
 `;
 
 const Map = () => {
+  const spots = useGetAllSpots();
+  console.log("spots :>> ", spots);
   return (
     <StyledContainer>
       <MapContainer
@@ -38,17 +47,19 @@ const Map = () => {
         />
 
         <SearchFieldHolder>
-          <SearchField  />
+          <SearchField />
         </SearchFieldHolder>
 
-        <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {spots.map((spot) => 
+            <Marker key={spot._id} position={[spot.gps.lat, spot.gps.lon]}>
+              <Popup>
+                <h3>{spot.title}</h3>
+                {spot.advice}
+              </Popup>
+            </Marker>
+        )}
 
         <ZoomControl position="bottomright" />
-        
       </MapContainer>
     </StyledContainer>
   );

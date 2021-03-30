@@ -1,8 +1,7 @@
 import React from "react";
 
-import Map from "./Map/Map";
+import Map from "./pageMap/Map";
 import NavBar from "./NavBar/NavBar";
-
 const App = () => (
   <React.Fragment>
     <NavBar/>
