@@ -1,6 +1,6 @@
 import React from "react";
 
-import Map from "./Map/Map";
+import Map from "./pageMap/Map";
 
 const App = () => (
   <Map/>

@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 const express = require('express');
-const path = require('path');
 const morgan = require('morgan');
 const errorHandler = require('errorhandler');
 const session = require('express-session');
 const flash = require('express-flash');
+const cors = require('cors');
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
 
@@ -16,8 +17,9 @@ const router = require('./routes/router');
 
 const app = express();
 
-app.set('view engine', process.env.VIEW_ENGINE);
-app.set('views', path.join(__dirname, '/views')); 
+if (process.env.NODE_ENV === 'development') {
+    app.use(cors());
+}
 
 // parse request
 app.use(express.json());
@@ -50,7 +52,7 @@ app.use(router);
 /**
  * Error Handler.
  */
-if (process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'development') {
     // only use in development
     app.use(errorHandler());
 } else {
