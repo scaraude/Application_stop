@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Drawer } from "@material-ui/core";
 import {
   MapContainer,
   TileLayer,
   ZoomControl,
   Marker,
-  Popup,
 } from "react-leaflet";
 
+import Sidebar from './SideBar/Sidebar'
 import SearchField from "./SearchField";
 import useGetAllSpots from "./useGetAllSpots";
 
@@ -19,6 +18,7 @@ const StyledContainer = styled.div`
   top: 0;
   left: 0;
 `;
+
 const SearchFieldHolder = styled.div`
   position: absolute;
   top: 10vh;
@@ -34,6 +34,10 @@ const Map = () => {
   const spots = useGetAllSpots();
   console.log("spots :>> ", spots);
 
+  const ResetCurrentSpot = () => {
+    setCurrentSpot(null);
+  }
+  
   return (
     <StyledContainer>
       <MapContainer
@@ -67,14 +71,7 @@ const Map = () => {
           />
         ))}
 
-        <Drawer
-          anchor="right"
-          open={currentSpot ? true : false}
-          onClose={() => setCurrentSpot(null)}
-        >
-          {currentSpot && <h3>{currentSpot.title}</h3>}
-        </Drawer>
-
+        <Sidebar open={currentSpot ? true : false} spot={currentSpot} onClose={ResetCurrentSpot}/>
         <ZoomControl position="bottomright" />
       </MapContainer>
     </StyledContainer>
