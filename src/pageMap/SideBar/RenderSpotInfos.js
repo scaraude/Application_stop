@@ -1,8 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+
+const InfoContainer = styled.div`
+  padding: 1.5rem;
+  padding-top: 10rem;
+`
 
 const RenderSpotInfos = ({spot}) => (
-  <div>
+  <InfoContainer>
     <h2>{spot.title}</h2>
     <p>PHOTO ICI</p>
     <h4>rating :</h4> {spot.score}
@@ -21,7 +27,7 @@ const RenderSpotInfos = ({spot}) => (
       ))}
     </ul>
     <h4>access :</h4> {spot.access}
-  </div>
+  </InfoContainer>
 );
 
 RenderSpotInfos.propTypes = {
