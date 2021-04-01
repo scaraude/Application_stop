@@ -10,7 +10,7 @@ import RenderSpotInfos from "./renders/RenderSpotInfos";
 import RenderSpotIconButtons from './renders/RenderSpotIconButtons'
 const StyledPanel = styled.div`
   width: 33vw;
-  min-height: calc(100% - 1rem);
+  /* min-height: calc(100% - 1rem); */
   background-color: #ececec;
   padding: 0.5rem;
 `;
