@@ -22,8 +22,9 @@ const StyledContainer = styled.div`
 const SearchFieldHolder = styled.div`
   position: absolute;
   top: 10vh;
-  left: 1vw;
-  z-index: 1000;
+  left: 50vw;
+  transform: translateX(-50%);
+  z-index: 9999;
   background-color: white;
 `;
 
@@ -33,7 +34,7 @@ const Map = () => {
   const spots = useGetAllSpots();
   console.log("spots :>> ", spots);
 
-  const handleDrawerClose  = () => {
+  const ResetCurrentSpot = () => {
     setCurrentSpot(null);
   }
   
@@ -70,7 +71,7 @@ const Map = () => {
           />
         ))}
 
-        <Sidebar open={currentSpot ? true : false} spot={currentSpot} handleDrawerClose={handleDrawerClose}/>
+        <Sidebar open={currentSpot ? true : false} spot={currentSpot} onClose={ResetCurrentSpot}/>
         <ZoomControl position="bottomright" />
       </MapContainer>
     </StyledContainer>
