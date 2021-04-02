@@ -7,10 +7,11 @@ import { Drawer } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 
 import RenderSpotInfos from "./renders/RenderSpotInfos";
-import RenderSpotIconButtons from './renders/RenderSpotIconButtons'
+import RenderSpotIconButtons from './renders/RenderSpotIconButtons';
+
 const StyledPanel = styled.div`
   width: 33vw;
-  /* min-height: calc(100% - 1rem); */
+  min-height: calc(100% - 1rem);
   background-color: #ececec;
   padding: 0.5rem;
 `;
@@ -21,9 +22,9 @@ const StyledHeader = styled.div`
   justify-content: space-between;
 `;
 
-const Sidebar = ({ open = false, spot = null, onClose }) => {
+const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
   return (
-    <Drawer anchor="right" open={open} onClose={() => onClose()}>
+    <Drawer anchor="right" open={open} onClose={() => handleDrawerClose()}>
       <StyledPanel>
         <StyledHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -40,7 +41,7 @@ const Sidebar = ({ open = false, spot = null, onClose }) => {
 Sidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   spot: PropTypes.object,
-  onClose: PropTypes.func.isRequired,
+  handleDrawerClose: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
