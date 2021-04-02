@@ -8,12 +8,13 @@ const passport = require('passport');
 const passportConfig = require('../config/passport');
 
 // Controllers
-// const homeController = require('../controllers/home')
+const homeController = require('../controllers/home')
 const userController = require('../controllers/user');
 const commentCtrl = require('../controllers/comment');
 const spotCtrl = require('../controllers/spot');
 
 // Basic auth
+router.get('/', homeController.getHome)
 router.post('/signup', userController.postSignup);
 router.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 
