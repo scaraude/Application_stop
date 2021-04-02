@@ -1,26 +1,65 @@
+/* eslint-disable no-undef */
 const express = require('express');
+const morgan = require('morgan');
+const errorHandler = require('errorhandler');
+const session = require('express-session');
+const flash = require('express-flash');
+const cors = require('cors');
+const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
 
-//config
-const db = require('./config/db-connection');
-
-//routes
-const spotRoutes = require('./router/spot');
-
-// const userRoutes = require('./router/user');
-// const configuration = require('./middleware/websiteConf');
+// connection with DB
+require('./config/db-connection');
+// import authentification strategies
+require('./config/passport');
+// import routes
+const router = require('./routes/router');
 
 const app = express();
 
-// app.use(configuration.autorizeCORS);
+if (process.env.NODE_ENV === 'development') {
+    app.use(cors());
+}
 
+// parse request
 app.use(express.json());
+app.use(express.urlencoded({extended : true}));
 
-app.use(express.static('public'));//jsuis pas trop sure de comprendre à quoi ça sert...
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
+    store: new MongoStore({
+        url: process.env.MONGODB_URI,
+        autoReconnect: true,
+    })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
 
-app.get('/', (req, res) => {
-    res.sendFile('public/views/index.html', { root: __dirname });
-})
+app.use(express.static('public'));
 
-app.use('/api/spots', spotRoutes);
+app.use(morgan('dev'));
+
+app.use(router);
+
+/**
+ * Error Handler.
+ */
+if (process.env.NODE_ENV === 'development') {
+    // only use in development
+    app.use(errorHandler());
+} else {
+    app.use((err, req, res, next) => {
+        console.error(err);
+        res.status(500).send('Server Error');
+    });
+}
 
 module.exports = app;
