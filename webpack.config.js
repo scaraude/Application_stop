@@ -31,10 +31,6 @@ let config = {
     open: true,
     hot: true,
   },
-  // A décommenter quand le back et le front fonctionneront ensemble
-  // plugins: [
-  //   new NodemonPlugin(),
-  // ],
   devtool: "eval-source-map",
 };
 
