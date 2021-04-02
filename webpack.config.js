@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
+// eslint-disable-next-line no-unused-vars
 const webpack = require("webpack");
 const path = require("path");
-const NodemonPlugin = require('nodemon-webpack-plugin');
 
 let config = {
   entry: "./src/index.js",

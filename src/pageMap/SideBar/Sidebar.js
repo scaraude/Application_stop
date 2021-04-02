@@ -7,7 +7,7 @@ import { Drawer } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 
 import RenderSpotInfos from "./renders/RenderSpotInfos";
-import RenderSpotIconButtons from './renders/RenderSpotIconButtons';
+import RenderSpotIconButtons from './renders/RenderSpotIcons';
 
 const StyledPanel = styled.div`
   width: 33vw;
