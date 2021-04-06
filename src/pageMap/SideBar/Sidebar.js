@@ -6,12 +6,12 @@ import ArrowRightAltRoundedIcon from "@material-ui/icons/ArrowRightAltRounded";
 import { Drawer } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 
-import RenderSpotInfos from "./renders/RenderSpotInfos";
+import PanelInfoOnSpot from "./PanelInfoOnSpot";
 import RenderSpotIconButtons from './renders/RenderSpotIconButtons';
 
 const StyledPanel = styled.div`
   width: 33vw;
-  min-height: calc(100% - 1rem);
+  /* min-height: calc(100% - 1rem); */
   background-color: #ececec;
   padding: 0.5rem;
 `;
@@ -32,7 +32,7 @@ const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
           </IconButton>
           {spot && <RenderSpotIconButtons/>}
         </StyledHeader>
-        {spot && <RenderSpotInfos spot={spot} />}
+        {spot && <PanelInfoOnSpot spot={spot} />}
       </StyledPanel>
     </Drawer>
   );

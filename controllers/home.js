@@ -4,7 +4,5 @@
  * Home page.
  */
 exports.getHome = (req, res) => {
-  res.render('pages/home', {
-    title: 'Home'
-  });
+  res.sendFile("index.html");
 };

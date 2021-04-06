@@ -56,6 +56,7 @@ if (process.env.NODE_ENV === 'development') {
     // only use in development
     app.use(errorHandler());
 } else {
+    // eslint-disable-next-line no-unused-vars
     app.use((err, req, res, next) => {
         console.error(err);
         res.status(500).send('Server Error');
