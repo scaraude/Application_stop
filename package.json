@@ -40,15 +40,18 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-leaflet": "^3.1.0",
+    "react-perfect-scrollbar": "^1.5.8",
     "react-timeago": "^5.2.0",
     "styled-components": "^5.2.1",
     "validator": "^13.5.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.13.9",
+    "css-loader": "^5.2.0",
     "eslint": "^7.21.0",
     "eslint-plugin-react": "^7.22.0",
     "mocha": "^8.2.1",
+    "style-loader": "^2.0.0",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"

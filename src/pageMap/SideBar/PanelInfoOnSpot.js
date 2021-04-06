@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import fetch from "cross-fetch";
 
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-
 import ExemplePhoto from "./exemple_photo_spot.jpg";
 import RenderRating from "./renders/RenderRating";
 import RenderInfo from "./renders/RenderInfo";
@@ -40,17 +37,6 @@ const PanelInfoOnSpot = ({ spot }) => {
 
   return (
     <div>
-      <ButtonGroup
-        variant="text"
-        color="primary"
-        aria-label="text primary button group"
-        style={{ width: "100%" }}
-      >
-        <Button selected style={{ width: "50%" }}>
-          Informations
-        </Button>
-        <Button style={{ width: "50%" }}>Commentaires</Button>
-      </ButtonGroup>
 
       <Card>
         <StyledInfoHeader>

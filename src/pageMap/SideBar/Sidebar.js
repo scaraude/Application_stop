@@ -3,37 +3,74 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import ArrowRightAltRoundedIcon from "@material-ui/icons/ArrowRightAltRounded";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { Drawer } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 
-import PanelInfoOnSpot from "./PanelInfoOnSpot";
-import RenderSpotIconButtons from './renders/RenderSpotIconButtons';
+import ScrollBar from "react-perfect-scrollbar";
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
-const StyledPanel = styled.div`
+import PanelInfoOnSpot from "./PanelInfoOnSpot";
+import RenderSpotIconButtons from "./renders/RenderSpotIconButtons";
+
+const Panel = styled.div`
+  position:relative;
   width: 33vw;
-  /* min-height: calc(100% - 1rem); */
+  min-height: calc(100% - 1rem);
   background-color: #ececec;
-  padding: 0.5rem;
 `;
 
-const StyledHeader = styled.div`
+const Header = styled.div`
+  background-color: #ececec;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+`;
+
+const StyledIconButtons = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-`;
+  `;
+
+const Body = styled.div`
+  background-color: #ececec;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  `;
 
 const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
   return (
     <Drawer anchor="right" open={open} onClose={() => handleDrawerClose()}>
-      <StyledPanel>
-        <StyledHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ArrowRightAltRoundedIcon />
-          </IconButton>
-          {spot && <RenderSpotIconButtons/>}
-        </StyledHeader>
-        {spot && <PanelInfoOnSpot spot={spot} />}
-      </StyledPanel>
+          <ScrollBar component="div">
+      <Panel>
+        <Header>
+          <StyledIconButtons>
+            <IconButton onClick={handleDrawerClose}>
+              <ArrowRightAltRoundedIcon />
+            </IconButton>
+            {spot && <RenderSpotIconButtons />}
+          </StyledIconButtons>
+
+          {spot && (
+            <ButtonGroup className="test-boutton"
+            variant="text"
+              color="primary"
+              aria-label="text primary button group"
+              style={{ width: "100%" }}
+              >
+              <Button selected style={{ width: "50%" }}>
+                Informations
+              </Button>
+              <Button style={{ width: "50%" }}>Commentaires</Button>
+            </ButtonGroup>
+          )}
+        </Header>
+
+          <Body>{spot && <PanelInfoOnSpot spot={spot} />}</Body>
+      </Panel>
+        </ScrollBar>
     </Drawer>
   );
 };

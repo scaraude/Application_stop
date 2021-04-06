@@ -12,6 +12,10 @@ const formatter = buildFormatter(frenchStrings)
 
 // in your react component
 
+const CommentSection = styled.div`
+  width: 100%;
+  min-height: 100vh;
+`;
 
 const Header = styled.div`
   display: flex;
@@ -38,7 +42,7 @@ const StyledTime = styled.div`
 `;
 
 const RenderComments = ({ comments }) => (
-  <div>
+  <CommentSection>
     <Separator>
     Avis & Commentaires 
     </Separator>
@@ -54,7 +58,7 @@ const RenderComments = ({ comments }) => (
       <Text>{comment.text}</Text>
     </Card>
     ))}
-  </div>
+  </CommentSection>
 );
 
 RenderComments.propTypes = {
