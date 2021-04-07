@@ -2,7 +2,8 @@
   "name": "hitchhike_app",
   "version": "1.0.0",
   "engines": {
-    "node": "14.x"
+    "node": "14.x",
+    "yarn": "1.x"
   },
   "description": "",
   "main": "server.js",

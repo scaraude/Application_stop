@@ -27,7 +27,7 @@ let config = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, "./public"),
-    historyApiFallback: true,
+    historyApiFallback: false,
     inline: true,
     open: true,
     hot: true,
