@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import fetch from "cross-fetch";
 
-const baseUrl = "http://localhost:8080";
+// eslint-disable-next-line no-undef
+const baseUrl = process.env.BASEURL;
 
 /**
  * Hooks to fetch all spots in DB
