@@ -56,10 +56,9 @@ const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
 
   useEffect(() => {
     if (!spot) return null;
-    const baseUrl = "http://localhost:8080";
 
     (async () => {
-      const response = await fetch(`${baseUrl}/api/comment/${spot._id}`);
+      const response = await fetch(`/api/comment/${spot._id}`);
       setComments(await response.json());
     })();
   }, [spot]);
