@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import fetch from "cross-fetch";
-
-const baseUrl = "http://localhost:8080";
+// import fetch from "cross-fetch";
 
 /**
  * Hooks to fetch all spots in DB
@@ -11,14 +9,10 @@ export default function useGetAllSpots() {
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-
     (async () => {
-      const response = await fetch(
-        `${baseUrl}/api/spots/`
-      );
+      const response = await fetch(`/api/spots/`);
       setSpots(await response.json());
     })();
-    
   }, []);
 
   return spots;
