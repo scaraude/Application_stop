@@ -7,7 +7,7 @@ import {
   Marker,
 } from "react-leaflet";
 
-import Sidebar from './SideBar/Sidebar'
+import PanelSpotInfos from './sidebars/sidebarSpotInfos/Sidebar'
 import SearchField from "./SearchField";
 import useGetAllSpots from "./useGetAllSpots";
 
@@ -29,9 +29,7 @@ const SearchFieldHolder = styled.div`
 
 const Map = () => {
   const [currentSpot, setCurrentSpot] = useState(null);
-
   const spots = useGetAllSpots();
-  console.log("spots :>> ", spots);
 
   const handleDrawerClose  = () => {
     setCurrentSpot(null);
@@ -70,7 +68,7 @@ const Map = () => {
           />
         ))}
 
-        <Sidebar open={currentSpot ? true : false} spot={currentSpot} handleDrawerClose={handleDrawerClose}/>
+        <PanelSpotInfos open={currentSpot !== null ? true : false} spot={currentSpot} handleDrawerClose={handleDrawerClose}/>
         <ZoomControl position="bottomright" />
       </MapContainer>
     </StyledContainer>

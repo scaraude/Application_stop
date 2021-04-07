@@ -8,13 +8,9 @@ import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import RenderRating from "./RenderRating";
 import Card from "../styled/Card";
 
-const formatter = buildFormatter(frenchStrings)
-
-// in your react component
 
 const CommentSection = styled.div`
   width: 100%;
-  min-height: 100vh;
 `;
 
 const Header = styled.div`
@@ -23,13 +19,13 @@ const Header = styled.div`
   width: 100%;
 `;
 
-const UserName = styled.p`
+const UserName = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
 const Text = styled.div`
-  font-style: italic;
 `;
 
 const Separator = styled.p`
@@ -38,16 +34,18 @@ const Separator = styled.p`
 
 const StyledTime = styled.div`
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 `;
+
+const formatter = buildFormatter(frenchStrings)
 
 const RenderComments = ({ comments }) => (
   <CommentSection>
     <Separator>
-    Avis & Commentaires 
+    Avis & Commentaires ({comments.length})
     </Separator>
     {comments.map((comment) => (
-    <Card key={comment._id}>
+      <Card key={comment._id}>
       <Header>
         <RenderRating rating={comment.score} />
         <StyledTime>
