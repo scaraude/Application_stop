@@ -33,7 +33,7 @@ let config = {
     hot: true,
     proxy: [
       {
-        context: ['/auth', '/api', '/login'],
+        context: ['/auth', '/api', '/login', '/signup'],
         target: 'http://localhost:8080',
       },
     ],

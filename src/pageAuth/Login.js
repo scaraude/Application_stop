@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
 import isEmail from "validator/lib/isEmail";
 import isEmpty from "validator/lib/isEmpty";
 
@@ -11,7 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import PasswordField from "./components/PasswordField";
 
 const paperStyle = { width: "33vw", height: "50vh", maxWidth: 450 };
-const inputStyle = { margin: 8, width: "80%" };
+const inputStyle = { margin: "1rem", width: "80%" };
 
 const Container = styled.div`
   width: 100vw;
@@ -19,6 +21,17 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Frame = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.div`
+  padding: 0.5rem;
+  color: #666666;
+  align-self: flex-end;
 `;
 
 const StyledForm = styled.form`
@@ -46,51 +59,60 @@ const Login = () => {
 
     if (!isEmail(email)) {
       formIsValid = false;
-      Object.assign(errors, {email: "email adress not valid" });
+      Object.assign(errors, { email: "email adress not valid" });
     }
 
     if (isEmpty(password)) {
       formIsValid = false;
-      Object.assign(errors, {password: "password is not valid" });
+      Object.assign(errors, { password: "password is not valid" });
     }
 
-    setErrors(errors)
+    setErrors(errors);
     return formIsValid;
   };
 
   return (
     <Container>
-      <Paper style={paperStyle} elevation={3}>
-        <StyledForm
-          method=""
-          action=""
-          id="login-form"
-          onSubmit={handleValidation}
-        >
-          <Title>Connexion !</Title>
-          <TextField
-            style={inputStyle}
-            id="id"
-            label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={Boolean(errors["email"])}
-            helperText={errors["email"]}
-          />
-          <PasswordField
-            style={inputStyle}
-            id="password"
-            label="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={Boolean(errors["password"])}
-            helperText={errors["password"]}
-          />
-          <Button type="submit" style={{ ...inputStyle, marginTop: 15 }} variant="contained">
-            Connexion
-          </Button>
-        </StyledForm>
-      </Paper>
+      <Frame>
+        <Label>
+          Pas encore membre ? <Link to="/signup">Rejoins-nous !</Link>
+        </Label>
+        <Paper style={paperStyle} elevation={3}>
+          <StyledForm
+            method=""
+            action=""
+            id="login-form"
+            onSubmit={handleValidation}
+          >
+            <Title>Connexion !</Title>
+            <TextField
+              style={inputStyle}
+              id="id"
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={Boolean(errors["email"])}
+              helperText={errors["email"]}
+            />
+            <PasswordField
+              style={inputStyle}
+              id="password"
+              label="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={Boolean(errors["password"])}
+              helperText={errors["password"]}
+            />
+            <Button
+              type="submit"
+              style={{ ...inputStyle, marginTop: "3rem" }}
+              variant="contained"
+            >
+              Connexion
+            </Button>
+          </StyledForm>
+        </Paper>
+      </Frame>
     </Container>
   );
 };
