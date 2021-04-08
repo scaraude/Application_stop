@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 import Map from "./pageMap/Map";
 import Login from './pageAuth/Login';
-// import SignUp from './pageAuth/SignUp';
+import SignUp from './pageAuth/SignUp';
 
 const LinkHolder = styled.div`
 position: absolute;
@@ -29,9 +29,9 @@ const App = () => (
       <Route path="/login">
         <Login />
       </Route>
-      {/* <Route path="/signup">
+      <Route path="/signup">
         <SignUp />
-      </Route> */}
+      </Route>
     </Switch>
   </Router>
 );

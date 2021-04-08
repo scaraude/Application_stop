@@ -9,11 +9,13 @@ import isEmpty from "validator/lib/isEmpty";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
+import LockIcon from '@material-ui/icons/Lock';
 
 import PasswordField from "./components/PasswordField";
 
 const paperStyle = { width: "33vw", height: "50vh", maxWidth: 450 };
-const inputStyle = { margin: "1rem", width: "80%" };
+const inputStyle = { width: "100%", marginLeft: "0.5rem" };
 
 const Container = styled.div`
   width: 100vw;
@@ -42,8 +44,16 @@ const StyledForm = styled.form`
   align-items: center;
 `;
 
+const InputControl = styled.div`
+  display: flex;
+  align-items: flex-end;
+  margin: 0.5rem;
+  width: 80%;
+`;
+
 const Title = styled.h1`
   font-weight: bold;
+  margin-bottom: 3rem;
 `;
 
 const Login = () => {
@@ -85,6 +95,8 @@ const Login = () => {
             onSubmit={handleValidation}
           >
             <Title>Connexion !</Title>
+            <InputControl>
+              <AlternateEmailIcon />
             <TextField
               style={inputStyle}
               id="id"
@@ -94,6 +106,9 @@ const Login = () => {
               error={Boolean(errors["email"])}
               helperText={errors["email"]}
             />
+            </InputControl>
+            <InputControl>
+            <LockIcon />
             <PasswordField
               style={inputStyle}
               id="password"
@@ -103,6 +118,8 @@ const Login = () => {
               error={Boolean(errors["password"])}
               helperText={errors["password"]}
             />
+            </InputControl>
+            <InputControl>
             <Button
               type="submit"
               style={{ ...inputStyle, marginTop: "3rem" }}
@@ -110,6 +127,7 @@ const Login = () => {
             >
               Connexion
             </Button>
+            </InputControl>
           </StyledForm>
         </Paper>
       </Frame>
