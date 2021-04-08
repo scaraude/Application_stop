@@ -6,11 +6,11 @@ Après un pull
 >yarn install
 
 #### Lancer l'appli
-coté front : 
->yarn start
-
 coté back  : 
 >nodemon
+
+coté front : 
+>yarn watch
 
 _faite gaffe à votre .env qui a tendance à dégager lors de push/merge_
 

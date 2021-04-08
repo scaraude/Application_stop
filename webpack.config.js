@@ -31,6 +31,12 @@ let config = {
     inline: true,
     open: true,
     hot: true,
+    proxy: [
+      {
+        context: ['/auth', '/api', '/login'],
+        target: 'http://localhost:8080',
+      },
+    ],
   },
   devtool: "eval-source-map",
 };
