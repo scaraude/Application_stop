@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   MapContainer,
@@ -20,7 +21,7 @@ const StyledContainer = styled.div`
 `;
 const SearchFieldHolder = styled.div`
   position: absolute;
-  top: 10vh;
+  top: 30vh;
   left: 50vw;
   transform: translateX(-50%);
   z-index: 9999;

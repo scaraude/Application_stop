@@ -1,47 +1,51 @@
 import React from "react";
-import Logo from "./Logo.png"
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import styled from "styled-components";
 
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  appBar : {
-    background : "white",
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    flexGrow: 1,
-  },
-  title: {
-    flexGrow: 1,
-  },
-  item: {
-    color: "brown",
-  },
-}));
+import Logo from "./Logo.png";
+
+const Container = styled.div`
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+`;
+
+const NavButtons = styled.div`
+  padding-right: 2rem;
+`;
+
+const StyledNavbar = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const NavBar = () => {
-  const classes = useStyles();
-    return (
-      <AppBar position="static" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+  const buttonStyle = {color: "brown" }
+  return (
+    <Container>
+      <AppBar
+        style={{ background: "white" }}
+      >
+        <Toolbar disableGutters>
+          <StyledNavbar>
             <img src={Logo} alt="Hitch Hick logo" />
-          </Typography>
-          <Button className={classes.item}>Itinéraire</Button>
-          <Button className={classes.item}>Plan</Button>
-          <Button className={classes.item}>Blog</Button>
-          <Button className={classes.item}>Login</Button>
+            <NavButtons>
+              <Button style={buttonStyle}>Itinéraire</Button>
+              <Button style={buttonStyle}>Plan</Button>
+              <Button style={buttonStyle}>Blog</Button>
+              <Button style={buttonStyle}>Login</Button>
+            </NavButtons>
+          </StyledNavbar>
         </Toolbar>
       </AppBar>
-    );
-  };
+    </Container>
+  );
+};
 export default NavBar;
