@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const passport = require('passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 
@@ -24,9 +25,9 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
     if (!user) {
       return done(null, false, { msg: `Email ${email} not found.` });
     }
-    if (!user.password) {
-      return done(null, false, { msg: 'Your account was registered using a sign-in provider. To enable password login, sign in using a provider, and then set a password under your user profile.' });
-    }
+    // if (!user.password) {
+    //   return done(null, false, { msg: 'Your account was registered using a sign-in provider. To enable password login, sign in using a provider, and then set a password under your user profile.' });
+    // }
     user.comparePassword(password, (err, isMatch) => {
       if (err) { return done(err); }
       if (isMatch) {
@@ -44,7 +45,7 @@ exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  req.flash('info', {msg: 'You need to be log in'})
+  req.flash('info', {msg: 'You need to log in'})
   res.redirect('/login');
 };
 

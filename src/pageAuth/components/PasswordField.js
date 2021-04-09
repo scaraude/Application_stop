@@ -10,7 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-const PasswordField = ({value: password, onChange: handleChange, onFocus: handleOnFocus,style = {}, error = false, helperText = ""}) => {
+const PasswordField = ({value: password, onChange: handleChange, onFocus: handleOnFocus,style = {}, error = false, helperText = "", name = "password"}) => {
     const [showPassword, setShowPassword] = useState(false)
     
     const handleClickShowPassword = () => {
@@ -25,7 +25,8 @@ const PasswordField = ({value: password, onChange: handleChange, onFocus: handle
         <FormControl error={error} style={style} onFocus={handleOnFocus}>
         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
         <Input
-          id="standard-adornment-password"
+          id="password"
+          name={name}
           type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={handleChange}
@@ -54,6 +55,7 @@ PasswordField.propTypes = {
     style: PropTypes.object,
     error: PropTypes.bool,
     helperText: PropTypes.string,
+    name: PropTypes.string,
 }
 
 export default PasswordField

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -53,6 +53,8 @@ const FormGenerator = ({
   const [focused, setFocused] = useState("");
   const [errors, setErrors] = useState({});
 
+  const formRef = useRef(null)
+
   const handleValidation = (event) => {
     const errors = {};
     event.preventDefault();
@@ -90,7 +92,13 @@ const FormGenerator = ({
       }
     }
 
+    console.log(`formRef`, formRef)
+
     setErrors(errors);
+    if (formIsValid) {
+       formRef.current.submit()      
+    }
+
     return formIsValid;
   };
 
@@ -107,6 +115,7 @@ const FormGenerator = ({
   return (
     <StyledForm
       autocomplete="off"
+      ref={formRef}
       method={method}
       action={action}
       id="login-form"
@@ -119,6 +128,7 @@ const FormGenerator = ({
           <TextField
             style={inputStyle}
             id="pseudo"
+            name="pseudo"
             label="Pseudo, name, secret identity..."
             value={pseudo}
             onChange={handlePseudoChange}
@@ -136,7 +146,8 @@ const FormGenerator = ({
           <AlternateEmailIcon />
           <TextField
             style={inputStyle}
-            id="id"
+            id="email"
+            name="email"
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -152,6 +163,7 @@ const FormGenerator = ({
           <PasswordField
             style={inputStyle}
             id="password"
+            name="password"
             label="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

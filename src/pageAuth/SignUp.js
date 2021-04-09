@@ -42,8 +42,8 @@ const SignUp = () => {
             hasPseudo
             hasEmail
             hasPassword
-            method="#"
-            action="#"
+            method="post"
+            action="/signup"
           />
         </Paper>
       </Frame>

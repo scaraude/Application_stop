@@ -38,8 +38,8 @@ const Login = () => {
           <FormGenerator
             title="Connexion"
             buttonLabel="Connexion"
-            method="#"
-            action="#"
+            method="post"
+            action="/login"
             hasEmail
             hasPassword
             hideHelperText

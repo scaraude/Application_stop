@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+// const passport = require('passport');
 const path = require('path');
 
 const passportConfig = require('../config/passport');
@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
   res.sendFile(path.join( process.cwd(), "public", "index.html"));
 })
 
+router.post('/login', userController.postLogin);
 router.post('/signup', userController.postSignup);
 router.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 
