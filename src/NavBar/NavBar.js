@@ -7,13 +7,7 @@ import Button from "@material-ui/core/Button";
 
 import Logo from "./Logo.png";
 
-const Container = styled.div`
-  z-index: 9999;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-`;
+const NAVBAR_HEIGHT = 54;
 
 const NavButtons = styled.div`
   padding-right: 2rem;
@@ -21,21 +15,26 @@ const NavButtons = styled.div`
 
 const StyledNavbar = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
+const StyledImg = styled.img`
+  max-height: ${NAVBAR_HEIGHT}px;
+  width:auto;
+`;
+
 const NavBar = () => {
   const buttonStyle = {color: "brown" }
   return (
-    <Container>
       <AppBar
-        style={{ background: "white" }}
+        style={{ background: "white", maxHeight: NAVBAR_HEIGHT }}
       >
-        <Toolbar disableGutters>
+        <Toolbar style={{ maxHeight: NAVBAR_HEIGHT, minHeight: 48 }} disableGutters>
           <StyledNavbar>
-            <img src={Logo} alt="Hitch Hick logo" />
+            <StyledImg src={Logo} alt="Hitch Hick logo" />
             <NavButtons>
               <Button style={buttonStyle}>Itinéraire</Button>
               <Button style={buttonStyle}>Plan</Button>
@@ -45,7 +44,6 @@ const NavBar = () => {
           </StyledNavbar>
         </Toolbar>
       </AppBar>
-    </Container>
   );
 };
 export default NavBar;

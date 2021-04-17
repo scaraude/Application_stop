@@ -16,6 +16,10 @@ import RenderComments from "./renders/RenderComments";
 import RenderSpotInfos from "./renders/RenderSpotInfos";
 import RenderSpotIconButtons from "./renders/RenderSpotIconButtons";
 
+const StyledContainer = styled.div`
+z-index: 5;
+`;
+
 const Panel = styled.div`
   position: relative;
   width: 33vw;
@@ -100,6 +104,7 @@ const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
   };
 
   return (
+    <StyledContainer>
     <Drawer anchor="right" open={open} onClose={() => handleDrawerClose()}>
       <ScrollBar
         containerRef={(ref) => {
@@ -143,6 +148,7 @@ const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
         </Panel>
       </ScrollBar>
     </Drawer>
+    </StyledContainer>
   );
 };
 
