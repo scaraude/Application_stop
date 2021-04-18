@@ -1,17 +1,7 @@
+/* eslint-disable no-undef */
 const passport = require('passport');
 const validator = require('validator');
 const User = require('../models/User');
-
-/**
- * GET /login
- * Login page.
- */
-exports.getLogin = (req, res) => {
-    if (req.user) {
-        return res.redirect('/');
-    }
-    res.render('pages/user/login');
-};
 
 /**
 * POST /login
@@ -19,8 +9,8 @@ exports.getLogin = (req, res) => {
 */
 exports.postLogin = (req, res, next) => {
     const validationErrors = [];
-    if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
-    if (validator.isEmpty(req.body.password)) validationErrors.push({ msg: 'Password cannot be blank.' });
+    if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Email address is not valid' });
+    if (validator.isEmpty(req.body.password)) validationErrors.push({ msg: 'Password must be filled.' });
 
     if (validationErrors.length) {
         req.flash('errors', validationErrors);
@@ -56,39 +46,31 @@ exports.logout = (req, res) => {
 };
 
 /**
- * GET /signup
- * Signup page.
- */
-exports.getSignup = (req, res) => {
-    if (req.user) {
-        return res.redirect('/');
-    }
-    res.render('pages/user/signup');
-};
-
-/**
  * POST /signup
  * Create a new local account.
  */
 exports.postSignup = (req, res, next) => {
+
+    const {pseudo, email, password} = req.body;
+    
     const validationErrors = [];
-    if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
-    if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Password must be at least 8 characters long' });
-    if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Passwords do not match' });
+
+    if (!validator.isAlphanumeric(pseudo) || !validator.isLength(pseudo, { min: 3, max: 20 })) validationErrors.push({ msg: 'Email adress is not valid' });
+    if (!validator.isEmail(email)) validationErrors.push({ msg: 'Email adress is not valid' });
+    if (!validator.isStrongPassword(password, { minLowercase: 0, minSymbols: 0 })) validationErrors.push({ msg: 'Password must be at least 8 characters, 1 uppercase, 1 number' });
 
     if (validationErrors.length) {
         req.flash('errors', validationErrors);
         return res.redirect('/signup');
     }
-    req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
 
     const user = new User({
-        profile: {name: req.body.name},
-        email: req.body.email,
-        password: req.body.password
+        profile: {pseudo: pseudo},
+        email: validator.normalizeEmail(email, { gmail_remove_dots: false }),
+        password: password
     });
 
-    User.findOne({ email: req.body.email }, (err, existingUser) => {
+    User.findOne({ email: email }, (err, existingUser) => {
         if (err) { return next(err); }
         if (existingUser) {
             req.flash('errors', { msg: 'Account with that email address already exists.' });

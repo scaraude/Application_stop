@@ -6,5 +6,6 @@ const path = require('path');
  * Home page.
  */
 exports.getHome = (req, res) => {
+  console.log('get home')
   res.sendFile(path.join(__dirname, "public", "index.html"));
 };
