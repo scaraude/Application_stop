@@ -50,7 +50,7 @@ const RenderSpotInfos = forwardRef(({ spot }, forwardedRef) => {
 });
 
 RenderSpotInfos.propTypes = {
-  spot: PropTypes.object.isRequired,
+  spot: PropTypes.object,
 };
 
 export default RenderSpotInfos;

@@ -13,6 +13,7 @@ import useGetAllSpots from "./useGetAllSpots";
 
 const StyledContainer = styled.div`
   position: absolute;
+  z-index:1;
   width: 100%;
   height: 100vh;
   top: 0;
@@ -21,7 +22,7 @@ const StyledContainer = styled.div`
 
 const SearchFieldHolder = styled.div`
   position: absolute;
-  top: 10vh;
+  top: 14vh;
   left: 1vw;
   z-index: 1000;
   background-color: white;
@@ -34,6 +35,8 @@ const Map = () => {
   const handleDrawerClose  = () => {
     setCurrentSpot(null);
   }
+  
+  
   
   return (
     <StyledContainer>

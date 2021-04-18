@@ -3,18 +3,24 @@
 /* eslint-disable no-undef */
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+// const passport = require('passport');
+const path = require('path');
 
 const passportConfig = require('../config/passport');
 
 // Controllers
-const homeController = require('../controllers/home')
 const userController = require('../controllers/user');
 const commentCtrl = require('../controllers/comment');
 const spotCtrl = require('../controllers/spot');
 
+
+router.get('/', (req, res) => {
+  console.log('get home')
+  res.sendFile(path.join( process.cwd(), "public", "index.html"));
+})
+
 // Basic auth
-router.get('/', homeController.getHome)
+router.post('/login', userController.postLogin);
 router.post('/signup', userController.postSignup);
 router.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 
@@ -47,5 +53,10 @@ router.get('/api/spots/',spotCtrl.getAllSpots);
 //Map 
 router.get('/popup',spotCtrl.popUp);
 router.get('/formside',spotCtrl.formSidebar);
+
+router.get('/*', (req, res) => {
+  console.log('catch all')
+  res.sendFile(path.join( process.cwd(), "public", "index.html"));
+})
 
 module.exports = router;
