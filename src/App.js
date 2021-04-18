@@ -8,8 +8,8 @@ import SignUp from './pageAuth/SignUp';
 
 const App = () => (
   <Router>
-    <Switch>
     <NavBar/>
+    <Switch>
       <Route exact path="/">
         <Map />
       </Route>

@@ -36,6 +36,8 @@ const Map = () => {
     setCurrentSpot(null);
   }
   
+  
+  
   return (
     <StyledContainer>
       <MapContainer

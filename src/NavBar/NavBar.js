@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from 'react-router-dom'
+
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -37,9 +39,13 @@ const NavBar = () => {
             <StyledImg src={Logo} alt="Hitch Hick logo" />
             <NavButtons>
               <Button style={buttonStyle}>Itinéraire</Button>
+              <Link to="/">
               <Button style={buttonStyle}>Plan</Button>
+              </Link>
               <Button style={buttonStyle}>Blog</Button>
+              <Link to="/login">
               <Button style={buttonStyle}>Login</Button>
+              </Link>
             </NavButtons>
           </StyledNavbar>
         </Toolbar>
