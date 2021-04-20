@@ -21,7 +21,7 @@ const StyledForm = styled.form`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 `;
 
@@ -33,7 +33,8 @@ const InputControl = styled.div`
 
 const Title = styled.h1`
   font-weight: bold;
-  margin-bottom: 3rem;
+  margin-top: 0;
+  margin-bottom: 2.5rem;
 `;
 
 const FormGenerator = ({
@@ -44,7 +45,7 @@ const FormGenerator = ({
   hasPassword = false,
   method,
   action,
-  hideHelperText,
+  helperTextHided,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -136,7 +137,7 @@ const FormGenerator = ({
             error={Boolean(errors["pseudo"])}
             helperText={
               errors["pseudo"] ||
-              ((!hideHelperText && focused === "pseudo") ? "3 to 20 charaters" : " ")
+              ((!helperTextHided && focused === "pseudo") ? "3 to 20 charaters" : " ")
             }
           />
         </InputControl>
@@ -171,7 +172,7 @@ const FormGenerator = ({
             error={Boolean(errors["password"])}
             helperText={
               errors["password"] ||
-              ((!hideHelperText && focused === "password")
+              ((!helperTextHided && focused === "password")
                 ? "At least 8 characters, 1 uppercase, 1 number"
                 : " ")
             }
@@ -181,7 +182,7 @@ const FormGenerator = ({
       <InputControl>
         <Button
           type="submit"
-          style={{ ...inputStyle, marginTop: "3rem" }}
+          style={{ ...inputStyle, marginTop: "2rem" }}
           variant="contained"
         >
           {buttonLabel}
@@ -199,7 +200,7 @@ FormGenerator.propTypes = {
   hasPassword: PropTypes.bool,
   method: PropTypes.string.isRequired,
   action: PropTypes.string.isRequired,
-  hideHelperText: PropTypes.bool,
+  helperTextHided: PropTypes.bool,
 };
 
 export default FormGenerator;

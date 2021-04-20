@@ -43,7 +43,7 @@ const SignUp = () => {
             hasEmail
             hasPassword
             method="post"
-            action="/signup"
+            action="/api/auth/signup"
           />
         </Paper>
       </Frame>

@@ -20,8 +20,9 @@ router.get('/', (req, res) => {
   res.sendFile(path.join( process.cwd(), "public", "index.html"));
 })
 
-router.post('/login', userController.postLogin);
-router.post('/signup', userController.postSignup);
+// Basic auth
+router.post('/api/auth/login', userController.postLogin);
+router.post('/api/auth/signup', userController.postSignup);
 router.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 
 // Social auth
