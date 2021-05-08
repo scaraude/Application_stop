@@ -1,27 +1,24 @@
-/* eslint-disable no-undef */
-const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
-const db = require("../models");
-const User = db.user;
-const Role = db.role;
+const User = require("../user/user.model");
+const Role = require("./role.model");
 
-verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
+const ROLES = ["user", "admin", "moderator"];
 
-  if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+const checkRolesExisted = (req, res, next) => {
+  if (req.body.roles) {
+    for (let i = 0; i < req.body.roles.length; i++) {
+      if (!ROLES.includes(req.body.roles[i])) {
+        res.status(400).send({
+          message: `Failed! Role ${req.body.roles[i]} does not exist!`,
+        });
+        return;
+      }
+    }
   }
 
-  jwt.verify(token, config.secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ message: "Unauthorized!" });
-    }
-    req.userId = decoded.id;
-    next();
-  });
+  next();
 };
 
-isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -30,7 +27,7 @@ isAdmin = (req, res, next) => {
 
     Role.find(
       {
-        _id: { $in: user.roles }
+        _id: { $in: user.roles },
       },
       (err, roles) => {
         if (err) {
@@ -52,7 +49,7 @@ isAdmin = (req, res, next) => {
   });
 };
 
-isModerator = (req, res, next) => {
+const isModerator = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -61,7 +58,7 @@ isModerator = (req, res, next) => {
 
     Role.find(
       {
-        _id: { $in: user.roles }
+        _id: { $in: user.roles },
       },
       (err, roles) => {
         if (err) {
@@ -83,9 +80,11 @@ isModerator = (req, res, next) => {
   });
 };
 
-const authJwt = {
-  verifyToken,
-  isAdmin,
-  isModerator
-};
-module.exports = authJwt;
+const roleService = {
+    ROLES,
+    checkRolesExisted,
+    isAdmin,
+    isModerator,
+}
+
+module.exports = roleService;

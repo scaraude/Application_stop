@@ -1,11 +1,9 @@
-/* eslint-disable no-undef */
-const config = require("../config/auth.config");
-const db = require("../models");
-const User = db.user;
-const Role = db.role;
+const config = require("./auth.config");
+const User = require("../user/user.model");
+const Role = require("../role/role.model");
 
 var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+var bcrypt = require("bcrypt");
 
 exports.signup = (req, res) => {
   const user = new User({
