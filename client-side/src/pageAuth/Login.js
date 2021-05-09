@@ -7,12 +7,17 @@ import Paper from "@material-ui/core/Paper";
 
 import FormGenerator from "./components/FormGenerator";
 
-const paperStyle = { width: "33vw", height: "50vh", maxWidth: 450, padding: "3rem 0rem" };
+const paperStyle = {
+  width: "33vw",
+  height: "50vh",
+  maxWidth: 450,
+  padding: "3rem 0rem",
+};
 
 const Container = styled.div`
-position: absolute;
-top:0;
-left:0;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -43,8 +48,9 @@ const Login = () => {
             title="Connexion"
             buttonLabel="Connexion"
             method="post"
-            action="/api/auth/login"
-            hasEmail
+            action="/api/auth/signin"
+            validatePassword={false}
+            hasUsername
             hasPassword
             helperTextHided
           />

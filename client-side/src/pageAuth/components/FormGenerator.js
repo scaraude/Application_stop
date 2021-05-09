@@ -43,6 +43,7 @@ const FormGenerator = ({
   hasUsername = false,
   hasEmail = false,
   hasPassword = false,
+  validatePassword = true,
   method,
   action,
   helperTextHided,
@@ -84,7 +85,7 @@ const FormGenerator = ({
       }
     }
 
-    if (hasPassword) {
+    if (hasPassword && validatePassword) {
       if (!isStrongPassword(password, { minLowercase: 0, minSymbols: 0 })) {
         formIsValid = false;
         Object.assign(errors, {
@@ -203,6 +204,7 @@ FormGenerator.propTypes = {
   hasUsername: PropTypes.bool,
   hasEmail: PropTypes.bool,
   hasPassword: PropTypes.bool,
+  validatePassword: PropTypes.bool,
   method: PropTypes.string.isRequired,
   action: PropTypes.string.isRequired,
   helperTextHided: PropTypes.bool,
