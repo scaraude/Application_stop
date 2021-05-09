@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 require("dotenv").config();
 const http = require("http");
-const app = require("./serverside/app");
+const app = require("./server-side/app");
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
