@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 let config = {
-  entry: "./src/index.js",
+  entry: "./client-side/src/index.js",
   output: {
     path: path.resolve(__dirname, "./public"),
     filename: "./bundle.js",
@@ -15,14 +15,16 @@ let config = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-      },{
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
-      },{ test: /\.css$/,use: ['style-loader', 'css-loader']},
+      },
+      { test: /\.css$/, use: ["style-loader", "css-loader"] },
     ],
   },
   devServer: {
@@ -31,12 +33,7 @@ let config = {
     inline: true,
     open: true,
     hot: true,
-    proxy: [
-      {
-        context: ['/auth', '/api', '/login', '/signup'],
-        target: 'http://localhost:8080',
-      },
-    ],
+    proxy: { "/api": "http://localhost:8080" },
   },
   devtool: "eval-source-map",
 };
