@@ -2,7 +2,6 @@
   "name": "hitchhike_app",
   "version": "1.0.0",
   "engines": {
-    "node": "14.x",
     "yarn": "1.x"
   },
   "description": "",
@@ -29,6 +28,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
     "file-loader": "^6.2.0",
+    "global": "^4.4.0",
     "jsonwebtoken": "^8.5.1",
     "leaflet-search": "^2.9.9",
     "mongoose": "^5.10.15",

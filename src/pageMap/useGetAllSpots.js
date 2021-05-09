@@ -10,7 +10,7 @@ export default function useGetAllSpots() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`/api/spots/`);
+      const response = await fetch(`/api/spot/`);
       setSpots(await response.json());
     })();
   }, []);
