@@ -13,9 +13,18 @@ module.exports = function (app) {
 
   app.post(
     "/api/auth/signup",
-    [authService.checkDuplicateUsernameOrEmail, roleService.checkRolesExisted],
+    [
+      authService.validateAuthInput,
+      authService.checkDuplicateUsername,
+      authService.checkDuplicateEmail,
+      roleService.checkRolesExisted,
+    ],
     authController.signup
   );
 
-  app.post("/api/auth/signin", authController.signin);
+  app.post(
+    "/api/auth/signin",
+    authService.validateAuthInput,
+    authController.signin
+  );
 };

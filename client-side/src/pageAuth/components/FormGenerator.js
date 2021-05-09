@@ -40,7 +40,7 @@ const Title = styled.h1`
 const FormGenerator = ({
   title = "",
   buttonLabel = "Submit",
-  hasPseudo = false,
+  hasUsername = false,
   hasEmail = false,
   hasPassword = false,
   method,
@@ -49,30 +49,30 @@ const FormGenerator = ({
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [pseudo, setPseudo] = useState("");
+  const [username, setUsername] = useState("");
 
   const [focused, setFocused] = useState("");
   const [errors, setErrors] = useState({});
 
-  const formRef = useRef(null)
+  const formRef = useRef(null);
 
   const handleValidation = (event) => {
     const errors = {};
     event.preventDefault();
     let formIsValid = true;
 
-    if (hasPseudo) {
-      if (!isAlphanumeric(pseudo)) {
+    if (hasUsername) {
+      if (!isAlphanumeric(username)) {
         formIsValid = false;
         Object.assign(errors, {
-          pseudo: "pseudo can only contain letters and numbers",
+          username: "username can only contain letters and numbers",
         });
       }
 
-      if (!isLength(pseudo, { min: 3, max: 20 })) {
+      if (!isLength(username, { min: 3, max: 20 })) {
         formIsValid = false;
         Object.assign(errors, {
-          pseudo: "pseudo must be between 3 and 20 charaters",
+          username: "username must be between 3 and 20 charaters",
         });
       }
     }
@@ -93,23 +93,26 @@ const FormGenerator = ({
       }
     }
 
-    console.log(`formRef`, formRef)
+    console.log(`formRef`, formRef);
 
     setErrors(errors);
     if (formIsValid) {
-       formRef.current.submit()      
+      formRef.current.submit();
     }
 
     return formIsValid;
   };
 
-  const handlePseudoChange = (event) => {
-    const pseudoInput = event.target.value;
-    if (pseudoInput.length > 20) {
-      setErrors({ ...errors, pseudo: "pseudo must be 20 charaters maximum" });
+  const handleUsernameChange = (event) => {
+    const usernameInput = event.target.value;
+    if (usernameInput.length > 20) {
+      setErrors({
+        ...errors,
+        username: "username must be 20 charaters maximum",
+      });
     } else {
       setErrors({});
-      setPseudo(pseudoInput);
+      setUsername(usernameInput);
     }
   };
 
@@ -123,21 +126,23 @@ const FormGenerator = ({
       onSubmit={handleValidation}
     >
       {title && <Title>{title}</Title>}
-      {hasPseudo && (
+      {hasUsername && (
         <InputControl>
           <PersonIcon />
           <TextField
             style={inputStyle}
-            id="pseudo"
-            name="pseudo"
-            label="Pseudo, name, secret identity..."
-            value={pseudo}
-            onChange={handlePseudoChange}
-            onFocus={() => setFocused("pseudo")}
-            error={Boolean(errors["pseudo"])}
+            id="username"
+            name="username"
+            label="Username, name, secret identity..."
+            value={username}
+            onChange={handleUsernameChange}
+            onFocus={() => setFocused("username")}
+            error={Boolean(errors["username"])}
             helperText={
-              errors["pseudo"] ||
-              ((!helperTextHided && focused === "pseudo") ? "3 to 20 charaters" : " ")
+              errors["username"] ||
+              (!helperTextHided && focused === "username"
+                ? "3 to 20 charaters"
+                : " ")
             }
           />
         </InputControl>
@@ -172,7 +177,7 @@ const FormGenerator = ({
             error={Boolean(errors["password"])}
             helperText={
               errors["password"] ||
-              ((!helperTextHided && focused === "password")
+              (!helperTextHided && focused === "password"
                 ? "At least 8 characters, 1 uppercase, 1 number"
                 : " ")
             }
@@ -195,7 +200,7 @@ const FormGenerator = ({
 FormGenerator.propTypes = {
   title: PropTypes.string,
   buttonLabel: PropTypes.string,
-  hasPseudo: PropTypes.bool,
+  hasUsername: PropTypes.bool,
   hasEmail: PropTypes.bool,
   hasPassword: PropTypes.bool,
   method: PropTypes.string.isRequired,

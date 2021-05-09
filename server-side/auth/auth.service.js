@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const config = require("./auth.config");
-const User = require("../user/user.model");
+const bcrypt = require("bcrypt");
+const userService = require("../user/user.service");
+const { isEmail, isAlphanumeric, isLength } = require("validator");
 
 const verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -18,41 +20,68 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-const checkDuplicateUsernameOrEmail = (req, res, next) => {
-  User.findOne({
-    username: req.body.username,
-  }).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
+const checkDuplicateUsername = async (req, res, next) => {
+  const { username } = req.body;
 
-    if (user) {
-      res.status(400).send({ message: "Failed! Username is already in use!" });
-      return;
-    }
+  const user = await userService.getUserIdByUsername(username);
 
-    User.findOne({
-      email: req.body.email,
-    }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
+  if (user) {
+    res.status(403).send("Failed : Username is already use !");
+    return;
+  }
 
-      if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use!" });
-        return;
-      }
+  next();
+};
 
-      next();
-    });
+const checkDuplicateEmail = async (req, res, next) => {
+  const { email } = req.body;
+
+  const user = await userService.getUserIdByEmail(email);
+
+  if (user) {
+    res.status(403).send("Failed! Email is already in use!");
+    return;
+  }
+
+  next();
+};
+
+const validatePassword = (inputPassword, userPassword) => {
+  return bcrypt.compareSync(inputPassword, userPassword);
+};
+
+const generateJwtToken = (payload) => {
+  const oneDayInSecond = 3600 * 60 * 24;
+  return jwt.sign(payload, config.secret, {
+    expiresIn: oneDayInSecond,
   });
 };
 
+const validateAuthInput = (req, res, next) => {
+  const { username, email } = req.body;
+
+  if (email && !isEmail(email)) {
+    res.status(403).send("Email is not valid !");
+  }
+
+  if (username && !isAlphanumeric(username)) {
+    res.status(403).send("username can only contain letters and numbers");
+  }
+
+  if (username && !isLength(username, { min: 3, max: 20 })) {
+    res.status(403).send("username must be between 3 and 20 charaters");
+  }
+
+  next();
+};
+
 const authService = {
+  generateJwtToken,
+  validateAuthInput,
   verifyToken,
-  checkDuplicateUsernameOrEmail,
+  checkDuplicateEmail,
+  checkDuplicateUsername,
+  validatePassword,
 };
 
 module.exports = authService;
