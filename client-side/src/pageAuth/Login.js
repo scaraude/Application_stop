@@ -1,42 +1,67 @@
-import React from "react";
-import styled from "styled-components";
-
-import { Link } from "react-router-dom";
-
 import Paper from "@material-ui/core/Paper";
-
-import FormGenerator from "./components/FormGenerator";
-
-const paperStyle = {
-  width: "33vw",
-  height: "50vh",
-  maxWidth: 450,
-  padding: "3rem 0rem",
-};
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Frame = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Label = styled.div`
-  padding: 0.5rem;
-  color: #666666;
-  align-self: flex-end;
-`;
+import TextField from "@material-ui/core/TextField";
+import LockIcon from "@material-ui/icons/Lock";
+import PersonIcon from "@material-ui/icons/Person";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuthServices } from "./hooks/useAuthServices";
+import { useHistory } from "react-router-dom";
+import {
+  Container,
+  StyledForm,
+  Frame,
+  Label,
+  Title,
+  InputControl,
+} from "./styles/styledComponents";
+import { paperStyle, inputStyle } from "./styles/style";
+import PasswordField from "./components/PasswordField";
 
 const Login = () => {
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = (event) => {
+    const history = useHistory();
+    event.preventDefault();
+
+    setErrors([]);
+    setIsLoading(true);
+
+    if (!username) {
+      setErrors({ username: "Username is required" });
+    }
+    if (!password) {
+      setErrors({ password: "Password is required" });
+    }
+
+    if (errors.length === 0) {
+      useAuthServices.login(username, password).then(
+        () => {
+          history.push("/profile");
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setIsLoading(false);
+          setErrors(resMessage);
+        }
+      );
+    } else {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Container>
       <Frame>
@@ -44,16 +69,44 @@ const Login = () => {
           Pas encore membre ? <Link to="/signup">Rejoins-nous !</Link>
         </Label>
         <Paper style={paperStyle} elevation={3}>
-          <FormGenerator
-            title="Connexion"
-            buttonLabel="Connexion"
-            method="post"
-            action="/api/auth/signin"
-            validatePassword={false}
-            hasUsername
-            hasPassword
-            helperTextHided
-          />
+          <StyledForm autocomplete="off" id="login-form" onSubmit={handleLogin}>
+            <Title>Connexion !</Title>
+            <InputControl>
+              <PersonIcon />
+              <TextField
+                style={inputStyle}
+                id="username"
+                name="username"
+                label="Username"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                error={Boolean(errors["username"])}
+                helperText={errors["username"]}
+              />
+            </InputControl>
+            <InputControl>
+              <LockIcon />
+              <PasswordField
+                style={inputStyle}
+                id="password"
+                name="password"
+                label="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                error={Boolean(errors["password"])}
+                helperText={errors["password"]}
+              />
+            </InputControl>
+            <InputControl>
+              <Button
+                type="submit"
+                style={{ ...inputStyle, marginTop: "2rem" }}
+                variant="contained"
+              >
+                {isLoading ? <CircularProgress /> : "Connexion !"}
+              </Button>
+            </InputControl>
+          </StyledForm>
         </Paper>
       </Frame>
     </Container>
