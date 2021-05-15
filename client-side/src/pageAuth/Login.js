@@ -22,42 +22,45 @@ import PasswordField from "./components/PasswordField";
 const Login = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
-  const handleLogin = (event) => {
-    const history = useHistory();
+  const handleLogin = async (event) => {
+    const { login } = useAuthServices();
+    const validationErrors = {};
     event.preventDefault();
 
-    setErrors([]);
+    setErrors({});
     setIsLoading(true);
 
     if (!username) {
-      setErrors({ username: "Username is required" });
+      Object.assign(validationErrors, { username: "Username is required" });
     }
     if (!password) {
-      setErrors({ password: "Password is required" });
+      Object.assign(validationErrors, { password: "Password is required" });
     }
 
-    if (errors.length === 0) {
-      useAuthServices.login(username, password).then(
-        () => {
-          history.push("/profile");
-          window.location.reload();
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+    if (Object.keys(validationErrors).length === 0) {
+      console.log(validationErrors);
+      try {
+        const user = await login(username, password);
+        history.push("/profile");
+        window.location.reload();
+        console.log(`user`, user);
+      } catch (error) {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-          setIsLoading(false);
-          setErrors(resMessage);
-        }
-      );
+        setIsLoading(false);
+        setErrors(resMessage);
+      }
     } else {
+      setErrors(validationErrors);
       setIsLoading(false);
     }
   };

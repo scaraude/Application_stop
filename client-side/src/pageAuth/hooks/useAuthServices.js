@@ -1,30 +1,33 @@
 export const useAuthServices = () => {
-  const login = (username, password) => {
-    return fetch("/signin", {
+  const login = async (username, password) => {
+    const response = await fetch("api/auth/signin", {
       method: "POST",
-      body: { username, password },
-    }).then((response) => {
-      console.log(`response`, response);
-      if (response.json().accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.json()));
-      }
-
-      return response.json();
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
     });
+
+    const user = await response.json();
+    if (user.accessToken) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+
+    return user;
   };
 
   const logout = () => {
     localStorage.removeItem("user");
   };
 
-  const register = (username, email, password) => {
-    return fetch("/signup", {
+  const register = async (username, email, password) => {
+    console.log(`username, email, password`, username, email, password);
+    return await fetch("api/auth/signup", {
       method: "POST",
-      body: {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         username,
         email,
         password,
-      },
+      }),
     });
   };
 

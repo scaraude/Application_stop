@@ -26,40 +26,48 @@ const SignUp = () => {
   const [password, setPassword] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState(null);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [registrationState, setRegistrationState] = useState(null);
 
-  const handleSignUp = (event) => {
-    const [registrationState, setRegistrationState] = useState();
+  const handleSignUp = async (event) => {
     const { findValidationErrors } = useValidator();
+    const { register } = useAuthServices();
     event.preventDefault();
 
-    setErrors([]);
+    setErrors({});
     setIsLoading(true);
-    setErrors(findValidationErrors(username, email, password));
+    const validationErrors = findValidationErrors({
+      username,
+      email,
+      password,
+    });
 
-    if (errors.length === 0) {
-      useAuthServices.register(username, email, password).then(
-        (response) => {
-          setRegistrationState({
-            message: response.json().message,
-            successful: true,
-          });
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+    console.log(`Object.keys(errors).length`, Object.keys(errors).length);
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        const response = await register(username, email, password);
+        const responseBody = await response.json();
+        setRegistrationState({
+          message: responseBody.message,
+          successful: true,
+        });
+      } catch (error) {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-          setRegistrationState({
-            successful: false,
-            message: resMessage,
-          });
-        }
-      );
+        setRegistrationState({
+          successful: false,
+          message: resMessage,
+        });
+        setIsLoading(false);
+      }
     }
+    setIsLoading(false);
+    setErrors(validationErrors);
     console.log(`registrationState`, registrationState);
   };
 
@@ -75,18 +83,18 @@ const SignUp = () => {
             id="login-form"
             onSubmit={handleSignUp}
           >
-            <Title>Connexion !</Title>
+            <Title>Rejoins-nous !</Title>
             <InputControl>
               <PersonIcon />
               <TextField
                 style={inputStyle}
                 id="username"
                 name="username"
-                label="Username"
+                label="Username, name, secret identity..."
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 error={Boolean(errors["username"])}
-                helperText={errors["username"]}
+                helperText={errors["username"] || " "}
               />
             </InputControl>
             <InputControl>
@@ -121,7 +129,7 @@ const SignUp = () => {
                 style={{ ...inputStyle, marginTop: "2rem" }}
                 variant="contained"
               >
-                {isLoading ? <CircularProgress /> : "Connexion !"}
+                {isLoading ? <CircularProgress /> : "Inscription !"}
               </Button>
             </InputControl>
           </StyledForm>

@@ -23,11 +23,15 @@ const verifyToken = (req, res, next) => {
 const checkDuplicateUsername = async (req, res, next) => {
   const { username } = req.body;
 
-  const user = await userService.getUserIdByUsername(username);
-
-  if (user) {
-    res.status(403).send("Failed : Username is already use !");
-    return;
+  try {
+    const user = await userService.getUserIdByUsername(username);
+    if (user) {
+      res.status(403).send("Failed : Username is already use !");
+      return;
+    }
+  } catch (error) {
+    console.log(`error`, error);
+    res.status(500).send(error);
   }
 
   next();
@@ -36,11 +40,16 @@ const checkDuplicateUsername = async (req, res, next) => {
 const checkDuplicateEmail = async (req, res, next) => {
   const { email } = req.body;
 
-  const user = await userService.getUserIdByEmail(email);
+  try {
+    const user = await userService.getUserIdByEmail(email);
 
-  if (user) {
-    res.status(403).send("Failed! Email is already in use!");
-    return;
+    if (user) {
+      res.status(403).send("Failed! Email is already in use!");
+      return;
+    }
+  } catch (error) {
+    console.log(`error`, error);
+    res.status(500).send(error);
   }
 
   next();
