@@ -17,7 +17,7 @@ import RenderSpotInfos from "./renders/RenderSpotInfos";
 import RenderSpotIconButtons from "./renders/RenderSpotIconButtons";
 
 const StyledContainer = styled.div`
-z-index: 5;
+  z-index: 5;
 `;
 
 const Panel = styled.div`
@@ -47,7 +47,12 @@ const Body = styled.div`
   padding: 0 0.5rem 0.5rem 0.5rem;
 `;
 
-const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
+const Sidebar = ({
+  open = false,
+  spot = null,
+  handleDrawerClose,
+  isOpenToAddSpot,
+}) => {
   const [tabValue, setTabValue] = useState(0);
   const [animated, setAnimated] = useState(false);
   const [comments, setComments] = useState([]);
@@ -105,49 +110,53 @@ const Sidebar = ({ open = false, spot = null, handleDrawerClose }) => {
 
   return (
     <StyledContainer>
-    <Drawer anchor="right" open={open} onClose={() => handleDrawerClose()}>
-      <ScrollBar
-        containerRef={(ref) => {
-          refScrollBar.current = ref; //tricks trouvé sur github
-        }}
-        component="div"
-        onScrollY={ScrollSpy}
-        onYReachStart={() => {
-          if (!animated) setTabValue(0);
-        }}
-        onYReachEnd={(scroll) => {
-          if (scroll.scrollTop !== 0 && !animated) setTabValue(1);
-        }}
+      <Drawer
+        anchor="right"
+        open={open || isOpenToAddSpot}
+        onClose={() => handleDrawerClose()}
       >
-        <Panel>
-          <Header>
-            <StyledIconButtons>
-              <IconButton onClick={handleDrawerClose}>
-                <ArrowRightAltRoundedIcon />
-              </IconButton>
-              <RenderSpotIconButtons />
-            </StyledIconButtons>
+        <ScrollBar
+          containerRef={(ref) => {
+            refScrollBar.current = ref; //tricks trouvé sur github
+          }}
+          component="div"
+          onScrollY={ScrollSpy}
+          onYReachStart={() => {
+            if (!animated) setTabValue(0);
+          }}
+          onYReachEnd={(scroll) => {
+            if (scroll.scrollTop !== 0 && !animated) setTabValue(1);
+          }}
+        >
+          <Panel>
+            <Header>
+              <StyledIconButtons>
+                <IconButton onClick={handleDrawerClose}>
+                  <ArrowRightAltRoundedIcon />
+                </IconButton>
+                <RenderSpotIconButtons />
+              </StyledIconButtons>
 
-            <Tabs
-              variant="fullWidth"
-              value={tabValue}
-              indicatorColor="primary"
-              textColor="primary"
-              onChange={handleChangeOnTab}
-              aria-label="nav tabs"
-            >
-              <Tab label="Informations" />
-              <Tab label="Commentaires" disabled={comments.length === 0}/>
-            </Tabs>
-          </Header>
+              <Tabs
+                variant="fullWidth"
+                value={tabValue}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={handleChangeOnTab}
+                aria-label="nav tabs"
+              >
+                <Tab label="Informations" />
+                <Tab label="Commentaires" disabled={comments.length === 0} />
+              </Tabs>
+            </Header>
 
-          <Body>
-            <RenderSpotInfos ref={refSpotInfos} spot={spot} />
-            {comments.length > 0 && <RenderComments comments={comments} />}
-          </Body>
-        </Panel>
-      </ScrollBar>
-    </Drawer>
+            <Body>
+              <RenderSpotInfos ref={refSpotInfos} spot={spot} />
+              {comments.length > 0 && <RenderComments comments={comments} />}
+            </Body>
+          </Panel>
+        </ScrollBar>
+      </Drawer>
     </StyledContainer>
   );
 };
@@ -156,6 +165,7 @@ Sidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   spot: PropTypes.object,
   handleDrawerClose: PropTypes.func.isRequired,
+  isOpenToAddSpot: PropTypes.bool,
 };
 
 export default Sidebar;
