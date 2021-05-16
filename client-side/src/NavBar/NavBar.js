@@ -7,6 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 
 import Logo from "./Logo.png";
+import { useCurrentUser } from "../pageAuth/hooks/useCurrentUser";
 
 const NAVBAR_HEIGHT = 54;
 
@@ -28,6 +29,7 @@ const StyledImg = styled.img`
 `;
 
 const NavBar = () => {
+  const currentUser = useCurrentUser();
   const buttonStyle = { color: "brown" };
   return (
     <AppBar style={{ background: "white", maxHeight: NAVBAR_HEIGHT }}>
@@ -43,9 +45,15 @@ const NavBar = () => {
               <Button style={buttonStyle}>Plan</Button>
             </Link>
             <Button style={buttonStyle}>Blog</Button>
-            <Link to="/login">
-              <Button style={buttonStyle}>Login</Button>
-            </Link>
+            {currentUser ? (
+              <Link to="/profile">
+                <Button style={buttonStyle}>{currentUser.username}</Button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button style={buttonStyle}>Login</Button>
+              </Link>
+            )}
           </NavButtons>
         </StyledNavbar>
       </Toolbar>

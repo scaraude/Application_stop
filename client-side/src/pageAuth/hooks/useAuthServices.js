@@ -16,6 +16,7 @@ export const useAuthServices = () => {
 
   const logout = () => {
     localStorage.removeItem("user");
+    console.log("yoooo");
   };
 
   const register = async (username, email, password) => {
@@ -31,25 +32,9 @@ export const useAuthServices = () => {
     });
   };
 
-  const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
-  };
-
-  const authHeader = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (user && user.accessToken) {
-      return { Authorization: "Bearer " + user.accessToken };
-    } else {
-      return {};
-    }
-  };
-
   return {
     login,
     logout,
     register,
-    getCurrentUser,
-    authHeader,
   };
 };

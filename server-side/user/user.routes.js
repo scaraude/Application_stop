@@ -2,8 +2,8 @@ const authService = require("../auth/auth.service");
 const roleService = require("../role/role.service");
 const userController = require("./user.controller");
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
+module.exports = function (app) {
+  app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
@@ -13,7 +13,11 @@ module.exports = function(app) {
 
   app.get("/api/test/all", userController.allAccess);
 
-  app.get("/api/test/user", [authService.verifyToken], userController.userBoard);
+  app.get(
+    "/api/test/user",
+    [authService.verifyToken],
+    userController.userBoard
+  );
 
   app.get(
     "/api/test/mod",
@@ -25,5 +29,11 @@ module.exports = function(app) {
     "/api/test/admin",
     [authService.verifyToken, roleService.isAdmin],
     userController.adminBoard
+  );
+
+  app.post(
+    "/api/user/delete",
+    [authService.verifyToken],
+    userController.deleteUser
   );
 };

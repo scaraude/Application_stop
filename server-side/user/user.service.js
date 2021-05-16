@@ -36,10 +36,19 @@ const getUserIdByEmail = async (email) => {
   return await User.findOne({ email }).populate("roles", "-__v");
 };
 
+const deleteUserByEmail = async (email) => {
+  if (!email) {
+    throw new Error("username is not defined");
+  }
+
+  return User.deleteOne({ email });
+};
+
 const userService = {
   createUser,
   getUserIdByUsername,
   getUserIdByEmail,
+  deleteUserByEmail,
 };
 
 module.exports = userService;
