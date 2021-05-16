@@ -3,7 +3,7 @@ import { MapContainer, Marker, TileLayer, ZoomControl } from "react-leaflet";
 import styled from "styled-components";
 import AddSpotButton from "./addSpotButton/AddSpotButton";
 import SearchField from "./SearchField";
-import Sidebar from "./sidebars/sidebarSpotInfos/Sidebar";
+import Sidebar from "./sidebars/Sidebar";
 import useGetAllSpots from "./useGetAllSpots";
 
 const StyledContainer = styled.div`
