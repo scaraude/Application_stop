@@ -9,11 +9,11 @@ const commentSchema = mongoose.Schema(
   {
     rating: { type: Number, required: true, min: 0, max: 3 },
     text: { type: String, maxLength: 256 },
-    spot: {
+    spotId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Spot",
     },
-    user: {
+    authorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
