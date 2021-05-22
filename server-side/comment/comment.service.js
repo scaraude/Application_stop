@@ -1,11 +1,11 @@
 import Comment from "./Comment.model";
 
-const isSpotOwner = async (req, res, next) => {
-  const { id: spotId } = req.body;
+const isCommentOwner = async (req, res, next) => {
+  const { id: commentId } = req.body;
   const userId = req.userId;
 
   try {
-    const comment = await Comment.find({ id: spotId });
+    const comment = await Comment.find({ id: commentId });
     if (comment.authorId === userId) {
       next();
     }
@@ -17,8 +17,8 @@ const isSpotOwner = async (req, res, next) => {
   }
 };
 
-const spotService = {
-  isSpotOwner,
+const commentService = {
+  isCommentOwner,
 };
 
-module.exports = spotService;
+module.exports = commentService;
