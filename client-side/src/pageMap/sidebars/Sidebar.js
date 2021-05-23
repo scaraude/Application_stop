@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import styled from "styled-components";
+import AddSpotForm from "./addSpotForm/AddSpotForm";
 import SidebarSpotInfos from "./sidebarSpotInfos/SidebarSpotInfos";
 import { Panel } from "./style/styledComponents";
 
@@ -29,6 +30,9 @@ const Sidebar = ({
               handleDrawerClose={handleDrawerClose}
               spot={spot}
             />
+          )}
+          {isOpenToAddSpot && (
+            <AddSpotForm/>
           )}
         </Panel>
       </Drawer>
