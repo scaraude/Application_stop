@@ -32,7 +32,9 @@ const Sidebar = ({
             />
           )}
           {isOpenToAddSpot && (
-            <AddSpotForm/>
+            <AddSpotForm
+              handleDrawerClose={handleDrawerClose}
+            />
           )}
         </Panel>
       </Drawer>

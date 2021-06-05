@@ -20,7 +20,7 @@ export const useAuthServices = () => {
   };
 
   const register = async (username, email, password) => {
-    console.log(`username, email, password`, username, email, password);
+
     return await fetch("api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
