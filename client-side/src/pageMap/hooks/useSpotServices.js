@@ -6,7 +6,7 @@ export const useSpotServices = () => {
 
     return await fetch("api/spot/create", {
       method: "POST",
-      headers: { ...authHeader, "Content-Type": "application/json" };,
+      headers: { ...authHeader, "Content-Type": "application/json" },
       body: JSON.stringify({
         spotInfos,
       }),

@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useSpotServices } from "../../hooks/useSpotServices";
 import PropTypes from "prop-types";
+import { Marker, useMapEvents } from "react-leaflet";
+import { SidebarHeader } from "../SidebarHeader";
 
 const StyledAddSpotForm = styled.form`
   display: flex;
@@ -28,17 +30,18 @@ const StylesCheckBox = styled.div`
 
 const AddSpotForm = ({ handleDrawerClose }) => {
   const [spotName, setSpotName] = useState("");
-  const [spotDescription, setSpotDescription] = useState("");
   const [isSpotAccessible, setIsSpotAccessible] = useState(true);
   const [isSpotSafe, setIsSpotSafe] = useState(true);
   const [spotRate, setSpotRate] = useState(2.5);
+  const [mapCenter, setMapCenter] = useState(null)
+  
+  useMapEvents("move", (map) => setMapCenter(map.getCenter()))
 
   const handleSpotCreation = async (event) => {
     const { addSpot } = useSpotServices();
     event.preventDefault();
     const spotInfos = {
       spotName,
-      spotDescription,
       isSpotAccessible,
       isSpotSafe,
       spotRate,
@@ -49,6 +52,9 @@ const AddSpotForm = ({ handleDrawerClose }) => {
   };
 
   return (
+    <>
+    <SidebarHeader handleDrawerClose={handleDrawerClose}/>
+    {mapCenter && <Marker position={mapCenter} />}
     <StyledAddSpotForm
       noValidate
       autocomplete="off"
@@ -97,16 +103,6 @@ const AddSpotForm = ({ handleDrawerClose }) => {
           onChange={(event) => setIsSpotAccessible(event.target.checked)}
         />
       </StylesCheckBox>
-      <TextField
-        style={fieldStyle}
-        id="outlined-multiline-static"
-        label="Description"
-        multiline
-        rows={5}
-        variant="outlined"
-        value={spotDescription}
-        onChange={(event) => setSpotDescription(event.target.value)}
-      />
       <Button
         style={{ ...fieldStyle, marginTop: "1rem" }}
         variant="contained"
@@ -116,6 +112,7 @@ const AddSpotForm = ({ handleDrawerClose }) => {
         Ajouter
       </Button>
     </StyledAddSpotForm>
+    </>
   );
 };
 

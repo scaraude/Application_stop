@@ -13,8 +13,8 @@ export const Header = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
-  box-shadow: 0px 2px 2px #3d3d3d61;
-`;
+  `;
+  // box-shadow: 0px 2px 2px #3d3d3d61; ombre pour les tabs
 
 export const StyledIconButtons = styled.div`
   width: 100%;

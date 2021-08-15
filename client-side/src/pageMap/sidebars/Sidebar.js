@@ -23,6 +23,7 @@ const Sidebar = ({
         anchor="right"
         open={open || isOpenToAddSpot}
         onClose={() => handleDrawerClose()}
+        variant={isOpenToAddSpot ? "persistent" : "temporary"}
       >
         <Panel>
           {spot && (

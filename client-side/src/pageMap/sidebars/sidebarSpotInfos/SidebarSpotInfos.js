@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Header, StyledIconButtons, Body } from "../style/styledComponents";
+import { Body } from "../style/styledComponents";
 import PropTypes from "prop-types";
 import RenderComments from "./renders/RenderComments";
 import RenderSpotInfos from "./renders/RenderSpotInfos";
 import RenderSpotIconButtons from "./renders/RenderSpotIconButtons";
-import ArrowRightAltRoundedIcon from "@material-ui/icons/ArrowRightAltRounded";
-import IconButton from "@material-ui/core/IconButton";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import easyScroll from "easy-scroll"; //scroll animations
 import ScrollBar from "react-perfect-scrollbar";
+import { SidebarHeader } from "../SidebarHeader";
 
 const SidebarSpotInfos = ({ handleDrawerClose, spot = null }) => {
   const [tabValue, setTabValue] = useState(0);
@@ -81,26 +80,23 @@ const SidebarSpotInfos = ({ handleDrawerClose, spot = null }) => {
         if (scroll.scrollTop !== 0 && !animated) setTabValue(1);
       }}
     >
-      <Header>
-        <StyledIconButtons>
-          <IconButton onClick={handleDrawerClose}>
-            <ArrowRightAltRoundedIcon />
-          </IconButton>
-          <RenderSpotIconButtons />
-        </StyledIconButtons>
-
-        <Tabs
-          variant="fullWidth"
-          value={tabValue}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={handleChangeOnTab}
-          aria-label="nav tabs"
-        >
-          <Tab label="Informations" />
-          <Tab label="Commentaires" disabled={comments.length === 0} />
-        </Tabs>
-      </Header>
+      <SidebarHeader 
+        handleDrawerClose={handleDrawerClose}
+        rightChildren={<RenderSpotIconButtons />} 
+        bottomChildren={
+          <Tabs
+              variant="fullWidth"
+              value={tabValue}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={handleChangeOnTab}
+              aria-label="nav tabs"
+            >
+              <Tab label="Informations" />
+              <Tab label="Commentaires" disabled={comments.length === 0} />
+            </Tabs>
+        }
+      />
 
       <Body>
         <RenderSpotInfos ref={refSpotInfos} spot={spot} />

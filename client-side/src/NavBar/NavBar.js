@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types'
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -28,7 +29,11 @@ const StyledImg = styled.img`
   width: auto;
 `;
 
-const NavBar = () => {
+const NavBar = ({disabled = true}) => {
+
+  if(disabled){
+    return null;
+  }
   const currentUser = useCurrentUser();
   const buttonStyle = { color: "brown" };
   return (
@@ -61,3 +66,7 @@ const NavBar = () => {
   );
 };
 export default NavBar;
+
+NavBar.propTypes = {
+  disabled : PropTypes.bool,
+}
