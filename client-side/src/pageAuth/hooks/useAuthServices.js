@@ -16,7 +16,6 @@ export const useAuthServices = () => {
 
   const logout = () => {
     localStorage.removeItem("user");
-    console.log("yoooo");
   };
 
   const register = async (username, email, password) => {

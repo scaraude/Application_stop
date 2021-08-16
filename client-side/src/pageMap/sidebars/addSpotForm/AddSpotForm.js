@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useSpotServices } from "../../hooks/useSpotServices";
 import PropTypes from "prop-types";
-import { Marker, useMapEvents } from "react-leaflet";
+import { Marker, useMapEvent } from "react-leaflet";
 import { SidebarHeader } from "../SidebarHeader";
 
 const StyledAddSpotForm = styled.form`
@@ -33,15 +33,19 @@ const AddSpotForm = ({ handleDrawerClose }) => {
   const [isSpotAccessible, setIsSpotAccessible] = useState(true);
   const [isSpotSafe, setIsSpotSafe] = useState(true);
   const [spotRate, setSpotRate] = useState(2.5);
-  const [mapCenter, setMapCenter] = useState(null)
   
-  useMapEvents("move", (map) => setMapCenter(map.getCenter()))
+  const map = useMapEvent('move', () => {
+    setMapCenter(map.getCenter())
+  });
+
+  const [mapCenter, setMapCenter] = useState(map.getCenter())
 
   const handleSpotCreation = async (event) => {
     const { addSpot } = useSpotServices();
     event.preventDefault();
     const spotInfos = {
       spotName,
+      location: mapCenter,
       isSpotAccessible,
       isSpotSafe,
       spotRate,

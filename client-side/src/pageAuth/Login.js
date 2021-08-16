@@ -42,7 +42,6 @@ const Login = () => {
     }
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log(validationErrors);
       try {
         const user = await login(username, password);
         history.push("/profile");

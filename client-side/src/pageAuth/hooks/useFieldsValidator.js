@@ -7,7 +7,6 @@ export const useValidator = () => {
   const findValidationErrors = ({ username, email, password }) => {
     const errors = {};
 
-    console.log(`username`, username);
     if (username) {
       if (!isAlphanumeric(username)) {
         Object.assign(errors, {
@@ -47,7 +46,6 @@ export const useValidator = () => {
         password: "Password is required",
       });
     }
-    console.log(`validationErrors`, errors);
     return errors;
   };
 

@@ -26,3 +26,11 @@ export const Body = styled.div`
   background-color: #ececec;
   padding: 0 0.5rem 0.5rem 0.5rem;
 `;
+
+export const Centered = styled.div`
+    position: absolute;
+    left: -50vw;
+    top: 50vh;
+    z-index: 500;
+    transform: translateX(-50%) translateY(-50%);
+`
