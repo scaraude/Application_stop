@@ -27,14 +27,13 @@ const Map = () => {
   const [currentSpot, setCurrentSpot] = useState(null);
   const [isSidebarOpenToAddSpot, setIsSidebarOpenToAddSpot] = useState(false);
   const spots = useGetAllSpots();
-
+ 
   const handleDrawerClose = () => {
     setCurrentSpot(null);
     setIsSidebarOpenToAddSpot(false);
   };
 
   const openSidebarToAddSpot = () => {
-    console.log(`isSidebarOpenToAddSpot`, isSidebarOpenToAddSpot);
     setIsSidebarOpenToAddSpot(true);
   };
 
@@ -56,11 +55,12 @@ const Map = () => {
         <SearchFieldHolder>
           <SearchField />
         </SearchFieldHolder>
+
         {spots.map((spot) => (
           <Marker
             key={spot._id}
             id={spot._id}
-            position={[spot.gps.lat, spot.gps.lon]}
+            position={spot.gps}
             eventHandlers={{
               click: () => {
                 setCurrentSpot(spot);

@@ -13,8 +13,8 @@ export const Header = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
-  box-shadow: 0px 2px 2px #3d3d3d61;
-`;
+  `;
+  // box-shadow: 0px 2px 2px #3d3d3d61; ombre pour les tabs
 
 export const StyledIconButtons = styled.div`
   width: 100%;
@@ -26,3 +26,11 @@ export const Body = styled.div`
   background-color: #ececec;
   padding: 0 0.5rem 0.5rem 0.5rem;
 `;
+
+export const Centered = styled.div`
+    position: absolute;
+    left: -50vw;
+    top: 50vh;
+    z-index: 500;
+    transform: translateX(-50%) translateY(-50%);
+`

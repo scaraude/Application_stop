@@ -23,7 +23,7 @@ export default function useSuggestedCities(inputValue) {
       const cities = await response.json();
 
       if (active) {
-        setCities(cities.map((city) => city));
+        setCities(cities.map((city) => city));// ???
       }
     })();
 

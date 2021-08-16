@@ -6,8 +6,6 @@ import { useMap } from "react-leaflet";
 
 import useSuggestedCities from "./useSuggestedCities";
 
-// import searchIcon from './search-icon2.png'
-
 const SearchField = () => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -63,7 +61,7 @@ const SearchField = () => {
         setValue(newValue);
       }}
       getOptionSelected={(option, value) => option.nom === value.nom}
-      getOptionLabel={(option) => option.nom} //normalement on peut virer, mais si on le fait ca fait tout planter...
+      getOptionLabel={(option) => option.nom}
       options={options}
       loading={loading}
       renderInput={(params) => (

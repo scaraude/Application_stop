@@ -1,23 +1,11 @@
 const Spot = require("./Spot.model");
 
-exports.createSpot = (req, res, next) => {
-  const spot = new Spot({
-    userId: req.user.userId,
-    title: req.body.title,
-    rating: req.body.rating,
-    gps: { lat: req.body.lat, lon: req.body.lon },
-    destinations: req.body.destinations,
-    direction: req.body.direction,
-    roads: [req.body.roads],
-    access: req.body.access,
-    advice: req.body.advice,
-  });
-  spot
-    .save()
-    .then((spot) =>
-      res.status(201).json({ message: "Nouveau spot enregistré :", spot: spot })
-    )
-    .catch((error) => res.status(400).json({ error }));
+exports.createSpot = async (req, res, next) => {
+  const spot = req.body;
+  console.log("spot", spot)
+  const spotDocument = await Spot.create(spot);
+  const savedSpot = await spotDocument.save();
+  res.status(201).json({ message: "Nouveau spot enregistré :", spot: savedSpot })
 };
 
 exports.modifySpot = (req, res, next) => {
