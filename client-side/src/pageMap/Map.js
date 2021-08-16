@@ -60,7 +60,7 @@ const Map = () => {
           <Marker
             key={spot._id}
             id={spot._id}
-            position={[spot.gps.lat, spot.gps.lon]}
+            position={spot.gps}
             eventHandlers={{
               click: () => {
                 setCurrentSpot(spot);

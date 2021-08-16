@@ -1,8 +1,11 @@
 const Spot = require("./Spot.model");
 
-exports.createSpot = (req, res, next) => {
+exports.createSpot = async (req, res, next) => {
   const spot = req.body;
-  res.status(201).json({ message: "Nouveau spot enregistré :", spot: spot })
+  console.log("spot", spot)
+  const spotDocument = await Spot.create(spot);
+  const savedSpot = await spotDocument.save();
+  res.status(201).json({ message: "Nouveau spot enregistré :", spot: savedSpot })
 };
 
 exports.modifySpot = (req, res, next) => {

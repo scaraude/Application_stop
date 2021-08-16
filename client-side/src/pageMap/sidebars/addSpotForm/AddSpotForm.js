@@ -43,14 +43,13 @@ const AddSpotForm = ({ handleDrawerClose }) => {
   const handleSpotCreation = async (event) => {
     const { addSpot } = useSpotServices();
     event.preventDefault();
-    const spotInfos = {
-      spotName,
-      location: mapCenter,
+    const response = await addSpot({
+      title: spotName,
+      gps: mapCenter,
       isSpotAccessible,
       isSpotSafe,
-      spotRate,
-    };
-    const response = addSpot(spotInfos);
+      rating: spotRate,
+    });
     console.log(`response`, response);
     handleDrawerClose();
   };

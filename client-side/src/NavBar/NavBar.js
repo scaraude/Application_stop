@@ -29,7 +29,7 @@ const StyledImg = styled.img`
   width: auto;
 `;
 
-const NavBar = ({disabled = true}) => {
+const NavBar = ({disabled}) => {
 
   if(disabled){
     return null;
