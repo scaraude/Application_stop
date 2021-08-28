@@ -1,0 +1,19 @@
+{
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+    ],
+    "[javascript]": {
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": [
+            "source.fixAll",
+        ]
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": [
+            "source.fixAll",
+        ]
+    },
+    "npm.packageManager": "yarn",
+}
