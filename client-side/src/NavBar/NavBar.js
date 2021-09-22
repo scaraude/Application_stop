@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import Logo from "./Logo.png";
 import { useCurrentUser } from "../pageAuth/hooks/useCurrentUser";
 
-const NAVBAR_HEIGHT = 54;
+export const NAVBAR_HEIGHT = 54;
 
 const NavButtons = styled.div`
   padding-right: 2rem;
