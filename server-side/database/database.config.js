@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
@@ -13,5 +12,6 @@ module.exports = {
   DATABASE_PORT: DATABASE_PORT || 27017,
   DB: DATABASE_NAME || "HitchHikeAppLocalDB",
   getMongoURI: () =>
+    // eslint-disable-next-line max-len
     `mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@cluster0.t6jtg.mongodb.net/${DATABASE_NAME}?retryWrites=true&w=majority`,
 };

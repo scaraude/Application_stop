@@ -66,6 +66,10 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
+    "lint:front": "eslint --config ./client-side/.eslintrc.json ./client-side/**/*.js",
+    "lint:front:fix": "eslint --fix --config ./client-side/.eslintrc.json ./client-side/**/*.js",
+    "lint:back": "eslint --config ./server-side/.eslintrc.json ./server-side/**/*.js",
+    "lint:back:fix": "eslint --fix --config ./server-side/.eslintrc.json ./server-side/**/*.js",
     "test": "mocha",
     "start": "node server.js",
     "dev:back": "nodemon server.js",

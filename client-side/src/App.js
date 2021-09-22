@@ -7,7 +7,7 @@ import Login from "./pageAuth/Login";
 import SignUp from "./pageAuth/SignUp";
 import Profile from "./pageUser/Profile";
 
-const App = () => (
+const App = () => 
   <Router>
     <NavBar />
     <Switch>
@@ -25,6 +25,6 @@ const App = () => (
       </Route>
     </Switch>
   </Router>
-);
+;
 
 export default App;
