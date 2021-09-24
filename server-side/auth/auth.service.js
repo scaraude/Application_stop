@@ -3,6 +3,7 @@ const config = require("./auth.config");
 const bcrypt = require("bcrypt");
 const userService = require("../user/user.service");
 const { isEmail, isAlphanumeric, isLength } = require("validator");
+const { logger } = require("../../utils/logger");
 
 const verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -30,7 +31,7 @@ const checkDuplicateUsername = async (req, res, next) => {
       return;
     }
   } catch (error) {
-    console.log(`error`, error);
+    logger.error(`error ${error}`);
     res.status(500).send(error);
   }
 
@@ -48,7 +49,7 @@ const checkDuplicateEmail = async (req, res, next) => {
       return;
     }
   } catch (error) {
-    console.log(`error`, error);
+    logger.error(`error ${error}`);
     res.status(500).send(error);
   }
 

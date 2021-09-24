@@ -43,15 +43,14 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const user = await login(username, password);
+        await login(username, password);
         history.push("/profile");
         window.location.reload();
-        console.log(`user`, user);
       } catch (error) {
         const resMessage =
-          (error.response &&
+          error.response &&
             error.response.data &&
-            error.response.data.message) ||
+            error.response.data.message ||
           error.message ||
           error.toString();
 

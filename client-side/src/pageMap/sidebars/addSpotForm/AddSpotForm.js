@@ -35,86 +35,85 @@ const AddSpotForm = ({ handleDrawerClose }) => {
   const [spotRate, setSpotRate] = useState(2.5);
   
   const map = useMapEvent('move', () => {
-    setMapCenter(map.getCenter())
+    setMapCenter(map.getCenter());
   });
 
-  const [mapCenter, setMapCenter] = useState(map.getCenter())
+  const [mapCenter, setMapCenter] = useState(map.getCenter());
 
   const handleSpotCreation = async (event) => {
     const { addSpot } = useSpotServices();
     event.preventDefault();
-    const response = await addSpot({
+    await addSpot({
       title: spotName,
       gps: mapCenter,
       isSpotAccessible,
       isSpotSafe,
       rating: spotRate,
     });
-    console.log(`response`, response);
     handleDrawerClose();
   };
 
   return (
     <>
-    <SidebarHeader handleDrawerClose={handleDrawerClose}/>
-    {mapCenter && <Marker position={mapCenter} />}
-    <StyledAddSpotForm
-      noValidate
-      autocomplete="off"
-      id="spot-form"
-      onSubmit={handleSpotCreation}
-    >
-      <h2>Ajouter un nouveau spot de stop</h2>
-      <TextField
-        style={fieldStyle}
-        id="standard-basic"
-        label="Nom"
-        value={spotName}
-        onChange={(event) => setSpotName(event.target.value)}
-      />
-      <Box component="fieldset" mb={3} borderColor="transparent">
-        <Typography component="legend">Note</Typography>
-        <Rating
-          name="customized-empty"
-          precision={0.5}
-          emptyIcon={<StarBorderIcon fontSize="inherit" />}
-          value={spotRate}
-          onChange={(event, newValue) => {
-            setSpotRate(newValue);
-          }}
-        />
-      </Box>
-      <TextField
-        style={fieldStyle}
-        id="standard-basic"
-        label="Image TODO"
-        disabled
-      />
-      <StylesCheckBox>
-        <FormControlLabel
-          style={fieldStyle}
-          control={<Checkbox name="isSafe" color="primary" />}
-          label="Ce spot est safe"
-          checked={isSpotSafe}
-          onChange={(event) => setIsSpotSafe(event.target.checked)}
-        />
-        <FormControlLabel
-          style={fieldStyle}
-          control={<Checkbox name="isAccessible" color="primary" />}
-          label="Ce spot est facile d'accès"
-          checked={isSpotAccessible}
-          onChange={(event) => setIsSpotAccessible(event.target.checked)}
-        />
-      </StylesCheckBox>
-      <Button
-        style={{ ...fieldStyle, marginTop: "1rem" }}
-        variant="contained"
-        color="primary"
-        type="submit"
+      <SidebarHeader handleDrawerClose={handleDrawerClose}/>
+      {mapCenter && <Marker position={mapCenter} />}
+      <StyledAddSpotForm
+        noValidate
+        autocomplete="off"
+        id="spot-form"
+        onSubmit={handleSpotCreation}
       >
+        <h2>Ajouter un nouveau spot de stop</h2>
+        <TextField
+          style={fieldStyle}
+          id="standard-basic"
+          label="Nom"
+          value={spotName}
+          onChange={(event) => setSpotName(event.target.value)}
+        />
+        <Box component="fieldset" mb={3} borderColor="transparent">
+          <Typography component="legend">Note</Typography>
+          <Rating
+            name="customized-empty"
+            precision={0.5}
+            emptyIcon={<StarBorderIcon fontSize="inherit" />}
+            value={spotRate}
+            onChange={(event, newValue) => {
+              setSpotRate(newValue);
+            }}
+          />
+        </Box>
+        <TextField
+          style={fieldStyle}
+          id="standard-basic"
+          label="Image TODO"
+          disabled
+        />
+        <StylesCheckBox>
+          <FormControlLabel
+            style={fieldStyle}
+            control={<Checkbox name="isSafe" color="primary" />}
+            label="Ce spot est safe"
+            checked={isSpotSafe}
+            onChange={(event) => setIsSpotSafe(event.target.checked)}
+          />
+          <FormControlLabel
+            style={fieldStyle}
+            control={<Checkbox name="isAccessible" color="primary" />}
+            label="Ce spot est facile d'accès"
+            checked={isSpotAccessible}
+            onChange={(event) => setIsSpotAccessible(event.target.checked)}
+          />
+        </StylesCheckBox>
+        <Button
+          style={{ ...fieldStyle, marginTop: "1rem" }}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
         Ajouter
-      </Button>
-    </StyledAddSpotForm>
+        </Button>
+      </StyledAddSpotForm>
     </>
   );
 };

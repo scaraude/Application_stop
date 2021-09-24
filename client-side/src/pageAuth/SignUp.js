@@ -42,7 +42,6 @@ const SignUp = () => {
       password,
     });
 
-    console.log(`Object.keys(errors).length`, Object.keys(errors).length);
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await register(username, email, password);
@@ -53,9 +52,9 @@ const SignUp = () => {
         });
       } catch (error) {
         const resMessage =
-          (error.response &&
+          error.response &&
             error.response.data &&
-            error.response.data.message) ||
+            error.response.data.message ||
           error.message ||
           error.toString();
 
@@ -68,7 +67,6 @@ const SignUp = () => {
     }
     setIsLoading(false);
     setErrors(validationErrors);
-    console.log(`registrationState`, registrationState);
   };
 
   return (

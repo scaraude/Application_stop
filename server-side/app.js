@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const errorHandler = require("errorhandler");
 const path = require("path");
 const cors = require("cors");
+const { logger } = require("../utils/logger");
 
 const app = express();
 
@@ -21,7 +22,6 @@ app.use(morgan("dev"));
 require("./database/database.service").connectDB();
 
 app.get("/", (req, res) => {
-  console.log("get home");
   res.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
 
@@ -31,7 +31,6 @@ require("./spot/spot.route")(app);
 require("./comment/comment.route")(app);
 
 app.get("/*", (req, res) => {
-  console.log("catch all");
   res.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
 
@@ -39,7 +38,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(errorHandler());
 } else {
   app.use((err, req, res) => {
-    console.error(err);
+    logger.error(err);
     res.status(500).send("Server Error");
   });
 }

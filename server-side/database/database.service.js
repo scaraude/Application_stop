@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const dbConfig = require("./database.config");
 const Role = require("../role/role.model");
+const { logger } = require("../../utils/logger");
 
 const connectDB = () => {
   mongoose
@@ -9,12 +10,11 @@ const connectDB = () => {
       useUnifiedTopology: true,
     })
     .then(() => {
-      console.log("Successfully connect to MongoDB.");
+      logger.info("Successfully connect to MongoDB.");
       initiate();
     })
     .catch((err) => {
-      console.error("Connection error", err);
-      // eslint-disable-next-line no-undef
+      logger.error(`Connection error > err ${err}`);
       process.exit();
     });
 };
@@ -26,30 +26,30 @@ function initiate() {
         name: "user",
       }).save((err) => {
         if (err) {
-          console.log("error", err);
+          logger.error(`database.service > ${JSON.stringify(err)}`);
         }
 
-        console.log("added 'user' to roles collection");
+        logger.info("added 'user' to roles collection");
       });
 
       new Role({
         name: "moderator",
       }).save((err) => {
         if (err) {
-          console.log("error", err);
+          logger.error(`error while saving Role > ${err}`);
         }
 
-        console.log("added 'moderator' to roles collection");
+        logger.info("added 'moderator' to roles collection");
       });
 
       new Role({
         name: "admin",
       }).save((err) => {
         if (err) {
-          console.log("error", err);
+          logger.error(`error while saving Role > ${err}`);
         }
 
-        console.log("added 'admin' to roles collection");
+        logger.info("added 'admin' to roles collection");
       });
     }
   });
