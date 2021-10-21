@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const errorHandler = require("errorhandler");
 const path = require("path");
 const cors = require("cors");
-const { logger } = require("../utils/logger");
+const { logger } = require("../../utils/logger");
 
 const app = express();
 

@@ -1,14 +1,15 @@
-const Spot = require("./Spot.model");
+import { SpotModel } from "./Spot.model";
+import { Request, Response } from "express";
 
-exports.createSpot = async (req, res) => {
+export const createSpot = async (req: Request, res: Response) => {
   const spot = req.body;
-  const spotDocument = await Spot.create(spot);
+  const spotDocument = await SpotModel.create(spot);
   const savedSpot = await spotDocument.save();
   res.status(201).json({ message: "Nouveau spot enregistré :", spot: savedSpot });
 };
 
-exports.modifySpot = (req, res) => {
-  Spot.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+export const modifySpot = (req: Request, res: Response) => {
+  SpotModel.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
     .then((info) =>
       res.status(200).json({
         message: "Modification enregistrée !",
@@ -18,27 +19,27 @@ exports.modifySpot = (req, res) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.deleteSpot = (req, res) => {
-  Spot.deleteOne({ _id: req.params.id })
+export const deleteSpot = (req: Request, res: Response) => {
+  SpotModel.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: "Spot supprimé !" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.getOneSpot = (req, res) => {
-  Spot.findOne({ _id: req.params.id })
+export const getOneSpot = (req: Request, res: Response) => {
+  SpotModel.findOne({ _id: req.params.id })
     .then((spot) => res.status(200).json(spot))
     .catch((error) => res.status(404).json({ error }));
 };
 
-exports.getAllSpots = (req, res) => {
-  Spot.find()
+export const getAllSpots = (req: Request, res: Response) => {
+  SpotModel.find()
     .then((spots) => res.status(200).json(spots))
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.popUp = (req, res) => {
+export const popUp = (req: Request, res: Response) => {
   res.render("pages/map/popup");
 };
-exports.formSidebar = (req, res) => {
+export const formSidebar = (req: Request, res: Response) => {
   res.render("pages/map/formside");
 };

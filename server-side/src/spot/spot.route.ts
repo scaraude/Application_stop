@@ -1,8 +1,9 @@
-const authService = require("../auth/auth.service");
-const spotController = require("./spot.controller");
+import authService from "../auth/auth.service"
+import * as spotController from "./spot.controller";
+import { Request, Response, NextFunction, Application } from "express";
 
-module.exports = function (app) {
-  app.use(function (req, res, next) {
+module.exports = function (app: Application) {
+  app.use(function (req: Request, res: Response, next: NextFunction) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
