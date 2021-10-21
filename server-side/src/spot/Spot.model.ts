@@ -1,6 +1,12 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
+import { User } from "../user/user.model";
 
-const pointSchema = new Schema({
+export interface Point extends Document {
+  latitude: number;
+  longitude: number;
+}
+
+const pointSchema = new Schema<Point>({
   type: {
     type: String,
     enum: ['Point'],
@@ -12,7 +18,14 @@ const pointSchema = new Schema({
   }
 });
 
-const spotSchema = new Schema(
+export interface Spot extends Document {
+  title: string;
+  rating: number;
+  gps: Point;
+  author: User;
+}
+
+const spotSchema = new Schema<Spot>(
   {
     title: { type: String, required: true },
     rating: { type: Number, required: true, min: 0, max: 3 },
@@ -24,9 +37,9 @@ const spotSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Comment",
     },
-    authorId: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    authorId: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
   },
-  { timestamps: true }
+  { timestamps: true, }
 );
 
-export const SpotModel = model("Spot", spotSchema);
+export const spotModel = model<Spot>("Spot", spotSchema);

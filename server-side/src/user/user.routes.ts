@@ -1,9 +1,10 @@
-const authService = require("../auth/auth.service");
-const roleService = require("../role/role.service");
-const userController = require("./user.controller");
+import authService from "../auth/auth.service";
+import roleService from "../role/role.service";
+import { userController } from "./user.controller";
+import { Express, Request, Response, NextFunction } from 'express'
 
-module.exports = function (app) {
-  app.use(function (req, res, next) {
+module.exports = function (app: Express) {
+  app.use(function (req: Request, res: Response, next: NextFunction) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"

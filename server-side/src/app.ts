@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
-const express = require("express");
-const morgan = require("morgan");
-const errorHandler = require("errorhandler");
-const path = require("path");
-const cors = require("cors");
-const { logger } = require("../../utils/logger");
+import express from "express"
+import morgan from "morgan";
+import errorHandler from "errorhandler";
+import path from "path";
+import cors from "cors";
+import { logger } from "../../utils/logger";
 
 const app = express();
 
@@ -37,9 +37,9 @@ app.get("/*", (req, res) => {
 if (process.env.NODE_ENV === "development") {
   app.use(errorHandler());
 } else {
-  app.use((err, req, res) => {
-    logger.error(err);
-    res.status(500).send("Server Error");
+  app.use((request, response, next) => {
+    logger.error("404 => Path not found");
+    response.status(500).send("Server Error");
   });
 }
 
