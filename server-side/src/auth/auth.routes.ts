@@ -1,8 +1,9 @@
-const authService = require("./auth.service");
-const roleService = require("../role/role.service");
-const authController = require("./auth.controller");
+import { authService } from "./auth.service";
+import { roleService } from "../role/role.service";
+import * as authController from "./auth.controller";
+import { Express } from "express";
 
-module.exports = function (app) {
+module.exports = function (app: Express) {
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",

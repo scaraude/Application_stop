@@ -1,13 +1,10 @@
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-
 const DATABASE_HOST = process.env.DATABASE_HOST;
 const DATABASE_PORT = process.env.DATABASE_PORT;
 const DATABASE_NAME = process.env.DATABASE_NAME;
 const DATABASE_USERNAME = process.env.DATABASE_USERNAME;
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 
-module.exports = {
+export const databaseConfig = {
   DATABASE_HOST: DATABASE_HOST || "localhost",
   DATABASE_PORT: DATABASE_PORT || 27017,
   DB: DATABASE_NAME || "HitchHikeAppLocalDB",

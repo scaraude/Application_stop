@@ -1,14 +1,16 @@
-import { model, Schema, Document } from "mongoose";
+import { model, Schema, Document, Query } from "mongoose";
 import { Role } from "../role/role.model";
 
-export interface User extends Document {
+export interface User {
   username: string;
   email: string;
   password: string;
   roles: Role[];
 }
 
-const userSchema = new Schema<User>(
+export interface UserSchema extends Document, User { }
+
+const userSchema = new Schema<UserSchema>(
   {
     username: { type: String, unique: true },
     email: { type: String, unique: true },
@@ -23,4 +25,4 @@ const userSchema = new Schema<User>(
   { timestamps: true }
 );
 
-export const userModel = model<User>("User", userSchema);
+export const userModel = model<UserSchema>("User", userSchema);

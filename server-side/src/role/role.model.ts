@@ -1,17 +1,19 @@
 import { model, Schema, Document } from "mongoose";
 
-enum RoleEnum {
+export enum RoleEnum {
   USER = "USER",
   ADMIN = "ADMIN",
   MODERATOR = "MODERATOR"
 }
 
-export interface Role extends Document {
+export interface Role {
   name: RoleEnum;
 }
 
-const roleSchema = new Schema<Role>({
+export interface RoleSchema extends Document, Role { }
+
+const roleSchema = new Schema<RoleSchema>({
   name: String,
 }, { timestamps: true });
 
-export const roleModel = model<Role>("Role", roleSchema);
+export const roleModel = model<RoleSchema>("Role", roleSchema);

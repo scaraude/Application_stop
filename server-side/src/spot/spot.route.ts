@@ -1,4 +1,4 @@
-import authService from "../auth/auth.service"
+import { authService } from "../auth/auth.service"
 import * as spotController from "./spot.controller";
 import { Request, Response, NextFunction, Express } from "express";
 

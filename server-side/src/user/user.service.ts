@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { User, userModel } from "./user.model";
 import { roleModel } from "../role/role.model";
 
-const createUser = async ({ username, email, password, roles }: User) => {
+const createUser = async ({ username, email, password, roles }: User): Promise<User> => {
   const user = new userModel({
     username,
     email,

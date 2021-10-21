@@ -1,17 +1,19 @@
-const userService = require("../user/user.service");
-const authService = require("./auth.service");
+import { Request, Response } from "express";
+import { RoleEnum } from "../role/role.model";
+import { userService } from "../user/user.service";
+import { authService } from "./auth.service";
 
-exports.signup = async (req, res) => {
+export const signup = async (req: Request, res: Response): Promise<Response> => {
   const { username, email, password } = req.body;
 
-  await userService.createUser(username, email, password);
-  res.status(201).send("User successfully created");
+  await userService.createUser({ username, email, password, roles: [{ name: RoleEnum.USER }] });
+  return res.status(201).send("User successfully created");
 };
 
-exports.signin = async (req, res) => {
+export const signin = async (req: Request, res: Response): Promise<Response | void> => {
   const { username, password } = req.body;
 
-  const user = await userService.getUserIdByUsername(username);
+  const user = await userService.getUserByUsername(username);
   if (!user) {
     return res.status(404).send("User Not found.");
   }
@@ -26,7 +28,7 @@ exports.signin = async (req, res) => {
   }
 
   const rolesNamesRelatedToUser = user.roles.map((role) =>
-    role.name.toUpperCase()
+    role.name
   );
 
   const token = authService.generateJwtToken({
