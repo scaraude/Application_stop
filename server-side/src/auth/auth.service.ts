@@ -7,10 +7,7 @@ import { Request, Response, NextFunction } from "express";
 import { RoleEnum } from "../role/role.model";
 import { logger } from "../../../utils/logger";
 import { User } from "../user/user.model";
-
-interface RequestWithMaybeAuthInformation extends Request {
-  userId?: string;
-}
+import { RequestWithMaybeAuthInformation } from "./types";
 
 const verifyToken = (req: RequestWithMaybeAuthInformation, res: Response, next: NextFunction): Response | void => {
   const token = req.headers["x-access-token"];

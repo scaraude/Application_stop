@@ -6,11 +6,11 @@ module.exports = {
   mode: 'production',
 
   // entry files
-  entry: './src/index.ts',
+  entry: './src/server.ts',
 
   // output bundles (location)
   output: {
-    path: path.resolve( __dirname, 'dist' ),
+    path: path.resolve( __dirname, './server-side/dist' ),
     filename: 'main.js',
   },
 

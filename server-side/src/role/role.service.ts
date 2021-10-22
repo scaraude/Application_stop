@@ -5,6 +5,7 @@ import {
   Response,
   NextFunction
 } from "express"
+import { RequestWithMaybeAuthInformation } from "../auth/types";
 
 const ROLES = ["user", "admin", "moderator"];
 
@@ -23,9 +24,9 @@ const checkRolesExisted = (req: Request, res: Response, next: NextFunction): voi
   next();
 };
 
-const isAdmin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const isAdmin = async (req: RequestWithMaybeAuthInformation, res: Response, next: NextFunction): Promise<void> => {
   const { userId } = req;
-  const user = await userModel.findById(req.userId).exec()
+  const user = await userModel.findById(userId)
 
   if (!user) {
     res.status(403);
@@ -55,9 +56,9 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction): Promise
   );
 };
 
-const isModerator = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const isModerator = async (req: RequestWithMaybeAuthInformation, res: Response, next: NextFunction): Promise<void> => {
   const { userId } = req;
-  const user = await userModel.findById(userId).exec();
+  const user = await userModel.findById(userId);
 
   if (!user) {
     res.status(500).send({ message: "User not found !" });

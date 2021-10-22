@@ -1,4 +1,4 @@
-import authService from "../auth/auth.service";
+import { authService } from "../auth/auth.service";
 import { roleService } from "../role/role.service";
 import { userController } from "./user.controller";
 import { Express, Request, Response, NextFunction } from 'express'

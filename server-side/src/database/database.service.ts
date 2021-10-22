@@ -18,7 +18,7 @@ const connectDB = async () => {
 };
 
 async function initiate() {
-  const estimatedDocumentCount = await roleModel.estimatedDocumentCount().exec();
+  const estimatedDocumentCount = await roleModel.estimatedDocumentCount();
   if (estimatedDocumentCount === 0) {
     const userRole = (await roleModel.create({ name: "user", })).save();
     logger.info(`added 'user' to roles collection. userRole: ${JSON.stringify(userRole)}`);
@@ -31,8 +31,6 @@ async function initiate() {
   }
 }
 
-const databaseService = {
+export const databaseService = {
   connectDB,
 };
-
-module.exports = databaseService;

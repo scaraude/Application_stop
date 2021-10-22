@@ -6,7 +6,7 @@ import path from "path";
 import cors from "cors";
 import { logger } from "../../utils/logger";
 
-const app = express();
+export const app = express();
 
 if (process.env.NODE_ENV === "development") {
   app.use(cors());
