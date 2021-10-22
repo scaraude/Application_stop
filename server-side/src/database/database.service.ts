@@ -1,7 +1,7 @@
 import { connect } from "mongoose";
 import { databaseConfig } from "./database.config";
 import { roleModel } from "../role/role.model";
-import { logger } from "../../../utils/logger";
+import { logger } from "../utils/logger";
 
 const connectDB = async () => {
   await connect(databaseConfig.getMongoURI(), {

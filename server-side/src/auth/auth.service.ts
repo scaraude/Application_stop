@@ -5,7 +5,7 @@ import { userService } from "../user/user.service";
 import validator from "validator";
 import { Request, Response, NextFunction } from "express";
 import { RoleEnum } from "../role/role.model";
-import { logger } from "../../../utils/logger";
+import { logger } from "../utils/logger";
 import { User } from "../user/user.model";
 import { RequestWithMaybeAuthInformation } from "./types";
 

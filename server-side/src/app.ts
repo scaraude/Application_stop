@@ -4,7 +4,7 @@ import morgan from "morgan";
 import errorHandler from "errorhandler";
 import path from "path";
 import cors from "cors";
-import { logger } from "../../utils/logger";
+import { logger } from "./utils/logger";
 
 export const app = express();
 

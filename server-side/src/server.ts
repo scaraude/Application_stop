@@ -2,7 +2,7 @@
 require("dotenv").config();
 import http from "http";
 import { app } from "./app";
-import { logger } from "../../utils/logger";
+import { logger } from "./utils/logger";
 
 const normalizePort = (portAsString: string): string | number | boolean => {
   const port = parseInt(portAsString, 10);
