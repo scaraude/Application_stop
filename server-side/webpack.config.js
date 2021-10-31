@@ -1,6 +1,8 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
+const { TurnedIn } = require("@material-ui/icons");
 const path = require("path");
+const nodeExternals = require('webpack-node-externals');
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -9,8 +11,9 @@ const config = {
   entry: {serverEntry: "./src/server.ts"},
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js"
+    filename: "bundle.js"
   },
+  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   devServer: {
     open: true,
     host: "localhost",
@@ -22,10 +25,10 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/i,
+        test: /\.ts$/,
         loader: "ts-loader",
-        exclude: ["/node_modules/"],
-        options: {configFile: 'tsconfig.json'}
+        exclude: ["/node_modules/*"],
+        options: {configFile: "tsconfig.json"}
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -36,7 +39,10 @@ const config = {
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
+  target: 'node',
+  externalsPresets: { node: true },
   resolve: {
+    mainFields: ['module', 'main'],
     extensions: [".tsx", ".ts", ".js"],
   },
 };
