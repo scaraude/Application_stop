@@ -3,7 +3,7 @@ import { roleService } from "../role/role.service";
 import { userController } from "./user.controller";
 import { Express, Request, Response, NextFunction } from 'express'
 
-module.exports = function (app: Express) {
+export const userRouter = (app: Express) => {
   app.use(function (req: Request, res: Response, next: NextFunction) {
     res.header(
       "Access-Control-Allow-Headers",

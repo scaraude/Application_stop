@@ -5,6 +5,11 @@ import errorHandler from "errorhandler";
 import path from "path";
 import cors from "cors";
 import { logger } from "./utils/logger";
+import { databaseService } from './database/database.service';
+import { authRouter } from "./auth/auth.routes";
+import { userRouter } from "./user/user.routes";
+import { spotRouter } from "./spot/spot.route";
+import { commentRouter } from "./comment/comment.route";
 
 export const app = express();
 
@@ -19,16 +24,16 @@ app.use(express.static("public"));
 
 app.use(morgan("dev"));
 
-require("./database/database.service").connectDB();
+databaseService.connectDB();
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
 
-require("./auth/auth.routes")(app);
-require("./user/user.routes")(app);
-require("./spot/spot.route")(app);
-require("./comment/comment.route")(app);
+authRouter(app);
+userRouter(app);
+spotRouter(app);
+commentRouter(app);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"));
@@ -42,5 +47,3 @@ if (process.env.NODE_ENV === "development") {
     response.status(500).send("Server Error");
   });
 }
-
-module.exports = app;

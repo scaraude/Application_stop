@@ -3,7 +3,7 @@ import { roleService } from "../role/role.service";
 import * as commentController from "./comment.controller";
 import { Express } from "express"
 
-module.exports = function (app: Express) {
+export const commentRouter = (app: Express) => {
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",

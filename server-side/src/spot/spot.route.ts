@@ -2,7 +2,7 @@ import { authService } from "../auth/auth.service"
 import * as spotController from "./spot.controller";
 import { Request, Response, NextFunction, Express } from "express";
 
-module.exports = function (app: Express) {
+export const spotRouter = (app: Express) => {
   app.use(function (req: Request, res: Response, next: NextFunction) {
     res.header(
       "Access-Control-Allow-Headers",

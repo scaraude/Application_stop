@@ -42,7 +42,6 @@ const config = {
   target: 'node',
   externalsPresets: { node: true },
   resolve: {
-    mainFields: ['module', 'main'],
     extensions: [".tsx", ".ts", ".js"],
   },
 };
