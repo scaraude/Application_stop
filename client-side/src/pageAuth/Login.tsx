@@ -94,7 +94,6 @@ const Login = () => {
               <PasswordField
                 style={inputStyle}
                 name="password"
-                label="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 error={Boolean(errors["password"])}

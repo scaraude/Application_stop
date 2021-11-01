@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-// import fetch from "cross-fetch";
+import { Spot } from "./hooks/useSpotServices";
 
-/**
- * Hooks to fetch all spots in DB
- * @returns Array(Objects)
- */
 export default function useGetAllSpots() {
-  const [spots, setSpots] = useState([]);
+  const [spots, setSpots] = useState<Spot[]>([]);
 
   useEffect(() => {
     (async () => {

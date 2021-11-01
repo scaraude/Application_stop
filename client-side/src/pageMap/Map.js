@@ -50,6 +50,7 @@ const Map = () => {
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
           id="mapbox/streets-v11"
           maxZoom="22"
+          // eslint-disable-next-line max-len
           accessToken="pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w"
         />
         <SearchFieldHolder>

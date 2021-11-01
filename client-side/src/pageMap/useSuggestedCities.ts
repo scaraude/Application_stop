@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import fetch from "cross-fetch";
 
-/**
- * Hooks to fetch suggested french city (async)
- * @param {inputValue} inputValue 
- * @returns Array(Objects)
- */
-export default function useSuggestedCities(inputValue) {
-  const [cities, setCities] = useState(null);
+type GeoApiCity = {
+  nom: string,
+  centre: { type: string, coordinates: number[] },
+  codesPostaux: string[],
+  code: string,
+  _score: number,
+  departement: { code: string, nom: string }
+}
+
+export default function useSuggestedCities(inputValue: string | undefined) {
+  const [cities, setCities] = useState<GeoApiCity | undefined>(undefined);
   useEffect(() => {
     let active = true;
 
@@ -20,10 +23,10 @@ export default function useSuggestedCities(inputValue) {
         `https://geo.api.gouv.fr/communes?nom=${inputValue}&fields=nom,centre,departement,codesPostaux&boost=population&limit=5`
       );
 
-      const cities = await response.json();
+      const cities = <GeoApiCity | undefined>await response.json();
 
       if (active) {
-        setCities(cities.map((city) => city));// ???
+        setCities(cities);
       }
     })();
 
