@@ -16,12 +16,12 @@ const Content = styled.div`
   color: #262626;
 `;
 
-const RenderInfo = ({ label, content }) => (
+const RenderInfo = ({ label, content }) => 
   <Info>
     <Label>{label}</Label>
     <Content>{content}</Content>
   </Info>
-);
+;
 
 RenderInfo.propTypes = {
   label: PropTypes.string.isRequired,

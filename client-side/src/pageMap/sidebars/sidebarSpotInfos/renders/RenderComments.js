@@ -37,27 +37,27 @@ const StyledTime = styled.div`
   font-size: 0.8rem;
 `;
 
-const formatter = buildFormatter(frenchStrings)
+const formatter = buildFormatter(frenchStrings);
 
-const RenderComments = ({ comments }) => (
+const RenderComments = ({ comments }) => 
   <CommentSection>
     <Separator>
     Avis & Commentaires ({comments.length})
     </Separator>
-    {comments.map((comment) => (
+    {comments.map((comment) => 
       <Card key={comment._id}>
-      <Header>
-        <RenderRating rating={comment.score} />
-        <StyledTime>
-        <TimeAgo date={comment.createdAt} formatter={formatter} />
-        </StyledTime>
-      </Header>
-      <UserName>{comment.userId}</UserName>
-      <Text>{comment.text}</Text>
-    </Card>
-    ))}
+        <Header>
+          <RenderRating rating={comment.score} />
+          <StyledTime>
+            <TimeAgo date={comment.createdAt} formatter={formatter} />
+          </StyledTime>
+        </Header>
+        <UserName>{comment.userId}</UserName>
+        <Text>{comment.text}</Text>
+      </Card>
+    )}
   </CommentSection>
-);
+;
 
 RenderComments.propTypes = {
   comments: PropTypes.array.isRequired,

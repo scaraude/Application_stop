@@ -56,7 +56,7 @@ const Map = () => {
           <SearchField />
         </SearchFieldHolder>
 
-        {spots.map((spot) => (
+        {spots.map((spot) => 
           <Marker
             key={spot._id}
             id={spot._id}
@@ -67,7 +67,7 @@ const Map = () => {
               },
             }}
           />
-        ))}
+        )}
         <AddSpotButton handleClick={openSidebarToAddSpot} />
 
         <Sidebar

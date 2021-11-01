@@ -26,17 +26,17 @@ const Sidebar = ({
         variant={isOpenToAddSpot ? "persistent" : "temporary"}
       >
         <Panel>
-          {spot && (
+          {spot && 
             <SidebarSpotInfos
               handleDrawerClose={handleDrawerClose}
               spot={spot}
             />
-          )}
-          {isOpenToAddSpot && (
+          }
+          {isOpenToAddSpot && 
             <AddSpotForm
               handleDrawerClose={handleDrawerClose}
             />
-          )}
+          }
         </Panel>
       </Drawer>
     </StyledContainer>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -50,15 +50,15 @@ const NavBar = ({ disabled }) => {
               <Button style={buttonStyle}>Plan</Button>
             </Link>
             <Button style={buttonStyle}>Blog</Button>
-            {currentUser ? (
+            {currentUser ? 
               <Link to="/profile">
                 <Button style={buttonStyle}>{currentUser.username}</Button>
               </Link>
-            ) : (
+              : 
               <Link to="/login">
                 <Button style={buttonStyle}>Login</Button>
               </Link>
-            )}
+            }
           </NavButtons>
         </StyledNavbar>
       </Toolbar>
@@ -69,4 +69,4 @@ export default NavBar;
 
 NavBar.propTypes = {
   disabled: PropTypes.bool,
-}
+};

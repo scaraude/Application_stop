@@ -9,7 +9,7 @@ export const Panel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  `
+  `;
 
 export const Header = styled.div`
   background-color: #ececec;
@@ -36,4 +36,4 @@ export const Centered = styled.div`
     top: 50vh;
     z-index: 500;
     transform: translateX(-50%) translateY(-50%);
-`
+`;

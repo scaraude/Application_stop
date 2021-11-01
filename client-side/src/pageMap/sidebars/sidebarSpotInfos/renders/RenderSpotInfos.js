@@ -31,19 +31,19 @@ const RenderSpotInfos = forwardRef(({ spot }, forwardedRef) => {
       </StyledInfoHeader>
       <StyledImg src={ExemplePhoto} alt="photo du spot" />
 
-      {spot.destinations && (
+      {spot.destinations && 
         <RenderInfo
           label="Destinations :"
           content={spot.destinations.join(", ")}
         />
-      )}
+      }
       {spot.advice && <RenderInfo label="Conseil :" content={spot.advice} />}
-      {spot.direction && (
+      {spot.direction && 
         <RenderInfo label="Direction :" content={spot.direction} />
-      )}
-      {spot.roads.length > 0 && (
+      }
+      {spot.roads.length > 0 && 
         <RenderInfo label="Roads :" content={spot.roads.join(", ")} />
-      )}
+      }
       {spot.access && <RenderInfo label="Accès :" content={spot.access} />}
     </Card>
   );

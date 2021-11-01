@@ -2,10 +2,6 @@
     "plugins": [
         "react"
     ],
-    "files": [
-        "*.ts",
-        "*.tsx"
-    ],
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module",

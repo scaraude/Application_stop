@@ -9,8 +9,8 @@ const RenderRating = ({ rating }) => {
     rating <= 1
       ? { color: red[600] }
       : rating <= 2
-      ? { color: orange[600] }
-      : { color: green[600] };
+        ? { color: orange[600] }
+        : { color: green[600] };
   Object.assign(style, { marginRight: "5px" });
 
   const JSX = [];
