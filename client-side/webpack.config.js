@@ -5,20 +5,31 @@ const path = require("path");
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
-  entry: "./src/index.ts",
+  entry: "./client-side/src/index.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "./public"),
+    filename: "./bundle.js",
   },
   devServer: {
     open: true,
     host: "localhost",
+    hot: true,
+    proxy: [
+      {
+        context: ['/auth', '/api', '/login', '/signup'],
+        target: 'http://localhost:8080',
+      }
+    ],
   },
   plugins: [
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      },
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",
@@ -28,9 +39,9 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
+      { 
+        test: /\.css$/,use: ['style-loader', 'css-loader'] 
+      },
     ],
   },
   resolve: {

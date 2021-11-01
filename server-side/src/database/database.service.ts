@@ -4,11 +4,11 @@ import { roleModel } from "../role/role.model";
 import { logger } from "../utils/logger";
 
 const connectDB = async () => {
-  await connect(databaseConfig.getMongoURI(), {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
   try {
+    await connect(databaseConfig.getMongoURI(), {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     logger.info("Successfully connect to MongoDB.");
     initiate();
   } catch (error) {

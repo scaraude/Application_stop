@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-require("dotenv").config();
+require("dotenv").config({ path: '/Users/ludovic/Application_stop/.env' });
 import http from "http";
 import { app } from "./app";
 import { logger } from "./utils/logger";

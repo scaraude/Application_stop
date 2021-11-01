@@ -34,7 +34,10 @@ export const getOneSpot = (req: Request, res: Response) => {
 export const getAllSpots = (req: Request, res: Response) => {
   spotModel.find()
     .then((spots) => res.status(200).json(spots))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => {
+      console.log(`error`, error)
+      res.status(400).json({ error })
+    });
 };
 
 export const popUp = (req: Request, res: Response) => {

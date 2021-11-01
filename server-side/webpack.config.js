@@ -1,6 +1,5 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
-const { TurnedIn } = require("@material-ui/icons");
 const path = require("path");
 const nodeExternals = require('webpack-node-externals');
 
@@ -8,19 +7,16 @@ const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
   context: __dirname,
-  entry: {serverEntry: "./src/server.ts"},
+  entry: "./src/server.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js"
   },
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   devServer: {
-    open: true,
-    host: "localhost",
+    static: './dist',
   },
   plugins: [
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
   module: {
     rules: [
@@ -34,9 +30,6 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
   target: 'node',
