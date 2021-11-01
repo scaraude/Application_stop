@@ -48,9 +48,9 @@ const Profile = () => {
           <strong>Authorities:</strong>
           <ul>
             {currentUser.roles &&
-              currentUser.roles.map((role, index) => (
+              currentUser.roles.map((role, index) =>
                 <li key={index}>{role}</li>
-              ))}
+              )}
           </ul>
         </Paper>
         <Button

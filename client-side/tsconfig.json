@@ -1,7 +1,11 @@
 {
   "include": [
     "./src/**/*.js",
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "src/pageUser/Profile.tsx",
+    "src/theme/GlobalStyle.tsx",
+    "src/App.tsx",
+    "src/index.tsx"
   ],
   "compilerOptions": {
     "target": "es5",
@@ -12,12 +16,10 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
-  },
-  "files": [
-    "src/server.ts"
-  ]
+    "jsx": "react",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+  }
 }

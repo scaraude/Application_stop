@@ -5,7 +5,7 @@ const path = require("path");
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
-  entry: "./client-side/src/index.js",
+  entry: "./client-side/src/index.tsx",
   output: {
     path: path.resolve(__dirname, "./public"),
     filename: "./bundle.js",
