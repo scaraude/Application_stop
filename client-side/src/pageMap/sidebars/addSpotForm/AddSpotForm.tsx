@@ -28,38 +28,41 @@ const StylesCheckBox = styled.div`
   justify-content: space-around;
 `;
 
-const AddSpotForm = ({ handleDrawerClose }) => {
+interface AddSpotFormProps {
+  handleDrawerClose: () => void;
+}
+const AddSpotForm = ({ handleDrawerClose }: AddSpotFormProps) => {
   const [spotName, setSpotName] = useState("");
   const [isSpotAccessible, setIsSpotAccessible] = useState(true);
   const [isSpotSafe, setIsSpotSafe] = useState(true);
-  const [spotRate, setSpotRate] = useState(2.5);
-  
+  const [spotRate, setSpotRate] = useState<number | null>(2.5);
+
   const map = useMapEvent('move', () => {
     setMapCenter(map.getCenter());
   });
 
   const [mapCenter, setMapCenter] = useState(map.getCenter());
 
-  const handleSpotCreation = async (event) => {
+  const handleSpotCreation = async (event: React.FormEvent<HTMLFormElement>) => {
     const { addSpot } = useSpotServices();
     event.preventDefault();
     await addSpot({
       title: spotName,
       gps: mapCenter,
-      isSpotAccessible,
-      isSpotSafe,
-      rating: spotRate,
+      isEasytoAccess: isSpotAccessible,
+      isSafe: isSpotSafe,
+      rating: spotRate ?? 2.5,
     });
     handleDrawerClose();
   };
 
   return (
     <>
-      <SidebarHeader handleDrawerClose={handleDrawerClose}/>
+      <SidebarHeader handleDrawerClose={handleDrawerClose} />
       {mapCenter && <Marker position={mapCenter} />}
       <StyledAddSpotForm
         noValidate
-        autocomplete="off"
+        autoComplete="off"
         id="spot-form"
         onSubmit={handleSpotCreation}
       >
@@ -95,14 +98,14 @@ const AddSpotForm = ({ handleDrawerClose }) => {
             control={<Checkbox name="isSafe" color="primary" />}
             label="Ce spot est safe"
             checked={isSpotSafe}
-            onChange={(event) => setIsSpotSafe(event.target.checked)}
+            onChange={(event, checked) => setIsSpotSafe(checked)}
           />
           <FormControlLabel
             style={fieldStyle}
             control={<Checkbox name="isAccessible" color="primary" />}
             label="Ce spot est facile d'accès"
             checked={isSpotAccessible}
-            onChange={(event) => setIsSpotAccessible(event.target.checked)}
+            onChange={(event, checked) => setIsSpotAccessible(checked)}
           />
         </StylesCheckBox>
         <Button
@@ -111,7 +114,7 @@ const AddSpotForm = ({ handleDrawerClose }) => {
           color="primary"
           type="submit"
         >
-        Ajouter
+          Ajouter
         </Button>
       </StyledAddSpotForm>
     </>
