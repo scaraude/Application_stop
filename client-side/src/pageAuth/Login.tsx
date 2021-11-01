@@ -19,16 +19,20 @@ import {
 import { paperStyle, inputStyle } from "./styles/style";
 import PasswordField from "./components/PasswordField";
 
+type FieldErrors = {
+  username?: string;
+  password?: string;
+}
 const Login = () => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [username, setUsername] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FieldErrors>({ username: undefined, password: undefined });
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
-  const handleLogin = async (event) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     const { login } = useAuthServices();
-    const validationErrors = {};
+    const validationErrors: FieldErrors = { username: undefined, password: undefined };
     event.preventDefault();
 
     setErrors({});
@@ -41,18 +45,18 @@ const Login = () => {
       Object.assign(validationErrors, { password: "Password is required" });
     }
 
-    if (Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length === 0 && username && password) {
       try {
         await login(username, password);
         history.push("/profile");
         window.location.reload();
-      } catch (error) {
+      } catch (error: any) {
         const resMessage =
-          error.response &&
-            error.response.data &&
-            error.response.data.message ||
-          error.message ||
-          error.toString();
+          error?.response &&
+          error?.response.data &&
+          error?.response.data.message ||
+          error?.message ||
+          error?.toString();
 
         setIsLoading(false);
         setErrors(resMessage);
@@ -70,7 +74,7 @@ const Login = () => {
           Pas encore membre ? <Link to="/signup">Rejoins-nous !</Link>
         </Label>
         <Paper style={paperStyle} elevation={3}>
-          <StyledForm autocomplete="off" id="login-form" onSubmit={handleLogin}>
+          <StyledForm autoComplete="off" id="login-form" onSubmit={handleLogin}>
             <Title>Connexion !</Title>
             <InputControl>
               <PersonIcon />
@@ -89,7 +93,6 @@ const Login = () => {
               <LockIcon />
               <PasswordField
                 style={inputStyle}
-                id="password"
                 name="password"
                 label="password"
                 value={password}

@@ -29,9 +29,9 @@ const StyledImg = styled.img`
   width: auto;
 `;
 
-const NavBar = ({disabled}) => {
+const NavBar = ({ disabled }) => {
 
-  if(disabled){
+  if (disabled) {
     return null;
   }
   const currentUser = useCurrentUser();
@@ -68,5 +68,5 @@ const NavBar = ({disabled}) => {
 export default NavBar;
 
 NavBar.propTypes = {
-  disabled : PropTypes.bool,
+  disabled: PropTypes.bool,
 }

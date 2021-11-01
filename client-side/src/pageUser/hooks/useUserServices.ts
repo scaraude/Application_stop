@@ -3,6 +3,7 @@ import { useCurrentUser } from "../../pageAuth/hooks/useCurrentUser";
 
 export const useUserServices = () => {
   const { email } = useCurrentUser();
+  
   const deleteCurrentUser = async () => {
     const deleteUserReponse = await fetch("api/user/delete", {
       method: "POST",

@@ -21,15 +21,26 @@ import {
   Title,
 } from "./styles/styledComponents";
 
-const SignUp = () => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState(null);
-  const [errors, setErrors] = useState({});
-  const [registrationState, setRegistrationState] = useState(null);
+interface RegistrationState {
+  message: string;
+  successful: boolean;
+}
 
-  const handleSignUp = async (event) => {
+interface SignInFormErrors {
+  username?: string;
+  password?: string;
+  email?: string;
+}
+
+const SignUp = () => {
+  const [username, setUsername] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
+  const [errors, setErrors] = useState<SignInFormErrors>({});
+  const [registrationState, setRegistrationState] = useState<RegistrationState | null>(null);
+
+  const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     const { findValidationErrors } = useValidator();
     const { register } = useAuthServices();
     event.preventDefault();
@@ -42,7 +53,7 @@ const SignUp = () => {
       password,
     });
 
-    if (Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length === 0 && username && email && password) {
       try {
         const response = await register(username, email, password);
         const responseBody = await response.json();
@@ -50,11 +61,11 @@ const SignUp = () => {
           message: responseBody.message,
           successful: true,
         });
-      } catch (error) {
+      } catch (error: any) {
         const resMessage =
           error.response &&
-            error.response.data &&
-            error.response.data.message ||
+          error.response.data &&
+          error.response.data.message ||
           error.message ||
           error.toString();
 
@@ -77,7 +88,7 @@ const SignUp = () => {
         </Label>
         <Paper style={paperStyle} elevation={3}>
           <StyledForm
-            autocomplete="off"
+            autoComplete="off"
             id="login-form"
             onSubmit={handleSignUp}
           >
@@ -112,7 +123,6 @@ const SignUp = () => {
               <LockIcon />
               <PasswordField
                 style={inputStyle}
-                id="password"
                 name="password"
                 label="password"
                 value={password}

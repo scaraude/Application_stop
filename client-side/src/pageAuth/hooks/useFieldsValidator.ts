@@ -3,8 +3,10 @@ import isLength from "validator/lib/isLength";
 import isAlphanumeric from "validator/lib/isAlphanumeric";
 import isStrongPassword from "validator/lib/isStrongPassword";
 
+interface FormField { username: string | null | undefined, email: string | null | undefined, password: string | null | undefined }
+
 export const useValidator = () => {
-  const findValidationErrors = ({ username, email, password }) => {
+  const findValidationErrors = ({ username, email, password }: FormField) => {
     const errors = {};
 
     if (username) {

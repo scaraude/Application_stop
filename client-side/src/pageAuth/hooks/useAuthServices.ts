@@ -9,7 +9,7 @@ const login = async (username: string, password: string) => {
   });
 
   const user = <User | undefined>await response.json();
-  if (user?.accessToken) {
+  if (user) {
     setStoredItem(ItemEnum.USER, user);
   }
 
