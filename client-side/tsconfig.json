@@ -2,10 +2,8 @@
   "include": [
     "./src/**/*.js",
     "./src/**/*.ts",
-    "src/pageUser/Profile.tsx",
-    "src/theme/GlobalStyle.tsx",
-    "src/App.tsx",
-    "src/index.tsx"
+    "./src/**/*.tsx",
+    "src/pageAuth/components/PasswordField.js",
   ],
   "compilerOptions": {
     "target": "es5",
