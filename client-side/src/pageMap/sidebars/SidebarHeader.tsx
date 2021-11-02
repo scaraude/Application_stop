@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ArrowRightAltRoundedIcon from "@material-ui/icons/ArrowRightAltRounded";
 import { Header, StyledIconButtons } from './style/styledComponents';
 import IconButton from "@material-ui/core/IconButton";
 
-export const SidebarHeader = ({ rightChildren, bottomChildren, handleDrawerClose }) => {
+interface SidebarHeaderProps {
+  rightChildren?: React.ReactNode;
+  bottomChildren?: React.ReactNode;
+  handleDrawerClose: () => void;
+}
+
+export const SidebarHeader = ({ rightChildren, bottomChildren, handleDrawerClose }: SidebarHeaderProps) => {
   return (
     <Header>
       <StyledIconButtons>
@@ -17,10 +22,4 @@ export const SidebarHeader = ({ rightChildren, bottomChildren, handleDrawerClose
       {bottomChildren}
     </Header>
   );
-};
-
-SidebarHeader.propTypes = {
-  rightChildren: PropTypes.element,
-  bottomChildren: PropTypes.element,
-  handleDrawerClose: PropTypes.func.isRequired,
 };
