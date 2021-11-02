@@ -3423,7 +3423,7 @@ duplexer3@^0.1.4:
 
 easy-scroll@^0.7.0:
   version "0.7.0"
-  resolved "https://registry.npmjs.org/easy-scroll/-/easy-scroll-0.7.0.tgz"
+  resolved "https://registry.yarnpkg.com/easy-scroll/-/easy-scroll-0.7.0.tgz#1da9fd1ae320fdb701d3a2a972ec9503fec43f8c"
   integrity sha512-FIP+UjU58SG/Hig8u3B8Ld5ssRGzTvv4aOxQLskyvQVnoEEftWe221hw39qyx6jYe2hU2trBVp/lPZbT+SVA4A==
 
 ecc-jsbn@~0.1.1:

@@ -39,12 +39,15 @@ const StyledTime = styled.div`
 
 const formatter = buildFormatter(frenchStrings);
 
-const RenderComments = ({ comments }) => 
+// interface RenderCommentsProps {
+//   comments: string[];
+// }
+const RenderComments = ({ comments }) =>
   <CommentSection>
     <Separator>
-    Avis & Commentaires ({comments.length})
+      Avis & Commentaires ({comments.length})
     </Separator>
-    {comments.map((comment) => 
+    {comments.map((comment) =>
       <Card key={comment._id}>
         <Header>
           <RenderRating rating={comment.score} />
@@ -57,7 +60,7 @@ const RenderComments = ({ comments }) =>
       </Card>
     )}
   </CommentSection>
-;
+  ;
 
 RenderComments.propTypes = {
   comments: PropTypes.array.isRequired,
