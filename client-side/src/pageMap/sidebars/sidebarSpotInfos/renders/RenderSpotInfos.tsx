@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import ExemplePhoto from "./exemple_photo_spot.jpg";
 import { RenderRating } from "./RenderRating";
-import RenderInfo from "./RenderInfo";
+import { RenderInfo } from "./RenderInfo";
 import Card from "../styled/Card";
 import { Spot } from "../../../hooks/useSpotServices";
 
@@ -21,7 +21,11 @@ const StyledInfoHeader = styled.div`
   align-items: center;
 `;
 
-export const RenderSpotInfos = forwardRef(({ spot }: { spot: Spot }, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
+interface RenderSpotInfosProps {
+  spot: Spot
+}
+
+export const RenderSpotInfos = forwardRef(({ spot }: RenderSpotInfosProps, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
   if (!spot) return null;
 
   return (

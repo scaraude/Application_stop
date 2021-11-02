@@ -20,12 +20,8 @@ interface RenderInfoProps {
   content: string;
 }
 
-const RenderInfo = ({ label, content }: RenderInfoProps) => (
+export const RenderInfo = ({ label, content }: RenderInfoProps) => (
   <Info>
     <Label>{label}</Label>
     <Content>{content}</Content>
   </Info>)
-
-
-
-export default RenderInfo;
