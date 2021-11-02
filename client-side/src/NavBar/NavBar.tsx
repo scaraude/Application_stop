@@ -2,11 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
-
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
-
 import Logo from "./Logo.png";
 import { useCurrentUser } from "../pageAuth/hooks/useCurrentUser";
 
@@ -29,7 +27,11 @@ const StyledImg = styled.img`
   width: auto;
 `;
 
-const NavBar = ({ disabled }) => {
+interface NavBarProps {
+  disabled?: boolean;
+}
+
+const NavBar = ({ disabled }: NavBarProps) => {
 
   if (disabled) {
     return null;
@@ -50,11 +52,11 @@ const NavBar = ({ disabled }) => {
               <Button style={buttonStyle}>Plan</Button>
             </Link>
             <Button style={buttonStyle}>Blog</Button>
-            {currentUser ? 
+            {currentUser ?
               <Link to="/profile">
                 <Button style={buttonStyle}>{currentUser.username}</Button>
               </Link>
-              : 
+              :
               <Link to="/login">
                 <Button style={buttonStyle}>Login</Button>
               </Link>
