@@ -3,7 +3,6 @@
     "./src/**/*.js",
     "./src/**/*.ts",
     "./src/**/*.tsx",
-    "src/pageAuth/components/PasswordField.js",
     "index.d.ts",
   ],
   "compilerOptions": {

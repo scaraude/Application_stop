@@ -17,7 +17,7 @@ import {
   InputControl,
 } from "./styles/styledComponents";
 import { paperStyle, inputStyle } from "./styles/style";
-import PasswordField from "./components/PasswordField";
+import PasswordFieldProps from "./components/PasswordField";
 
 type FieldErrors = {
   username?: string;
@@ -91,7 +91,7 @@ const Login = () => {
             </InputControl>
             <InputControl>
               <LockIcon />
-              <PasswordField
+              <PasswordFieldProps
                 style={inputStyle}
                 name="password"
                 value={password}

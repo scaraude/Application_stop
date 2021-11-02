@@ -7,7 +7,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import PasswordField from "./components/PasswordField";
+import PasswordFieldProps from "./components/PasswordField";
 import { useValidator } from "./hooks/useFieldsValidator";
 import { useAuthServices } from "./hooks/useAuthServices";
 
@@ -121,7 +121,7 @@ const SignUp = () => {
             </InputControl>
             <InputControl>
               <LockIcon />
-              <PasswordField
+              <PasswordFieldProps
                 style={inputStyle}
                 name="password"
                 value={password}

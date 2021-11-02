@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -9,6 +8,17 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { CSSProperties } from "styled-components";
+
+interface PasswordFieldProps {
+  value: string | null;
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  onFocus?: () => void;
+  style?: CSSProperties;
+  error: boolean;
+  helperText?: string;
+  name?: string;
+}
 
 const PasswordField = ({
   value: password,
@@ -18,14 +28,14 @@ const PasswordField = ({
   error = false,
   helperText = "",
   name = "password",
-}) => {
+}: PasswordFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -54,16 +64,6 @@ const PasswordField = ({
       <FormHelperText id="mail-helper-text">{helperText}</FormHelperText>
     </FormControl>
   );
-};
-
-PasswordField.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  onFocus: PropTypes.func,
-  style: PropTypes.object,
-  error: PropTypes.bool,
-  helperText: PropTypes.string,
-  name: PropTypes.string,
 };
 
 export default PasswordField;
