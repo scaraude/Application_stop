@@ -10,7 +10,7 @@ import easyScroll from "easy-scroll"; //scroll animations
 import ScrollBar from "react-perfect-scrollbar";
 import { SidebarHeader } from "../SidebarHeader";
 
-const SidebarSpotInfos = ({ handleDrawerClose, spot = null }) => {
+const SidebarSpotInfos = ({ handleDrawerClose, spot }) => {
   const [tabValue, setTabValue] = useState(0);
   const [animated, setAnimated] = useState(false);
   const [comments, setComments] = useState([]);
