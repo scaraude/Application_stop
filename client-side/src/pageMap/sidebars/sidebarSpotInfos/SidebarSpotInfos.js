@@ -9,38 +9,23 @@ import Tabs from "@material-ui/core/Tabs";
 import easyScroll from "easy-scroll"; //scroll animations
 import ScrollBar from "react-perfect-scrollbar";
 import { SidebarHeader } from "../SidebarHeader";
-import { Spot } from "../../hooks/useSpotServices";
 
-// type Comment = {
-//   _id: string;
-//   score: number;
-//   createdAt: Date;
-//   userId: string;
-//   text: string;
-// }
-
-// interface SidebarSpotInfosProps {
-//   handleDrawerClose: () => void;
-//   spot: Spot | null;
-// }
 const SidebarSpotInfos = ({ handleDrawerClose, spot = null }) => {
   const [tabValue, setTabValue] = useState(0);
   const [animated, setAnimated] = useState(false);
   const [comments, setComments] = useState([]);
-  const refSpotInfos = useRef<HTMLElement | undefined>(null);
-  const refScrollBar = useRef<HTMLElement | undefined>(undefined);
+  const refSpotInfos = useRef(null);
+  const refScrollBar = useRef(null);
 
   useEffect(() => {
     setTabValue(0);
   }, []);
 
   useEffect(async () => {
-    if (!spot) return;
-
-    (async () => {
-      const response = await fetch(`/api/comment/${spot.id}`);
-      setComments(await response.json());
-    })();
+    if (!spot) return null;
+    
+    const response = await fetch(`/api/comment/${spot._id}`);
+    setComments(await response.json());
   }, [spot]);
 
   const handleChangeOnTab = (event, newValue) => {
@@ -63,16 +48,17 @@ const SidebarSpotInfos = ({ handleDrawerClose, spot = null }) => {
         duration: 600,
         easingPreset: "easeOutQuad",
         scrollAmount:
-          refSpotInfos.current?.clientHeight - refScrollBar.current.scrollTop,
+          refSpotInfos.current.clientHeight - refScrollBar.current.scrollTop,
         onAnimationCompleteCallback: () => setAnimated(false),
       });
     }
   };
 
   const ScrollSpy = () => {
-    const currentHtmlElement = refScrollBar.current;
-    const tabValue = currentHtmlElement ?
-      currentHtmlElement.scrollTop >= refSpotInfos.current?.clientHeight ? 1 : 0 : 0;
+    const tabValue =
+      refScrollBar.current.scrollTop >= refSpotInfos.current.clientHeight
+        ? 1
+        : 0;
     if (!animated) {
       setTabValue(tabValue);
     }
@@ -92,9 +78,9 @@ const SidebarSpotInfos = ({ handleDrawerClose, spot = null }) => {
         if (scroll.scrollTop !== 0 && !animated) setTabValue(1);
       }}
     >
-      <SidebarHeader
+      <SidebarHeader 
         handleDrawerClose={handleDrawerClose}
-        rightChildren={<RenderSpotIconButtons />}
+        rightChildren={<RenderSpotIconButtons />} 
         bottomChildren={
           <Tabs
             variant="fullWidth"
