@@ -4,7 +4,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-const RenderSpotIcons = () => 
+export const RenderSpotIcons = () =>
   <div>
     <IconButton>
       <FavoriteBorderIcon />
@@ -17,5 +17,3 @@ const RenderSpotIcons = () =>
     </IconButton>
   </div>
   ;
-
-export default RenderSpotIcons;

@@ -7,6 +7,11 @@ export type Spot = {
   rating: number;
   isSafe: boolean;
   isEasytoAccess: boolean;
+  destinations?: string[];
+  advice?: string;
+  direction?: string;
+  roads?: string[];
+  access?: string;
 }
 
 export const useSpotServices = () => {

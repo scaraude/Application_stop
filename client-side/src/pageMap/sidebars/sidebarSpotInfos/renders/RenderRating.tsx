@@ -18,6 +18,7 @@ const getStyle = (rating: number): { color: string; marginRight: string } => {
 
   return { ...style, marginRight: "5px" }
 }
+
 export const RenderRating = ({ rating }: RenderRatingProps) => {
   const style = getStyle(rating);
 
