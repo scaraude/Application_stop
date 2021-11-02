@@ -4,14 +4,22 @@ import PropTypes from "prop-types";
 import ThumbUpRoundedIcon from "@material-ui/icons/ThumbUpRounded";
 import { green, orange, red } from "@material-ui/core/colors";
 
-const RenderRating = ({ rating }) => {
+interface RenderRatingProps {
+  rating: number;
+}
+
+const getStyle = (rating: number): { color: string; marginRight: string } => {
   const style =
     rating <= 1
       ? { color: red[600] }
       : rating <= 2
         ? { color: orange[600] }
         : { color: green[600] };
-  Object.assign(style, { marginRight: "5px" });
+
+  return { ...style, marginRight: "5px" }
+}
+export const RenderRating = ({ rating }: RenderRatingProps) => {
+  const style = getStyle(rating);
 
   const JSX = [];
   for (let index = 0; index < rating; index++) {
@@ -20,9 +28,3 @@ const RenderRating = ({ rating }) => {
 
   return <div>{JSX}</div>;
 };
-
-RenderRating.propTypes = {
-  rating: PropTypes.number.isRequired,
-};
-
-export default RenderRating;

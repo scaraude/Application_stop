@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Info = styled.div`
@@ -16,16 +15,17 @@ const Content = styled.div`
   color: #262626;
 `;
 
-const RenderInfo = ({ label, content }) => 
+interface RenderInfoProps {
+  label: string;
+  content: string;
+}
+
+const RenderInfo = ({ label, content }: RenderInfoProps) => (
   <Info>
     <Label>{label}</Label>
     <Content>{content}</Content>
-  </Info>
-;
+  </Info>)
 
-RenderInfo.propTypes = {
-  label: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-};
+
 
 export default RenderInfo;
