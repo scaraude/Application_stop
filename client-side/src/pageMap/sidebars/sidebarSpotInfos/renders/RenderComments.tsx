@@ -1,12 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
-import TimeAgo from 'react-timeago';
-import frenchStrings from 'react-timeago/lib/language-strings/fr-short';
-import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
-
+import TimeAgo from "react-timeago";
+import { Comment } from "../SidebarSpotInfos"
 import { RenderRating } from "./RenderRating";
-import Card from "../styled/Card";
+import { Card } from "../styled/Card";
 
 
 const CommentSection = styled.div`
@@ -37,22 +34,22 @@ const StyledTime = styled.div`
   font-size: 0.8rem;
 `;
 
-const formatter = buildFormatter(frenchStrings);
 
-// interface RenderCommentsProps {
-//   comments: string[];
-// }
-const RenderComments = ({ comments }) =>
+interface RenderCommentsProps {
+  comments: Comment[];
+}
+
+export const RenderComments = ({ comments }: RenderCommentsProps) =>
   <CommentSection>
     <Separator>
       Avis & Commentaires ({comments.length})
     </Separator>
     {comments.map((comment) =>
-      <Card key={comment._id}>
+      <Card key={comment.id}>
         <Header>
           <RenderRating rating={comment.score} />
           <StyledTime>
-            <TimeAgo date={comment.createdAt} formatter={formatter} />
+            <TimeAgo date={comment.createdAt} />
           </StyledTime>
         </Header>
         <UserName>{comment.userId}</UserName>
@@ -61,9 +58,3 @@ const RenderComments = ({ comments }) =>
     )}
   </CommentSection>
   ;
-
-RenderComments.propTypes = {
-  comments: PropTypes.array.isRequired,
-};
-
-export default RenderComments;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MapContainer, Marker, TileLayer, ZoomControl } from "react-leaflet";
 import styled from "styled-components";
-import AddSpotButton from "./addSpotButton/AddSpotButton";
+import { AddSpotButton } from "./addSpotButton/AddSpotButton";
 import SearchField from "./SearchField";
 import Sidebar from "./sidebars/Sidebar";
 import useGetAllSpots from "./useGetAllSpots";
@@ -27,7 +27,7 @@ const Map = () => {
   const [currentSpot, setCurrentSpot] = useState(null);
   const [isSidebarOpenToAddSpot, setIsSidebarOpenToAddSpot] = useState(false);
   const spots = useGetAllSpots();
- 
+
   const handleDrawerClose = () => {
     setCurrentSpot(null);
     setIsSidebarOpenToAddSpot(false);
@@ -41,6 +41,7 @@ const Map = () => {
     <StyledContainer>
       <MapContainer
         style={{ margin: "0", height: "100%" }}
+
         center={[45.756104, 4.841173]}
         zoom={14}
         zoomControl={false}
@@ -57,7 +58,7 @@ const Map = () => {
           <SearchField />
         </SearchFieldHolder>
 
-        {spots.map((spot) => 
+        {spots.map((spot) =>
           <Marker
             key={spot._id}
             id={spot._id}

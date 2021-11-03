@@ -15,7 +15,7 @@ interface AddSpotButtonProps {
   handleClick: () => void
 }
 
-const AddSpotButton = ({ handleClick }: AddSpotButtonProps) => {
+export const AddSpotButton = ({ handleClick }: AddSpotButtonProps) => {
   return (
     <StyledIconButton>
       <IconButton
@@ -28,5 +28,3 @@ const AddSpotButton = ({ handleClick }: AddSpotButtonProps) => {
     </StyledIconButton>
   );
 };
-
-export default AddSpotButton;

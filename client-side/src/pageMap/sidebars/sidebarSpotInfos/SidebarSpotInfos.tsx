@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Body } from "../style/styledComponents";
-import RenderComments from "./renders/RenderComments";
+import { RenderComments } from "./renders/RenderComments";
 import { RenderSpotInfos } from "./renders/RenderSpotInfos";
 import { RenderSpotIcons } from "./renders/RenderSpotIconButtons";
 import Tab from "@material-ui/core/Tab";
@@ -14,9 +14,17 @@ interface SidebarSpotInfosProps {
   spot: Spot;
 }
 
+export type Comment = {
+  id: string;
+  score: number;
+  createdAt: Date;
+  userId: string;
+  text: string;
+}
+
 const SidebarSpotInfos = ({ handleDrawerClose, spot }: SidebarSpotInfosProps) => {
   const [tabValue, setTabValue] = useState(0);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const refSpotInfos = useRef<HTMLDivElement | null>(null);
   const refScrollBar = useRef<HTMLElement | null>(null);
 

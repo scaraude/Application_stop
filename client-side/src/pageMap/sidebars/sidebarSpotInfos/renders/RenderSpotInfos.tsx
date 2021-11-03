@@ -6,7 +6,7 @@ import styled from "styled-components";
 import ExemplePhoto from "./exemple_photo_spot.jpg";
 import { RenderRating } from "./RenderRating";
 import { RenderInfo } from "./RenderInfo";
-import Card from "../styled/Card";
+import { Card } from "../styled/Card";
 import { Spot } from "../../../hooks/useSpotServices";
 
 const StyledImg = styled.img`
