@@ -3,7 +3,7 @@ import React from "react";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import styled from "styled-components";
 import { Spot } from "../hooks/useSpotServices";
-import AddSpotForm from "./addSpotForm/AddSpotForm";
+import { AddSpotForm } from "./addSpotForm/AddSpotForm";
 import SidebarSpotInfos from "./sidebarSpotInfos/SidebarSpotInfos";
 import { Panel } from "./style/styledComponents";
 

@@ -35,7 +35,7 @@ const SidebarSpotInfos = ({ handleDrawerClose, spot }: SidebarSpotInfosProps) =>
   useEffect(() => {
     if (!spot) return;
     (async () => {
-      const response = await fetch(`/api/comment/${spot.id}`);
+      const response = await fetch(`/api/comment/${spot._id}`);
       setComments(await response.json())
     })
   }, [spot]);

@@ -33,7 +33,7 @@ const SearchField = () => {
     if (!selectedCity) return;
     const newLatLon = {
       lat: selectedCity.centre.coordinates[1],
-      lon: selectedCity.centre.coordinates[0],
+      lng: selectedCity.centre.coordinates[0],
     };
     map.setView(newLatLon, 14);
     setInputValue("");

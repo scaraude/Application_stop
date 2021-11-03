@@ -31,7 +31,8 @@ const StylesCheckBox = styled.div`
 interface AddSpotFormProps {
   handleDrawerClose: () => void;
 }
-const AddSpotForm = ({ handleDrawerClose }: AddSpotFormProps) => {
+
+export const AddSpotForm = ({ handleDrawerClose }: AddSpotFormProps) => {
   const [spotName, setSpotName] = useState("");
   const [isSpotAccessible, setIsSpotAccessible] = useState(true);
   const [isSpotSafe, setIsSpotSafe] = useState(true);
@@ -48,7 +49,7 @@ const AddSpotForm = ({ handleDrawerClose }: AddSpotFormProps) => {
     event.preventDefault();
     await addSpot({
       title: spotName,
-      gps: mapCenter,
+      gps: { lat: mapCenter.lat, lon: mapCenter.lng },
       isEasytoAccess: isSpotAccessible,
       isSafe: isSpotSafe,
       rating: spotRate ?? 2.5,
@@ -120,9 +121,3 @@ const AddSpotForm = ({ handleDrawerClose }: AddSpotFormProps) => {
     </>
   );
 };
-
-AddSpotForm.propTypes = {
-  handleDrawerClose: PropTypes.func.isRequired,
-};
-
-export default AddSpotForm;

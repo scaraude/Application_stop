@@ -1,9 +1,9 @@
 import { useAuthHeader } from "../../pageAuth/hooks/useAuthHeader";
 
 export type Spot = {
-  id?: string;
+  _id?: string;
   title: string;
-  gps: { latitude: number; longitude: number }
+  gps: { lat: number; lon: number }
   rating: number;
   isSafe: boolean;
   isEasytoAccess: boolean;
