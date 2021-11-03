@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MapContainer, Marker, TileLayer, ZoomControl } from "react-leaflet";
 import styled from "styled-components";
 import { AddSpotButton } from "./addSpotButton/AddSpotButton";
+import { Spot } from "./hooks/useSpotServices";
 import SearchField from "./SearchField";
 import Sidebar from "./sidebars/Sidebar";
 import useGetAllSpots from "./useGetAllSpots";
@@ -24,7 +25,7 @@ const SearchFieldHolder = styled.div`
 `;
 
 const Map = () => {
-  const [currentSpot, setCurrentSpot] = useState(null);
+  const [currentSpot, setCurrentSpot] = useState<Spot | null>(null);
   const [isSidebarOpenToAddSpot, setIsSidebarOpenToAddSpot] = useState(false);
   const spots = useGetAllSpots();
 
@@ -41,7 +42,6 @@ const Map = () => {
     <StyledContainer>
       <MapContainer
         style={{ margin: "0", height: "100%" }}
-
         center={[45.756104, 4.841173]}
         zoom={14}
         zoomControl={false}
@@ -50,7 +50,7 @@ const Map = () => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
           id="mapbox/streets-v11"
-          maxZoom="22"
+          maxZoom={22}
           // eslint-disable-next-line max-len
           accessToken="pk.eyJ1Ijoic2NhcmF1ZGUiLCJhIjoiY2tnYXJpdDh1MDl2NTJ4cnR3c2c4NjVzcSJ9.UkZLikOnXgNA-j0Dmoub3w"
         />
@@ -60,9 +60,8 @@ const Map = () => {
 
         {spots.map((spot) =>
           <Marker
-            key={spot._id}
-            id={spot._id}
-            position={spot.gps}
+            key={spot.id}
+            position={{ lat: spot.gps.latitude, lng: spot.gps.longitude }}
             eventHandlers={{
               click: () => {
                 setCurrentSpot(spot);
