@@ -45,7 +45,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "nodemon": "^2.0.7",
-    "nodemon-webpack-plugin": "^4.4.4",
+    "nodemon-webpack-plugin": "^4.5.2",
     "parse-kml": "^1.0.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
@@ -108,7 +108,7 @@
     "build:front": "webpack build --mode=development --config ./client-side/webpack.config.js",
     "serve:front": "webpack serve --mode=development --config ./client-side/webpack.config.js --port 3000",
     "build:back": "webpack build --config ./server-side/webpack.config.js --mode=production --stats verbose",
-    "serve:back": "webpack serve --config ./server-side/webpack.config.js --mode=development",
+    "serve:back": "webpack --watch --config ./server-side/webpack.config.js --mode=development",
     "watch": "webpack --watch",
     "serve": "webpack serve"
   },

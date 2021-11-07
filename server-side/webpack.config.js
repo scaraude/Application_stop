@@ -1,7 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require("path");
 const nodeExternals = require('webpack-node-externals');
+const NodemonPlugin = require('nodemon-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -17,6 +17,7 @@ const config = {
     static: './dist',
   },
   plugins: [
+    new NodemonPlugin(),
   ],
   module: {
     rules: [
@@ -24,7 +25,7 @@ const config = {
         test: /\.ts$/,
         loader: "ts-loader",
         exclude: ["/node_modules/*"],
-        options: {configFile: "tsconfig.json"}
+        options: { configFile: "tsconfig.json" }
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
