@@ -7,7 +7,9 @@ const config = {
   output: {
     path: path.resolve(__dirname, "./public"),
     filename: "./bundle.js",
+    sourceMapFilename: "bundle.js.map",
   },
+  devtool: "source-map",
   devServer: {
     open: true,
     host: "localhost",
