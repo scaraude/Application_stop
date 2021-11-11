@@ -7,9 +7,9 @@ const config = {
   output: {
     path: path.resolve(__dirname, "./public"),
     filename: "./bundle.js",
-    sourceMapFilename: "bundle.js.map",
+    sourceMapFilename: '[name].[hash:8].map',
   },
-  devtool: "source-map",
+  devtool: "eval-source-map",
   devServer: {
     open: true,
     host: "localhost",

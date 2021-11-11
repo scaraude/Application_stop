@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /opt/homebrew/bin/yarn add @types/material-ui/core
+  /usr/local/bin/node /opt/homebrew/bin/yarn add @mui/material/styles
 
 PATH: 
   /opt/homebrew/opt/node@12/bin:/Users/ludovic/.yarn/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/ludovic/.antigen/bundles/robbyrussell/oh-my-zsh/lib:/Users/ludovic/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git:/Users/ludovic/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/heroku:/Users/ludovic/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/pip:/Users/ludovic/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/lein:/Users/ludovic/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/command-not-found:/Users/ludovic/.antigen/bundles/agkozak/zsh-z:/Users/ludovic/.antigen/bundles/zsh-users/zsh-syntax-highlighting
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fmaterial-ui/core: Request "https://registry.yarnpkg.com/@types%2fmaterial-ui/core" returned a 405
+  Error: https://registry.yarnpkg.com/@mui%2fmaterial/styles: Request "https://registry.yarnpkg.com/@mui%2fmaterial/styles" returned a 405
       at Request.params.callback [as _callback] (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:66997:18)
       at Request.self.callback (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:140662:22)
       at Request.emit (events.js:310:20)
@@ -67,13 +67,14 @@ npm manifest:
       "file-loader": "^6.2.0",
       "global": "^4.4.0",
       "jsonwebtoken": "^8.5.1",
+      "leaflet": "^1.7.1",
       "leaflet-search": "^2.9.9",
       "mongoose": "^5.10.15",
       "mongoose-unique-validator": "^2.0.3",
       "morgan": "^1.10.0",
       "multer": "^1.4.2",
       "nodemon": "^2.0.7",
-      "nodemon-webpack-plugin": "^4.4.4",
+      "nodemon-webpack-plugin": "^4.5.2",
       "parse-kml": "^1.0.1",
       "passport": "^0.4.1",
       "passport-facebook": "^3.0.0",
@@ -84,7 +85,7 @@ npm manifest:
       "react-leaflet": "^3.1.0",
       "react-perfect-scrollbar": "^1.5.8",
       "react-router-dom": "^5.2.0",
-      "react-timeago": "^5.2.0",
+      "react-timeago": "^6.2.1",
       "styled-components": "^5.2.1",
       "validator": "^13.6.0",
       "winston": "^3.3.3"
@@ -92,12 +93,15 @@ npm manifest:
     "devDependencies": {
       "@babel/plugin-transform-runtime": "^7.13.9",
       "@types/errorhandler": "^1.5.0",
+      "@types/leaflet": "^1.7.5",
       "@types/material-ui": "^0.21.12",
       "@types/morgan": "^1.9.3",
       "@types/node": "^16.11.6",
       "@types/react": "^17.0.33",
       "@types/react-dom": "^17.0.10",
+      "@types/react-leaflet": "^2.8.2",
       "@types/react-router-dom": "^5.3.2",
+      "@types/react-timeago": "^4.1.3",
       "@types/styled-components": "^5.1.15",
       "@types/winston": "^2.4.4",
       "@webpack-cli/generators": "^2.4.1",
@@ -130,9 +134,10 @@ npm manifest:
       "lint:back": "eslint --config ./server-side/.eslintrc.json ./server-side/**/*.js",
       "lint:back:fix": "eslint --fix --config ./server-side/.eslintrc.json ./server-side/**/*.js",
       "test": "mocha",
-      "dev:front": "webpack serve --mode=development --config ./client-side/webpack.config.js --port 3000",
+      "build:front": "webpack build --mode=development --config ./client-side/webpack.config.js",
+      "serve:front": "webpack serve --mode=development --config ./client-side/webpack.config.js --port 3000",
       "build:back": "webpack build --config ./server-side/webpack.config.js --mode=production --stats verbose",
-      "serve:back": "webpack serve --config ./server-side/webpack.config.js --mode=development",
+      "serve:back": "webpack --watch --config ./server-side/webpack.config.js --mode=development",
       "watch": "webpack --watch",
       "serve": "webpack serve"
     },
@@ -1485,6 +1490,11 @@ Lockfile:
       "@types/qs" "*"
       "@types/serve-static" "*"
   
+  "@types/geojson@*":
+    version "7946.0.8"
+    resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
+    integrity sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==
+  
   "@types/glob@^7.1.1":
     version "7.1.3"
     resolved "https://registry.npmjs.org/@types/glob/-/glob-7.1.3.tgz"
@@ -1524,6 +1534,13 @@ Lockfile:
     integrity sha512-OGqtHQ7N5/Ap/TUwO6IgHDuLiAoTmHhGpNvgkCm/F4N6pKzx/RBSfr2OXZSwC6vkfnsEdb6+7DNZVtiXiwdwFw==
     dependencies:
       "@types/node" "*"
+  
+  "@types/leaflet@*", "@types/leaflet@^1.7.5":
+    version "1.7.5"
+    resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.7.5.tgz#7b2bcf1271fb7b8c305e3c468eaad65b6dbac472"
+    integrity sha512-+Myo00Yb5OuvUyrH+vUwn9DRgOaBJsF/etIMdMcNhWGBMo58Mo1cxLInvCd0ZpvItju/AeDYFB/Od2pLiHB3VA==
+    dependencies:
+      "@types/geojson" "*"
   
   "@types/material-ui@^0.21.12":
     version "0.21.12"
@@ -1575,6 +1592,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.6.tgz#6bef7a2a0ad684cf6e90fcfe31cecabd9ce0a3ae"
     integrity sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w==
   
+  "@types/nodemon@latest":
+    version "1.19.1"
+    resolved "https://registry.yarnpkg.com/@types/nodemon/-/nodemon-1.19.1.tgz#00b2b931e240112dff30fc9cadbe3de02b5f3abc"
+    integrity sha512-3teAFqCFba3W9zk4dAGUZ+rW/nrQBrSGXWyK9HfJuWxmITk2z2d3u/5cy7oFqNG2fZxPwSAWkP+a8q/QC6UU5Q==
+    dependencies:
+      "@types/node" "*"
+  
   "@types/normalize-package-data@^2.4.0":
     version "2.4.1"
     resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz"
@@ -1616,6 +1640,14 @@ Lockfile:
     dependencies:
       "@types/react" "*"
   
+  "@types/react-leaflet@^2.8.2":
+    version "2.8.2"
+    resolved "https://registry.yarnpkg.com/@types/react-leaflet/-/react-leaflet-2.8.2.tgz#85b8d82d5204eee792dedd45ccb555c35b8ae2ac"
+    integrity sha512-Iel8Vd1bSCD38Yhiqcmm/+9hjPEdd39LFE3tBMbOytq3QAQsC3LDrbo6ifoh8JbpqPbCsQPo9Wx5OELHixEShg==
+    dependencies:
+      "@types/leaflet" "*"
+      "@types/react" "*"
+  
   "@types/react-router-dom@^5.3.2":
     version "5.3.2"
     resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.3.2.tgz#ebd8e145cf056db5c66eb1dac63c72f52e8542ee"
@@ -1631,6 +1663,13 @@ Lockfile:
     integrity sha512-RNSXOyb3VyRs/EOGmjBhhGKTbnN6fHWvy5FNLzWfOWOGjgVUKqJZXfpKzLmgoU8h6Hj8mpALj/mbXQASOb92wQ==
     dependencies:
       "@types/history" "*"
+      "@types/react" "*"
+  
+  "@types/react-timeago@^4.1.3":
+    version "4.1.3"
+    resolved "https://registry.yarnpkg.com/@types/react-timeago/-/react-timeago-4.1.3.tgz#957baaa9f8ea98457ee63b6a57b57a616066ba35"
+    integrity sha512-XaaMBzuXLw7lxPPDs/fenlohcf3NDqM5qP4oOL/Meu+Hb1QChW4Igw/SruS1llEqch18RQB3wDTIwvqq4nivvw==
+    dependencies:
       "@types/react" "*"
   
   "@types/react-transition-group@^4.2.0":
@@ -4180,7 +4219,7 @@ Lockfile:
   
   file-loader@^6.2.0:
     version "6.2.0"
-    resolved "https://registry.npmjs.org/file-loader/-/file-loader-6.2.0.tgz"
+    resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-6.2.0.tgz#baef7cf8e1840df325e4390b4484879480eebe4d"
     integrity sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==
     dependencies:
       loader-utils "^2.0.0"
@@ -5756,9 +5795,9 @@ Lockfile:
     dependencies:
       leaflet "*"
   
-  leaflet@*:
+  leaflet@*, leaflet@^1.7.1:
     version "1.7.1"
-    resolved "https://registry.npmjs.org/leaflet/-/leaflet-1.7.1.tgz"
+    resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.7.1.tgz#10d684916edfe1bf41d688a3b97127c0322a2a19"
     integrity sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==
   
   levn@^0.4.1:
@@ -6486,13 +6525,13 @@ Lockfile:
     resolved "https://registry.npmjs.org/node-releases/-/node-releases-1.1.75.tgz"
     integrity sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw==
   
-  nodemon-webpack-plugin@^4.4.4:
-    version "4.4.4"
-    resolved "https://registry.npmjs.org/nodemon-webpack-plugin/-/nodemon-webpack-plugin-4.4.4.tgz"
-    integrity sha512-fgRAkKNvek1r5hOY25i9Gxx95nSuHX2hHndgHbTO0HFXNq1ItBjmaBR7U7a2FbQJj4ttfMfKnhqYMzSpM92yBQ==
+  nodemon-webpack-plugin@^4.5.2:
+    version "4.5.2"
+    resolved "https://registry.yarnpkg.com/nodemon-webpack-plugin/-/nodemon-webpack-plugin-4.5.2.tgz#76aeee7f9c73815f64de5e0ae8578122bc3d2639"
+    integrity sha512-+TNh++lIY6qcKOdEP07XhFFW0cN1a2YfyfP3idP7dOtJOUzwcMYZpNRk5iTMtQmMwzJF04obpltwE2KT5FISGw==
     dependencies:
+      "@types/nodemon" latest
       nodemon "2.0.7"
-      ramda "0.27.1"
   
   nodemon@2.0.7, nodemon@^2.0.7:
     version "2.0.7"
@@ -7294,11 +7333,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
     integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
   
-  ramda@0.27.1:
-    version "0.27.1"
-    resolved "https://registry.npmjs.org/ramda/-/ramda-0.27.1.tgz"
-    integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
-  
   random-bytes@~1.0.0:
     version "1.0.0"
     resolved "https://registry.npmjs.org/random-bytes/-/random-bytes-1.0.0.tgz"
@@ -7407,10 +7441,10 @@ Lockfile:
       tiny-invariant "^1.0.2"
       tiny-warning "^1.0.0"
   
-  react-timeago@^5.2.0:
-    version "5.2.0"
-    resolved "https://registry.npmjs.org/react-timeago/-/react-timeago-5.2.0.tgz"
-    integrity sha512-wCEEDGQHMdFh/PLp+Hj5vk9ZoC4KjQ5u0u6+KrrY9rny5LqJ2gZvNNEAS4mhSZDV1i7JLgQI5VQTAux7f+vj2w==
+  react-timeago@^6.2.1:
+    version "6.2.1"
+    resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-6.2.1.tgz#f19716811156617ceb9c9f9a44315d85197c7fba"
+    integrity sha512-b9EObWO8wy4qwfOzj+g/RQZRrPvtMv1Pz12FCdAWKWCXbDGt0rZLyiyTGEr0Lh1O8w5xa48CtRpl3LI+CtGCyw==
   
   react-transition-group@^4.4.0:
     version "4.4.1"

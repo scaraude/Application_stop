@@ -9,6 +9,11 @@ import { Panel } from "./style/styledComponents";
 
 const StyledContainer = styled.div`
   z-index: 5;
+  background-color: #000000;
+`;
+
+const StyledDrawer = styled(Drawer)`
+  color: #000000;
 `;
 
 interface SidebarProps {
@@ -26,7 +31,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   return (
     <StyledContainer>
-      <Drawer
+      <StyledDrawer
         anchor="right"
         open={open || isOpenToAddSpot}
         onClose={() => handleDrawerClose()}
@@ -45,7 +50,7 @@ const Sidebar = ({
             />
           }
         </Panel>
-      </Drawer>
+      </StyledDrawer>
     </StyledContainer>
   );
 };

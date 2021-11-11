@@ -58,7 +58,7 @@ const Map = () => {
           <SearchField />
         </SearchFieldHolder>
 
-        {spots.map((spot) =>
+        {/* {spots.map((spot) =>
           <Marker
             key={spot._id}
             position={{ lat: spot.gps.lat, lng: spot.gps.lon }}
@@ -68,7 +68,7 @@ const Map = () => {
               },
             }}
           />
-        )}
+        )} */}
         <AddSpotButton handleClick={openSidebarToAddSpot} />
 
         <Sidebar
