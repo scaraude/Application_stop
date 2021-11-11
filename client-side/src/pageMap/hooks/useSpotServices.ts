@@ -1,4 +1,4 @@
-import { useAuthHeader } from "../../pageAuth/hooks/useAuthHeader";
+import { postAuthJson } from "../../utils/api-request";
 
 export type Spot = {
   _id?: string;
@@ -17,13 +17,7 @@ export type Spot = {
 export const useSpotServices = () => {
 
   const addSpot = async (spotInfos: Spot) => {
-    const authHeader = useAuthHeader();
-
-    return await fetch("api/spot/create", {
-      method: "POST",
-      headers: { ...authHeader, "Content-Type": "application/json" },
-      body: JSON.stringify(spotInfos),
-    });
+    return await postAuthJson("api/spot/create", spotInfos);
   };
 
   return {
