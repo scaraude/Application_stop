@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import TimeAgo from "react-timeago";
-import { Comment } from "../SidebarSpotInfos"
 import { RenderRating } from "./RenderRating";
 import { Card } from "../styled/Card";
-
+import { Comment } from '../get-comments.hook'
 
 const CommentSection = styled.div`
   width: 100%;

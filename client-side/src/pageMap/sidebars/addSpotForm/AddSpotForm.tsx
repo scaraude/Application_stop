@@ -9,7 +9,6 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useSpotServices } from "../../hooks/useSpotServices";
-import PropTypes from "prop-types";
 import { Marker, useMapEvent } from "react-leaflet";
 import { SidebarHeader } from "../SidebarHeader";
 

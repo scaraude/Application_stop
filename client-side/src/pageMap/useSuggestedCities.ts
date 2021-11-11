@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { requestGetJson } from "../utils/api-request";
 
 export type GeoApiCity = {
   nom: string,
@@ -19,11 +20,9 @@ export default function useSuggestedCities(inputValue: string | undefined) {
     }
 
     (async () => {
-      const response = await fetch(
+      const cities = <GeoApiCity[] | undefined>await requestGetJson(
         `https://geo.api.gouv.fr/communes?nom=${inputValue}&fields=nom,centre,departement,codesPostaux&boost=population&limit=5`
       );
-
-      const cities = <GeoApiCity[] | undefined>await response.json();
 
       if (active) {
         setCities(cities);

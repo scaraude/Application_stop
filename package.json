@@ -27,7 +27,6 @@
     "bcrypt": "^5.0.0",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
-    "cross-fetch": "^3.0.6",
     "dotenv": "^8.2.0",
     "easy-scroll": "^0.7.0",
     "ejs": "^3.1.5",

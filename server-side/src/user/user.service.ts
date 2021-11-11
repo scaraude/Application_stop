@@ -17,15 +17,15 @@ const createUser = async ({ username, email, password, roles }: User): Promise<U
 
   user.roles = rolesRelatedToUser.map((role) => role._id);
 
-  return await user.save();
+  return user.save();
 };
 
 const getUserByUsername = async (username: User["username"]) => {
-  return await userModel.findOne({ username }).populate("roles", "-__v");
+  return userModel.findOne({ username }).populate("roles", "-__v");
 };
 
 const getUserIdByEmail = async (email: User["email"]) => {
-  return await userModel.findOne({ email }).populate("roles", "-__v");
+  return userModel.findOne({ email }).populate("roles", "-__v");
 };
 
 const deleteUserByEmail = async (email: User["email"]) => {

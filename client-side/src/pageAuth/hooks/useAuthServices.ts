@@ -1,9 +1,9 @@
-import { postJson } from "../../utils/api-request";
+import { requestPostJson } from "../../utils/api-request";
 import { ItemEnum, removeStoredItem, setStoredItem } from "../../utils/local-storage-API";
 import { User } from "../types";
 
 const login = async (username: string, password: string) => {
-  const response = await postJson("api/auth/signin", { username, password });
+  const response = await requestPostJson("api/auth/signin", { username, password });
 
   const user = <User | undefined>await response.json();
   if (user) {
@@ -18,7 +18,7 @@ const logout = () => {
 };
 
 const register = async (username: string, email: string, password: string) => {
-  return postJson("api/auth/signup", {
+  return requestPostJson("api/auth/signup", {
     username,
     email,
     password,

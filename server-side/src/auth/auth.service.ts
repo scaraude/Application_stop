@@ -9,6 +9,11 @@ import { logger } from "../utils/logger";
 import { User } from "../user/user.model";
 import { RequestWithMaybeAuthInformation } from "./types";
 
+interface JwtAuthPayload {
+  id: string,
+  roles: RoleEnum[],
+}
+
 const verifyToken = (req: RequestWithMaybeAuthInformation, res: Response, next: NextFunction): Response | void => {
   const token = req.headers["x-access-token"];
 
@@ -65,13 +70,8 @@ const validatePassword = (inputPassword: string, userPassword: User["password"])
   return bcrypt.compareSync(inputPassword, userPassword);
 };
 
-interface JwtAuthPayload {
-  id: string,
-  roles: RoleEnum[],
-}
-
 const generateJwtToken = (payload: JwtAuthPayload) => {
-  const oneDayInSecond = 3600 * 60 * 24;
+  const oneDayInSecond = 60 * 60 * 24;
   return sign(payload, config.secret, {
     expiresIn: oneDayInSecond,
   });

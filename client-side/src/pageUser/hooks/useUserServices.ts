@@ -1,15 +1,12 @@
 import { useAuthHeader } from "../../pageAuth/hooks/useAuthHeader";
 import { useCurrentUser } from "../../pageAuth/hooks/useCurrentUser";
+import { requestPostAuthJson } from "../../utils/api-request";
 
 export const useUserServices = () => {
   const { email } = useCurrentUser();
-  
+
   const deleteCurrentUser = async () => {
-    const deleteUserReponse = await fetch("api/user/delete", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...useAuthHeader() },
-      body: JSON.stringify({ email }),
-    });
+    const deleteUserReponse = requestPostAuthJson("api/user/delete", { email })
 
     return deleteUserReponse;
   };

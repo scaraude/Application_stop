@@ -8,37 +8,23 @@ import Tabs from "@material-ui/core/Tabs";
 import ScrollBar from "react-perfect-scrollbar";
 import { SidebarHeader } from "../SidebarHeader";
 import { Spot } from "../../hooks/useSpotServices";
+import { useComments } from "./get-comments.hook";
 
 interface SidebarSpotInfosProps {
   handleDrawerClose: () => void;
   spot: Spot;
 }
 
-export type Comment = {
-  id: string;
-  score: number;
-  createdAt: Date;
-  userId: string;
-  text: string;
-}
-
 const SidebarSpotInfos = ({ handleDrawerClose, spot }: SidebarSpotInfosProps) => {
   const [tabValue, setTabValue] = useState(0);
-  const [comments, setComments] = useState<Comment[]>([]);
   const refSpotInfos = useRef<HTMLDivElement | null>(null);
   const refScrollBar = useRef<HTMLElement | null>(null);
+  const comments = useComments(spot._id);
 
   useEffect(() => {
     setTabValue(0);
   }, []);
 
-  useEffect(() => {
-    if (!spot) return;
-    (async () => {
-      const response = await fetch(`/api/comment/${spot._id}`);
-      setComments(await response.json())
-    })
-  }, [spot]);
 
   const handleChangeOnTab = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
@@ -78,14 +64,14 @@ const SidebarSpotInfos = ({ handleDrawerClose, spot }: SidebarSpotInfosProps) =>
             aria-label="nav tabs"
           >
             <Tab label="Informations" />
-            <Tab label="Commentaires" disabled={comments.length === 0} />
+            <Tab label="Commentaires" disabled={comments?.length === 0} />
           </Tabs>
         }
       />
 
       <Body>
         <RenderSpotInfos ref={refSpotInfos} spot={spot} />
-        {comments.length > 0 && <RenderComments comments={comments} />}
+        {comments && <RenderComments comments={comments} />}
       </Body>
     </ScrollBar>
   );
