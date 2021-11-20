@@ -1,7 +1,7 @@
 import React from 'react';
 import ArrowRightAltRoundedIcon from "@material-ui/icons/ArrowRightAltRounded";
-import { Header, StyledIconButtons } from './style/styledComponents';
 import IconButton from "@material-ui/core/IconButton";
+import { Header, StyledIconButtons } from './sidebarHeader.styled';
 
 interface SidebarHeaderProps {
   rightChildren?: React.ReactNode;

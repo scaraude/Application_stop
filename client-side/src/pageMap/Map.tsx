@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { AddSpotButton } from "./addSpotButton/AddSpotButton";
 import { Spot } from "./hooks/useSpotServices";
 import SearchField from "./SearchField";
-import Sidebar from "./sidebars/Sidebar";
+import { Sidebar } from "../components/Sidebar/Sidebar";
 import useGetAllSpots from "./useGetAllSpots";
 
 const StyledContainer = styled.div`
@@ -71,12 +71,13 @@ const Map = () => {
         )} */}
         <AddSpotButton handleClick={openSidebarToAddSpot} />
 
-        <Sidebar
+        <Sidebar />
+        {/* <Sidebar
           open={currentSpot !== null ? true : false}
           spot={currentSpot}
           isOpenToAddSpot={isSidebarOpenToAddSpot}
           handleDrawerClose={handleDrawerClose}
-        />
+        /> */}
         <ZoomControl position="bottomright" />
       </MapContainer>
     </StyledContainer>

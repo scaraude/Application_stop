@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NAVBAR_HEIGHT } from "../../../NavBar/NavBar";
+import { NAVBAR_HEIGHT } from "../../../components/NavBar/NavBar";
 
 export const Panel = styled.div`
   position: relative;
@@ -10,20 +10,6 @@ export const Panel = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   `;
-
-export const Header = styled.div`
-  background-color: #ececec;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  width: 100%;
-`;
-
-export const StyledIconButtons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
 
 export const Body = styled.div`
   background-color: #ececec;

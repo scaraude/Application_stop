@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useSpotServices } from "../../hooks/useSpotServices";
 import { Marker, useMapEvent } from "react-leaflet";
-import { SidebarHeader } from "../SidebarHeader";
+import { SidebarHeader } from "../../../components/Sidebar/headers/SidebarHeader";
 
 const StyledAddSpotForm = styled.form`
   display: flex;

@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Logo from "./Logo.png";
-import { useCurrentUser } from "../pageAuth/hooks/useCurrentUser";
+import { useCurrentUser } from "../../pageAuth/hooks/useCurrentUser";
 
 export const NAVBAR_HEIGHT = 54;
 

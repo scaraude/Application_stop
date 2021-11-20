@@ -49,6 +49,9 @@ const config = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@utils": path.resolve(__dirname, 'packages/utils'),
+    },
   },
 };
 

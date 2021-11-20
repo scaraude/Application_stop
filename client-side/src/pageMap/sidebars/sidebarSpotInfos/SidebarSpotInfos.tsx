@@ -6,7 +6,7 @@ import { RenderSpotIcons } from "./renders/RenderSpotIconButtons";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import ScrollBar from "react-perfect-scrollbar";
-import { SidebarHeader } from "../SidebarHeader";
+import { SidebarHeader } from "../../../components/Sidebar/headers/SidebarHeader";
 import { Spot } from "../../hooks/useSpotServices";
 import { useComments } from "./get-comments.hook";
 
