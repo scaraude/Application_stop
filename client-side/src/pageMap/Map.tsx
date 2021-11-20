@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { MapContainer, Marker, TileLayer, ZoomControl } from "react-leaflet";
+import { Route } from "react-router-dom";
 import styled from "styled-components";
+import { Sidebar as ComponentSidebar } from "../components/Sidebar/Sidebar";
 import { AddSpotButton } from "./addSpotButton/AddSpotButton";
 import { Spot } from "./hooks/useSpotServices";
+import { MapRouter } from "./MapRouter";
 import SearchField from "./SearchField";
-import { Sidebar } from "../components/Sidebar/Sidebar";
+import Sidebar from "./sidebars/Sidebar";
 import useGetAllSpots from "./useGetAllSpots";
 
 const StyledContainer = styled.div`
@@ -23,6 +26,20 @@ const SearchFieldHolder = styled.div`
   z-index: 1000;
   background-color: white;
 `;
+
+const renderMarker = (spot: Spot, setCurrentSpot: React.Dispatch<React.SetStateAction<Spot | null>>) => {
+  if (!spot.gps.lat || !spot.gps.lon) return null;
+  return (
+    <Marker
+      key={spot._id}
+      position={[spot.gps.lat, spot.gps.lon]}
+      eventHandlers={{
+        click: () => {
+          setCurrentSpot(spot);
+        },
+      }}
+    />)
+}
 
 const Map = () => {
   const [currentSpot, setCurrentSpot] = useState<Spot | null>(null);
@@ -58,26 +75,16 @@ const Map = () => {
           <SearchField />
         </SearchFieldHolder>
 
-        {/* {spots.map((spot) =>
-          <Marker
-            key={spot._id}
-            position={{ lat: spot.gps.lat, lng: spot.gps.lon }}
-            eventHandlers={{
-              click: () => {
-                setCurrentSpot(spot);
-              },
-            }}
-          />
-        )} */}
+        {spots?.map((spot) => renderMarker(spot, setCurrentSpot))}
         <AddSpotButton handleClick={openSidebarToAddSpot} />
 
-        <Sidebar />
-        {/* <Sidebar
+        <MapRouter />
+        <Sidebar
           open={currentSpot !== null ? true : false}
           spot={currentSpot}
           isOpenToAddSpot={isSidebarOpenToAddSpot}
           handleDrawerClose={handleDrawerClose}
-        /> */}
+        />
         <ZoomControl position="bottomright" />
       </MapContainer>
     </StyledContainer>

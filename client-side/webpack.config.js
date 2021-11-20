@@ -11,6 +11,7 @@ const config = {
   },
   devtool: "eval-source-map",
   devServer: {
+    historyApiFallback: true,
     open: true,
     host: "localhost",
     hot: true,
