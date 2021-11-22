@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { Sidebar } from "../components/Sidebar/Sidebar";
+import { CreateSpot } from "./create/CreateSpot";
 
 export const MapRouter = () => (
     <Switch>
-        <Route path="/spot-details">
-            <Sidebar />
+        <Route path="/create">
+            <CreateSpot />
         </Route>
     </Switch>
 )

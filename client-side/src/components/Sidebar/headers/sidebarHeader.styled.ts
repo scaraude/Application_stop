@@ -4,12 +4,12 @@ export const Header = styled.div`
 position: -webkit-sticky;
 position: sticky;
 top: 0;
-width: 100%;
+width: auto;
 `;
 
 export const StyledIconButtons = styled.div`
 padding: 8px;
-width: 100%;
+width: auto;
 display: flex;
 justify-content: space-between;
 `;

@@ -9,7 +9,7 @@ import { Sidebar } from "./components/Sidebar/Sidebar";
 
 const App = () =>
   <Router>
-    <NavBar />
+    <NavBar disabled />
     <Switch>
       <Route path="/">
         <Map />
