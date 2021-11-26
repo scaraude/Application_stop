@@ -76,7 +76,7 @@ const Map = () => {
         </SearchFieldHolder>
 
         {spots?.map((spot) => renderMarker(spot, setCurrentSpot))}
-        <AddSpotButton handleClick={openSidebarToAddSpot} />
+        <AddSpotButton />
 
         <MapRouter />
         <Sidebar

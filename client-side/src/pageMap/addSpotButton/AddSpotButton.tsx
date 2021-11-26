@@ -2,6 +2,7 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AddLocationIcon from "@material-ui/icons/AddLocation";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 const StyledIconButton = styled.div`
   position: absolute;
@@ -11,11 +12,14 @@ const StyledIconButton = styled.div`
   transform: translateX(-50%);
 `;
 
-interface AddSpotButtonProps {
-  handleClick: () => void
-}
 
-export const AddSpotButton = ({ handleClick }: AddSpotButtonProps) => {
+export const AddSpotButton = () => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push("/create")
+  }
+
   return (
     <StyledIconButton>
       <IconButton
