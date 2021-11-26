@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { User, userModel } from "./user.model";
 import { roleModel } from "../role/role.model";
 

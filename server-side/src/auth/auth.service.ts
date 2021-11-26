@@ -1,6 +1,6 @@
 import { verify, sign, JwtPayload } from "jsonwebtoken";
 import { config } from "./auth.config";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { userService } from "../user/user.service";
 import validator from "validator";
 import { Request, Response, NextFunction } from "express";
@@ -9,7 +9,7 @@ import { logger } from "../utils/logger";
 import { User } from "../user/user.model";
 import { RequestWithMaybeAuthInformation } from "./types";
 
-interface JwtAuthPayload {
+interface JwtAuthPayload extends JwtPayload {
   id: string,
   roles: RoleEnum[],
 }
@@ -21,7 +21,7 @@ const verifyToken = (req: RequestWithMaybeAuthInformation, res: Response, next: 
     return res.status(403).send({ message: "No token provided!" });
   }
 
-  const tokenPayload = verify(token[0], config.secret) as JwtAuthPayload;
+  const tokenPayload = <JwtAuthPayload>verify(token[0], config.secret);
 
   if (!tokenPayload) {
     return res.status(401).send({ message: "Unauthorized!" });
