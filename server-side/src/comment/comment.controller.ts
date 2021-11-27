@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { RequestWithMaybeAuthInformation } from "../auth/types";
-import { spotModel } from "../spot/Spot.model";
+import { spotModel } from "../spot/models/Spot.model";
 import { userModel } from "../user/user.model";
 import { commentModel } from "./Comment.model";
 

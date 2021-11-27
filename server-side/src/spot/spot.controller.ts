@@ -1,4 +1,4 @@
-import { spotModel } from "./Spot.model";
+import { spotModel } from "./models/Spot.model";
 import { Request, Response } from "express";
 
 export const createSpot = async (req: Request, res: Response) => {
