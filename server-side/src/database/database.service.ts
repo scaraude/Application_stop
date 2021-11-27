@@ -1,5 +1,5 @@
 import { connect } from "mongoose";
-import { databaseConfig } from "./database.config";
+import { databaseConfig } from "../config/database.config";
 import { roleModel } from "../role/role.model";
 import { logger } from "../utils/logger";
 
