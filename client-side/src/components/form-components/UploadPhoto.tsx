@@ -9,9 +9,9 @@ interface PhotoUploaderProps {
 const AddPhotoCard = styled.div`
     width: 100%;
     min-height: 15vh;
-    background-color: #c5c5c5;
-    border-radius: 8px;
-    border: 1px solid #777;
+    background-color: #e2e2e2;
+    border-radius: 4px;
+    border: 1px solid #b4b4b4;
     cursor: pointer;
     display: flex;
     flex-direction: column;

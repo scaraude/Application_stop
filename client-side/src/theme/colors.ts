@@ -1,1 +1,1 @@
-export const COMPONENT_BACKGROUND = "#DCDCDC"; //gainsboro
+export const COMPONENT_BACKGROUND = "#FEFEFE";

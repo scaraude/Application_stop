@@ -8,7 +8,7 @@ width: auto;
 `;
 
 export const StyledIconButtons = styled.div`
-padding: 8px;
+padding: 0px 8px;
 width: auto;
 display: flex;
 justify-content: space-between;

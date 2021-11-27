@@ -5,11 +5,12 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import { Emotion } from "../types";
 import styled from "styled-components";
+import { Box } from "@mui/system";
 
 const emotionColor: Record<Emotion, string> = {
-    [Emotion.GOOD]: "#167c3d",
-    [Emotion.BAD]: "#7c1616",
-    [Emotion.DANGEROUS]: "#7c5016",
+  [Emotion.GOOD]: "#167c3d",
+  [Emotion.BAD]: "#7c1616",
+  [Emotion.DANGEROUS]: "#7c5016",
 }
 
 const TabGood = styled(Tab)`
@@ -29,22 +30,24 @@ const TabDangerous = styled(Tab)`
 `;
 
 const getIndicatorColor = (emotion: Emotion | undefined): string => {
-    if (!emotion) return "#0000000"
+  if (!emotion) return "#0000000"
 
-    return emotionColor[emotion];
+  return emotionColor[emotion];
 }
 
 interface EmotionSelectorProps {
-    emotion: Emotion | undefined;
-    handleChange: (event: React.SyntheticEvent<Element, Event>, newValue: Emotion) => void;
+  emotion: Emotion | undefined;
+  handleChange: (event: React.SyntheticEvent<Element, Event>, newValue: Emotion) => void;
 }
 
 export const EmotionSelector = ({ emotion, handleChange }: EmotionSelectorProps): JSX.Element => {
-    return (
-        <Tabs value={emotion ?? false} onChange={handleChange} aria-label="spot-emotion" variant="fullWidth" textColor="inherit" TabIndicatorProps={{ style: { background: getIndicatorColor(emotion) } }}>
-            <TabGood icon={<ThumbUpIcon />} label="Good !" value={Emotion.GOOD} />
-            <TabBad icon={<ThumbDownIcon />} label="Bad" value={Emotion.BAD} />
-            <TabDangerous icon={<WarningRoundedIcon />} label="Dangerous" value={Emotion.DANGEROUS} />
-        </Tabs>
-    )
+  return (
+    <Box boxShadow="1px 1px 1px 2px #dbdbdb">
+      <Tabs value={emotion ?? false} onChange={handleChange} aria-label="spot-emotion" variant="fullWidth" textColor="inherit" TabIndicatorProps={{ style: { background: getIndicatorColor(emotion) } }}>
+        <TabGood icon={<ThumbUpIcon />} label="Cool !" value={Emotion.GOOD} />
+        <TabBad icon={<ThumbDownIcon />} label="Pas cool" value={Emotion.BAD} />
+        <TabDangerous icon={<WarningRoundedIcon />} label="Dangereux" value={Emotion.DANGEROUS} />
+      </Tabs>
+    </Box>
+  )
 }
