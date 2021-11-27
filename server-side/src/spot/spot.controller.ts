@@ -1,10 +1,17 @@
 import { spotModel } from "./models/Spot.model";
 import { Request, Response } from "express";
+import { SpotInput } from "./spot.types";
+import { createAndSaveSpot } from "./spot.service";
+import { RequestWithMaybeAuthInformation } from "../auth/types";
 
-export const createSpot = async (req: Request, res: Response) => {
-  const spot = req.body;
-  const spotDocument = await spotModel.create(spot);
-  const savedSpot = await spotDocument.save();
+export const createSpot = async (req: RequestWithMaybeAuthInformation, res: Response) => {
+  const spot: SpotInput = req.body;
+  const { userId } = req;
+
+  if (!userId) throw new Error("Need authentification");
+
+  const savedSpot = await createAndSaveSpot(spot, userId)
+
   res.status(201).json({ message: "Nouveau spot enregistré :", spot: savedSpot });
 };
 
