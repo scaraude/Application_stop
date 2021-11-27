@@ -1,10 +1,9 @@
-import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthServices } from "./hooks/useAuthServices";
 import { useHistory } from "react-router-dom";
@@ -16,7 +15,7 @@ import {
   Title,
   InputControl,
 } from "./styles/styledComponents";
-import { paperStyle, inputStyle } from "./styles/style";
+import { paperStyle, inputStyle, AuthCard } from "./styles/style";
 import PasswordFieldProps from "./components/PasswordField";
 
 type FieldErrors = {
@@ -24,11 +23,16 @@ type FieldErrors = {
   password?: string;
 }
 const Login = () => {
-  const [username, setUsername] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | undefined>(undefined);
+  const [password, setPassword] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<FieldErrors>({ username: undefined, password: undefined });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isUserLogged } = useAuthServices();
   const history = useHistory();
+
+  useEffect(() => {
+    if (isUserLogged()) history.push("/");
+  }, [])
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     const { login } = useAuthServices();
@@ -73,7 +77,7 @@ const Login = () => {
         <Label>
           Pas encore membre ? <Link to="/signup">Rejoins-nous !</Link>
         </Label>
-        <Paper style={paperStyle} elevation={3}>
+        <AuthCard style={paperStyle} elevation={3}>
           <StyledForm autoComplete="off" id="login-form" onSubmit={handleLogin}>
             <Title>Connexion !</Title>
             <InputControl>
@@ -110,7 +114,7 @@ const Login = () => {
               </Button>
             </InputControl>
           </StyledForm>
-        </Paper>
+        </AuthCard>
       </Frame>
     </Container>
   );

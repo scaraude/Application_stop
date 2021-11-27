@@ -11,7 +11,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { CSSProperties } from "styled-components";
 
 interface PasswordFieldProps {
-  value: string | null;
+  value: string | undefined;
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   onFocus?: () => void;
   style?: CSSProperties;
@@ -46,7 +46,7 @@ const PasswordField = ({
         id="password"
         name={name}
         type={showPassword ? "text" : "password"}
-        value={password}
+        value={password ?? ""}
         onChange={handleChange}
         aria-describedby="mail-helper-text"
         endAdornment={

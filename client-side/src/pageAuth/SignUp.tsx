@@ -6,12 +6,12 @@ import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PasswordFieldProps from "./components/PasswordField";
 import { useValidator } from "./hooks/useFieldsValidator";
 import { useAuthServices } from "./hooks/useAuthServices";
 
-import { inputStyle, paperStyle } from "./styles/style";
+import { AuthCard, inputStyle, paperStyle } from "./styles/style";
 import {
   Container,
   Frame,
@@ -33,16 +33,16 @@ interface SignInFormErrors {
 }
 
 const SignUp = () => {
-  const [username, setUsername] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | undefined>(undefined);
+  const [password, setPassword] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<SignInFormErrors>({});
-  const [registrationState, setRegistrationState] = useState<RegistrationState | null>(null);
+  const history = useHistory();
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     const { findValidationErrors } = useValidator();
-    const { register } = useAuthServices();
+    const { register, login } = useAuthServices();
     event.preventDefault();
 
     setErrors({});
@@ -55,13 +55,16 @@ const SignUp = () => {
 
     if (Object.keys(validationErrors).length === 0 && username && email && password) {
       try {
-        const response = await register(username, email, password);
-        const responseBody = await response.json();
-        setRegistrationState({
-          message: responseBody.message,
-          successful: true,
-        });
+        await register(username, email, password);
+        await login(username, password);
+
+        setIsLoading(false);
+
+        history.push("/");
+
       } catch (error: any) {
+        console.log(`error`, error)
+
         const resMessage =
           error.response &&
           error.response.data &&
@@ -69,10 +72,6 @@ const SignUp = () => {
           error.message ||
           error.toString();
 
-        setRegistrationState({
-          successful: false,
-          message: resMessage,
-        });
         setIsLoading(false);
       }
     }
@@ -86,7 +85,7 @@ const SignUp = () => {
         <Label>
           Déjà membre ? <Link to="/login">Connecte-toi !</Link>
         </Label>
-        <Paper style={paperStyle} elevation={3}>
+        <AuthCard elevation={3}>
           <StyledForm
             autoComplete="off"
             id="login-form"
@@ -100,7 +99,7 @@ const SignUp = () => {
                 id="username"
                 name="username"
                 label="Username, name, secret identity..."
-                value={username}
+                value={username ?? ""}
                 onChange={(event) => setUsername(event.target.value)}
                 error={Boolean(errors["username"])}
                 helperText={errors["username"] || " "}
@@ -113,7 +112,7 @@ const SignUp = () => {
                 id="email"
                 name="email"
                 label="Email"
-                value={email}
+                value={email ?? ""}
                 onChange={(e) => setEmail(e.target.value)}
                 error={Boolean(errors["email"])}
                 helperText={errors["email"] || " "}
@@ -140,7 +139,7 @@ const SignUp = () => {
               </Button>
             </InputControl>
           </StyledForm>
-        </Paper>
+        </AuthCard>
       </Frame>
     </Container>
   );

@@ -11,7 +11,7 @@ const App = () =>
   <Router>
     <NavBar disabled />
     <Switch>
-      <Route path="/">
+      <Route exact path="/">
         <Map />
       </Route>
       <Route path="/login">

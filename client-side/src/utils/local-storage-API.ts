@@ -4,6 +4,11 @@ export enum ItemEnum {
     USER = "user"
 }
 
+export const isItemStored = (item: ItemEnum): boolean => {
+    const storedItem = localStorage.getItem(item);
+    return !!storedItem;
+}
+
 export const getStoredItem = (item: ItemEnum): User => {
     const storedItem = localStorage.getItem(item);
 

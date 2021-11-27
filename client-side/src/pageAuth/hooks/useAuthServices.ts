@@ -1,5 +1,5 @@
 import { requestPostJson } from "../../utils/api-request";
-import { ItemEnum, removeStoredItem, setStoredItem } from "../../utils/local-storage-API";
+import { isItemStored, ItemEnum, removeStoredItem, setStoredItem } from "../../utils/local-storage-API";
 import { User } from "../types";
 
 const login = async (username: string, password: string) => {
@@ -25,10 +25,15 @@ const register = async (username: string, email: string, password: string) => {
   })
 };
 
+const isUserLogged = () => {
+  return isItemStored(ItemEnum.USER)
+}
+
 export const useAuthServices = () => {
   return {
     login,
     logout,
     register,
+    isUserLogged,
   };
 };
