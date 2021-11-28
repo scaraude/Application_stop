@@ -1,11 +1,10 @@
-import { Tab, Tabs } from "@mui/material"
+import { Tab, Tabs, Paper } from "@mui/material"
 import React from "react"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import { Emotion } from "../types";
 import styled from "styled-components";
-import { Box } from "@mui/system";
 
 const emotionColor: Record<Emotion, string> = {
   [Emotion.GOOD]: "#167c3d",
@@ -29,6 +28,10 @@ const TabDangerous = styled(Tab)`
   }
 `;
 
+const CustomPaper = styled(Paper) <{ error?: boolean }>`
+  border: ${props => props.error ? "1px solid #df5d5d" : "none"};
+`
+
 const getIndicatorColor = (emotion: Emotion | undefined): string => {
   if (!emotion) return "#0000000"
 
@@ -38,16 +41,18 @@ const getIndicatorColor = (emotion: Emotion | undefined): string => {
 interface EmotionSelectorProps {
   emotion: Emotion | undefined;
   handleChange: (event: React.SyntheticEvent<Element, Event>, newValue: Emotion) => void;
+  error?: string;
 }
 
-export const EmotionSelector = ({ emotion, handleChange }: EmotionSelectorProps): JSX.Element => {
+export const EmotionSelector = ({ emotion, handleChange, error }: EmotionSelectorProps): JSX.Element => {
+
   return (
-    <Box boxShadow="1px 1px 1px 2px #dbdbdb">
+    <CustomPaper elevation={2} error={!!error}>
       <Tabs value={emotion ?? false} onChange={handleChange} aria-label="spot-emotion" variant="fullWidth" textColor="inherit" TabIndicatorProps={{ style: { background: getIndicatorColor(emotion) } }}>
         <TabGood icon={<ThumbUpIcon />} label="Cool !" value={Emotion.GOOD} />
         <TabBad icon={<ThumbDownIcon />} label="Pas cool" value={Emotion.BAD} />
         <TabDangerous icon={<WarningRoundedIcon />} label="Dangereux" value={Emotion.DANGEROUS} />
       </Tabs>
-    </Box>
+    </CustomPaper>
   )
 }

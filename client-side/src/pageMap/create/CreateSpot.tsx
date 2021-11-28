@@ -1,8 +1,7 @@
-import { Autocomplete, Chip, Typography } from "@mui/material"
+import { Autocomplete } from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
-import { title } from "process"
 import React, { useState } from "react"
 import { Marker, useMapEvent } from "react-leaflet"
 import styled from "styled-components"
@@ -26,19 +25,20 @@ const SidebarFooter = styled.footer`
 `
 
 export const CreateSpot = () => {
+    const map = useMapEvent('move', () => {
+        setMapCenter(map.getCenter());
+    });
+    const [mapCenter, setMapCenter] = useState(map.getCenter());
     const [name, setName] = useState<string | undefined>(undefined)
     const [photo, setPhoto] = useState<File | undefined>(undefined);
     const [emotion, setEmotion] = useState<Emotion | undefined>(undefined)
     const [selectedCities, setSelectedCities] = useState<GeoApiCity[]>([])
     const [cityInput, setCityInput] = useState<string | undefined>(undefined)
     const [comment, setComment] = useState<string | undefined>(undefined)
+    const [formErrors, setFormErrors] = useState<{ emotion?: string, destination?: string }>({})
+
     const proposedCities = useSuggestedCities(cityInput)
     const cityOptions = proposedCities?.filter((proposedCity) => !selectedCities.map((selectedCity) => selectedCity.code).includes(proposedCity.code));
-    const map = useMapEvent('move', () => {
-        setMapCenter(map.getCenter());
-    });
-    const [mapCenter, setMapCenter] = useState(map.getCenter());
-
 
     const handleEmotionChange = (event: React.SyntheticEvent<Element, Event>, newValue: typeof emotion) => {
         setEmotion(newValue);
@@ -50,13 +50,20 @@ export const CreateSpot = () => {
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setFormErrors({});
+
+        if (!emotion) setFormErrors(Object.assign(formErrors, { emotion: "Dis nous ce que t'en penses !" }))
+        if (!selectedCities.length) setFormErrors(Object.assign(formErrors, { destination: "Il nous faut au moins une destination !" }))
+
         console.log(`name`, name)
+        console.log(`mapCenter`, mapCenter)
         console.log(`emotion`, emotion)
         console.log(`photo`, photo)
         console.log(`destinations`, selectedCities)
         console.log(`comment`, comment)
     }
 
+    console.log(`formErrors.destination`, formErrors.destination)
     return (
         <>
             {mapCenter && <Marker position={mapCenter} />}
@@ -73,7 +80,7 @@ export const CreateSpot = () => {
                             onChange={(event) => setName(event.target.value)}
                             autoFocus
                         />
-                        <EmotionSelector emotion={emotion} handleChange={handleEmotionChange} />
+                        <EmotionSelector emotion={emotion} handleChange={handleEmotionChange} error={formErrors.emotion} />
                         <PhotoUploader handleFileChange={(file: File | undefined) => setPhoto(file)} />
                         <Autocomplete
                             id="spot-destinations"
@@ -90,6 +97,8 @@ export const CreateSpot = () => {
                                 <TextField
                                     {...params}
                                     label="Destinations"
+                                    error={!!formErrors.destination}
+                                    helperText={formErrors.destination}
                                 />
                             )}
                         />
