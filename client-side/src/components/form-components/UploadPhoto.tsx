@@ -1,9 +1,10 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import React from 'react';
+import { Dialog } from '@mui/material';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 interface PhotoUploaderProps {
-    handleFile: (file: File | undefined) => void;
+    handleFileChange: (file: File | undefined) => void;
 }
 
 const AddPhotoCard = styled.div`
@@ -23,24 +24,31 @@ const Text = styled.span`
     color: #777;
 `
 
-export const PhotoUploader = ({ handleFile }: PhotoUploaderProps) => {
+export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
+    const [photo, setPhoto] = useState<File | undefined>(undefined)
     const hiddenFileInput = React.useRef<HTMLInputElement | null>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    const handleClick = () => {
         hiddenFileInput?.current?.click();
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileUploaded = event.target?.files?.[0];
-        handleFile(fileUploaded);
+        setPhoto(fileUploaded);
+        handleFileChange(fileUploaded);
     };
 
     return (
         <>
-            <AddPhotoCard onClick={handleClick}>
-                <AddAPhotoIcon fontSize="large" htmlColor="#777" />
-                <Text>Upload a photo</Text>
-            </AddPhotoCard>
+            {photo ?
+                <img src={URL.createObjectURL(photo)} height={200} onClick={handleClick} /> :
+                <>
+                    <AddPhotoCard onClick={handleClick}>
+                        <AddAPhotoIcon fontSize="large" htmlColor="#777" />
+                        <Text>Upload a photo</Text>
+                    </AddPhotoCard>
+                </>
+            }
             <input type="file"
                 ref={hiddenFileInput}
                 onChange={handleChange}
