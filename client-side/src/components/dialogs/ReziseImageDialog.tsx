@@ -9,35 +9,43 @@ const DialogXlPaperScroll = styled(Dialog)`
     }
 `
 const DialogImageContent = styled(DialogContent)`
+    height: 90vh;
     background-color: #2b2b2b;
     display: flex;
     justify-content: center;
 `
 
-const ImageDialog = styled.img`
+const ImageHolderDialog = styled.img`
     border-radius: 4px;
     max-height: 100%;
     width: auto;
 `
 
 interface ResizeImageDialogProps {
+    open: boolean;
     photo?: File;
     onClose: () => void;
+    onValid: () => void;
 }
 
-export const ResizeImageDialog = ({ photo, onClose }: ResizeImageDialogProps) => {
+export const ImageDialog = ({ open, photo, onClose, onValid }: ResizeImageDialogProps) => {
+    const imageUrl = photo ? URL.createObjectURL(photo) : "";
+
     return (
         <DialogXlPaperScroll
-            open={!!photo}
+            open={open}
             maxWidth="xl"
             scroll="paper"
         >
             <DialogImageContent>
-                {photo && <ImageDialog src={URL.createObjectURL(photo)} />}
+                <ImageHolderDialog src={imageUrl} />
             </DialogImageContent>
             <DialogActions>
-                <Button onClick={onClose}>
-                    Annuler
+                <Button onClick={onValid}>
+                    Changer
+                </Button>
+                <Button variant="contained" onClick={onClose}>
+                    Valider
                 </Button>
             </DialogActions>
         </DialogXlPaperScroll >

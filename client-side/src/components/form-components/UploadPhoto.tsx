@@ -1,8 +1,7 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ResizeImageDialog } from '../dialogs/ReziseImageDialog';
+import { ImageDialog } from '../dialogs/ReziseImageDialog';
 
 
 const AddPhotoCard = styled.div`
@@ -22,12 +21,18 @@ const Text = styled.span`
     color: #777;
 `
 
+const SidebarImageHolder = styled.img`
+    height: 200px;
+    width: auto;
+`
+
 interface PhotoUploaderProps {
     handleFileChange: (file: File | undefined) => void;
 }
 
 export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
     const [photo, setPhoto] = useState<File | undefined>(undefined)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
     const hiddenFileInput = React.useRef<HTMLInputElement | null>(null);
 
     const handleClick = () => {
@@ -40,16 +45,17 @@ export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
         handleFileChange(fileUploaded);
     };
 
-    const onCloseResize = () => {
+    const changePhoto = () => {
+        setIsDialogOpen(false)
         if (hiddenFileInput.current) hiddenFileInput.current.value = "";
         setPhoto(undefined)
     }
 
     return (
         <>
-            <ResizeImageDialog photo={photo} onClose={onCloseResize} />
+            <ImageDialog open={isDialogOpen} photo={photo} onValid={changePhoto} onClose={() => setIsDialogOpen(false)} />
             {photo ?
-                <img src={URL.createObjectURL(photo)} height={200} onClick={handleClick} /> :
+                <SidebarImageHolder src={URL.createObjectURL(photo)} onClick={() => setIsDialogOpen(true)} /> :
                 <>
                     <AddPhotoCard onClick={handleClick}>
                         <AddAPhotoIcon fontSize="large" htmlColor="#777" />
