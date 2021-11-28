@@ -17,6 +17,7 @@ import {
 } from "./styles/styledComponents";
 import { paperStyle, inputStyle, AuthCard } from "./styles/style";
 import PasswordFieldProps from "./components/PasswordField";
+import { useNotification } from "../hooks/useNotification";
 
 type FieldErrors = {
   username?: string;
@@ -28,10 +29,14 @@ const Login = () => {
   const [errors, setErrors] = useState<FieldErrors>({ username: undefined, password: undefined });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isUserLogged } = useAuthServices();
+  const notification = useNotification();
   const history = useHistory();
 
   useEffect(() => {
-    if (isUserLogged()) history.push("/");
+    if (isUserLogged()) {
+      history.push("/")
+      notification.info("You are already connected !")
+    };
   }, [])
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {

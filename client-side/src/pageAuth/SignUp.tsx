@@ -20,6 +20,7 @@ import {
   StyledForm,
   Title,
 } from "./styles/styledComponents";
+import { useNotification } from "../hooks/useNotification";
 
 interface RegistrationState {
   message: string;
@@ -39,6 +40,7 @@ const SignUp = () => {
   const [email, setEmail] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<SignInFormErrors>({});
   const history = useHistory();
+  const notification = useNotification();
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     const { findValidationErrors } = useValidator();
@@ -59,7 +61,7 @@ const SignUp = () => {
         await login(username, password);
 
         setIsLoading(false);
-
+        notification.success("You are logged in !")
         history.push("/");
 
       } catch (error: any) {
@@ -72,6 +74,7 @@ const SignUp = () => {
           error.message ||
           error.toString();
 
+        notification.error(resMessage)
         setIsLoading(false);
       }
     }
