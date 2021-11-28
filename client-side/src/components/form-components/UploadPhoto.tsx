@@ -2,10 +2,8 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ResizeImageDialog } from '../dialogs/ReziseImageDialog';
 
-interface PhotoUploaderProps {
-    handleFileChange: (file: File | undefined) => void;
-}
 
 const AddPhotoCard = styled.div`
     width: 100%;
@@ -18,29 +16,15 @@ const AddPhotoCard = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`
+    `
 
 const Text = styled.span`
     color: #777;
 `
 
-const ResizeImageDialog = styled(Dialog)`
-    .MuiDialog-paper {
-        width: 90vw;
-        height: 90vh;
-    }
-`
-const DialogImageContent = styled(DialogContent)`
-    background-color: #2b2b2b;
-    display: flex;
-    justify-content: center;
-`
-
-const ImageDialog = styled.img`
-    border-radius: 4px;
-    max-height: 100%;
-    width: auto;
-`
+interface PhotoUploaderProps {
+    handleFileChange: (file: File | undefined) => void;
+}
 
 export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
     const [photo, setPhoto] = useState<File | undefined>(undefined)
@@ -56,25 +40,14 @@ export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
         handleFileChange(fileUploaded);
     };
 
+    const onCloseResize = () => {
+        if (hiddenFileInput.current) hiddenFileInput.current.value = "";
+        setPhoto(undefined)
+    }
+
     return (
         <>
-            <ResizeImageDialog
-                open={!!photo}
-                maxWidth="xl"
-                scroll="paper"
-            >
-                <DialogImageContent>
-                    {photo && <ImageDialog src={URL.createObjectURL(photo)} />}
-                </DialogImageContent>
-                <DialogActions>
-                    <Button onClick={() => {
-                        if (hiddenFileInput.current) hiddenFileInput.current.value = "";
-                        setPhoto(undefined)
-                    }}>
-                        Annuler
-                    </Button>
-                </DialogActions>
-            </ResizeImageDialog>
+            <ResizeImageDialog photo={photo} onClose={onCloseResize} />
             {photo ?
                 <img src={URL.createObjectURL(photo)} height={200} onClick={handleClick} /> :
                 <>
