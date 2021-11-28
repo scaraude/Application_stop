@@ -25,15 +25,13 @@ const register = async (username: string, email: string, password: string) => {
   })
 };
 
-const isUserLogged = () => {
-  return isItemStored(ItemEnum.USER)
-}
+const isUserLogged = isItemStored(ItemEnum.USER);
 
 export const useAuthServices = () => {
   return {
+    isUserLogged,
     login,
     logout,
     register,
-    isUserLogged,
   };
 };

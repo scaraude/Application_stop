@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { MapContainer, Marker, TileLayer, ZoomControl } from "react-leaflet";
-import { Route } from "react-router-dom";
 import styled from "styled-components";
-import { Sidebar as ComponentSidebar } from "../components/Sidebar/Sidebar";
 import { AddSpotButton } from "./addSpotButton/AddSpotButton";
 import { Spot } from "./hooks/useSpotServices";
 import { MapRouter } from "./MapRouter";
@@ -49,10 +47,6 @@ const Map = () => {
   const handleDrawerClose = () => {
     setCurrentSpot(null);
     setIsSidebarOpenToAddSpot(false);
-  };
-
-  const openSidebarToAddSpot = () => {
-    setIsSidebarOpenToAddSpot(true);
   };
 
   return (

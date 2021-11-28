@@ -33,7 +33,7 @@ const Login = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (isUserLogged()) {
+    if (isUserLogged) {
       history.push("/")
       notification.info("You are already connected !")
     };

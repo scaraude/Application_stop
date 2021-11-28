@@ -11,9 +11,6 @@ const App = () =>
   <Router>
     <NavBar disabled />
     <Switch>
-      <Route exact path="/">
-        <Map />
-      </Route>
       <Route path="/login">
         <Login />
       </Route>
@@ -22,6 +19,9 @@ const App = () =>
       </Route>
       <Route path="/profile">
         <Profile />
+      </Route>
+      <Route path="/">
+        <Map />
       </Route>
       <Redirect to='/' />
     </Switch>
