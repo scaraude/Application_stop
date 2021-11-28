@@ -1,5 +1,5 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { Dialog } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -24,6 +24,24 @@ const Text = styled.span`
     color: #777;
 `
 
+const ResizeImageDialog = styled(Dialog)`
+    .MuiDialog-paper {
+        width: 90vw;
+        height: 90vh;
+    }
+`
+const DialogImageContent = styled(DialogContent)`
+    background-color: #2b2b2b;
+    display: flex;
+    justify-content: center;
+`
+
+const ImageDialog = styled.img`
+    border-radius: 4px;
+    max-height: 100%;
+    width: auto;
+`
+
 export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
     const [photo, setPhoto] = useState<File | undefined>(undefined)
     const hiddenFileInput = React.useRef<HTMLInputElement | null>(null);
@@ -40,6 +58,23 @@ export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
 
     return (
         <>
+            <ResizeImageDialog
+                open={!!photo}
+                maxWidth="xl"
+                scroll="paper"
+            >
+                <DialogImageContent>
+                    {photo && <ImageDialog src={URL.createObjectURL(photo)} />}
+                </DialogImageContent>
+                <DialogActions>
+                    <Button onClick={() => {
+                        if (hiddenFileInput.current) hiddenFileInput.current.value = "";
+                        setPhoto(undefined)
+                    }}>
+                        Annuler
+                    </Button>
+                </DialogActions>
+            </ResizeImageDialog>
             {photo ?
                 <img src={URL.createObjectURL(photo)} height={200} onClick={handleClick} /> :
                 <>
