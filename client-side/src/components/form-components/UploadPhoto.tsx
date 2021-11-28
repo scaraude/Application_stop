@@ -48,7 +48,8 @@ export const PhotoUploader = ({ handleFileChange }: PhotoUploaderProps) => {
     const changePhoto = () => {
         setIsDialogOpen(false)
         if (hiddenFileInput.current) hiddenFileInput.current.value = "";
-        setPhoto(undefined)
+        setPhoto(undefined);
+        hiddenFileInput?.current?.click();
     }
 
     return (

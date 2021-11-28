@@ -9,6 +9,7 @@ import { PhotoUploader } from "../../components/form-components/UploadPhoto"
 import { Sidebar } from "../../components/Sidebar/Sidebar"
 import useSuggestedCities, { GeoApiCity } from "../useSuggestedCities"
 import { EmotionSelector } from "./components/EmotionSelector"
+import { useSpot } from "./hooks/useCreateSpot.hook"
 import { Emotion } from "./types"
 
 const SidebarForm = styled.form`
@@ -25,6 +26,8 @@ const SidebarFooter = styled.footer`
 `
 
 export const CreateSpot = () => {
+    const defaultName = "Spot de stop #267";
+
     const map = useMapEvent('move', () => {
         setMapCenter(map.getCenter());
     });
@@ -37,6 +40,7 @@ export const CreateSpot = () => {
     const [comment, setComment] = useState<string | undefined>(undefined)
     const [formErrors, setFormErrors] = useState<{ emotion?: string, destination?: string }>({})
 
+    const { createSpot } = useSpot();
     const proposedCities = useSuggestedCities(cityInput)
     const cityOptions = proposedCities?.filter((proposedCity) => !selectedCities.map((selectedCity) => selectedCity.code).includes(proposedCity.code));
 
@@ -48,13 +52,23 @@ export const CreateSpot = () => {
         setCityInput(newValue);
     };
 
-    const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setFormErrors({});
 
         if (!emotion) setFormErrors(Object.assign(formErrors, { emotion: "Dis nous ce que t'en penses !" }))
         if (!selectedCities.length) setFormErrors(Object.assign(formErrors, { destination: "Il nous faut au moins une destination !" }))
 
+        if (formErrors === {}) {
+            await createSpot({
+                name: name ?? defaultName,
+                gps: mapCenter,
+                emotion: emotion as Emotion,
+                image: photo,
+                destinations: selectedCities,
+                comment
+            })
+        }
         console.log(`name`, name)
         console.log(`mapCenter`, mapCenter)
         console.log(`emotion`, emotion)
@@ -63,7 +77,6 @@ export const CreateSpot = () => {
         console.log(`comment`, comment)
     }
 
-    console.log(`formErrors.destination`, formErrors.destination)
     return (
         <>
             {mapCenter && <Marker position={mapCenter} />}
@@ -75,7 +88,7 @@ export const CreateSpot = () => {
                             name="name"
                             label="Nom du spot"
                             variant="standard"
-                            placeholder="Spot de stop #267"
+                            placeholder={defaultName}
                             value={name ?? ""}
                             onChange={(event) => setName(event.target.value)}
                             autoFocus

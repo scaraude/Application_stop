@@ -7,7 +7,7 @@ import { Point, pointSchema } from "./Point.model";
 export interface Spot extends Document {
   gps: Point;
   author: User;
-  title: string;
+  name: string;
   emotion: Emotion;
   imageUrl: URL;
   destinations: GeoApiCity[];
@@ -20,7 +20,7 @@ const spotSchema = new Schema<Spot>(
       required: true
     },
     authorId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    title: { type: String, required: "title can't be empty" },
+    name: { type: String, required: "name can't be empty" },
     emotion: { type: String, enum: Emotion, required: "Emotion can't be empty" },
     imageUrl: { type: String, required: "URL can't be empty" },
     destinations: { type: GeoCitySchema, required: "Destinations can't be empty" }
