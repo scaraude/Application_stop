@@ -6,7 +6,7 @@ export const createAndSaveSpot = async (spot: SpotInput, authorId: string): Prom
     const imageDownloadedUrl = await uploadFile(spot.image, spot.id);
 
     const spotDocument = await spotModel.create({
-        title: spot.title,
+        title: spot.name,
         gps: spot.gps,
         emotion: spot.emotion,
         imageUrl: imageDownloadedUrl,

@@ -15,13 +15,13 @@ interface JwtAuthPayload extends JwtPayload {
 }
 
 const verifyToken = (req: RequestWithMaybeAuthInformation, res: Response, next: NextFunction): Response | void => {
-  const token = req.headers["x-access-token"];
+  const token = req.headers["x-access-token"] as string | undefined;
 
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
 
-  const tokenPayload = <JwtAuthPayload>verify(token[0], config.secret);
+  const tokenPayload = <JwtAuthPayload>verify(token, config.secret);
 
   if (!tokenPayload) {
     return res.status(401).send({ message: "Unauthorized!" });

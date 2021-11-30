@@ -59,7 +59,7 @@ export const CreateSpot = () => {
         if (!emotion) setFormErrors(Object.assign(formErrors, { emotion: "Dis nous ce que t'en penses !" }))
         if (!selectedCities.length) setFormErrors(Object.assign(formErrors, { destination: "Il nous faut au moins une destination !" }))
 
-        if (formErrors === {}) {
+        if (Object.keys(formErrors).length === 0) {
             await createSpot({
                 name: name ?? defaultName,
                 gps: mapCenter,
@@ -114,6 +114,7 @@ export const CreateSpot = () => {
                                     helperText={formErrors.destination}
                                 />
                             )}
+                            ChipProps={{ size: "small" }}
                         />
                         <TextField
                             id="spot-comment"

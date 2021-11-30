@@ -28,7 +28,7 @@ const Login = () => {
   const [password, setPassword] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<FieldErrors>({ username: undefined, password: undefined });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { isUserLogged } = useAuthServices();
+  const { isUserLogged, login } = useAuthServices();
   const notification = useNotification();
   const history = useHistory();
 
@@ -40,9 +40,9 @@ const Login = () => {
   }, [])
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    const { login } = useAuthServices();
-    const validationErrors: FieldErrors = { username: undefined, password: undefined };
     event.preventDefault();
+    console.log("salut")
+    const validationErrors: FieldErrors = {};
 
     setErrors({});
     setIsLoading(true);
@@ -56,6 +56,7 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length === 0 && username && password) {
       try {
+        console.log("here")
         await login(username, password);
         history.push("/profile");
         window.location.reload();
@@ -92,7 +93,7 @@ const Login = () => {
                 id="username"
                 name="username"
                 label="Username"
-                value={username}
+                value={username ?? ""}
                 onChange={(event) => setUsername(event.target.value)}
                 error={Boolean(errors["username"])}
                 helperText={errors["username"]}
