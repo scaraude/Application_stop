@@ -5,15 +5,15 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 export const RenderSpotIcons = () =>
-  <div>
-    <IconButton>
-      <FavoriteBorderIcon />
-    </IconButton>
-    <IconButton>
-      <CreateRoundedIcon />
-    </IconButton>
-    <IconButton>
-      <MoreVertIcon />
-    </IconButton>
-  </div>
+	<div>
+		<IconButton>
+			<FavoriteBorderIcon />
+		</IconButton>
+		<IconButton>
+			<CreateRoundedIcon />
+		</IconButton>
+		<IconButton>
+			<MoreVertIcon />
+		</IconButton>
+	</div>
   ;

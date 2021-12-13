@@ -10,15 +10,15 @@ export type Comment = {
 }
 
 export const useComments = (spotId: string | undefined) => {
-    const [comments, setComments] = useState<Comment[] | undefined>([]);
+	const [comments, setComments] = useState<Comment[] | undefined>([]);
 
-    useEffect(() => {
-        if (!spotId) return;
-        (async () => {
-            const comments = <Comment[] | undefined>await requestGetJson(`/api/comment/${spotId}`);
-            setComments(comments)
-        })
-    }, [spotId]);
+	useEffect(() => {
+		if (!spotId) return;
+		(async () => {
+			const comments = <Comment[] | undefined>await requestGetJson(`/api/comment/${spotId}`);
+			setComments(comments);
+		});
+	}, [spotId]);
 
-    return comments;
-}
+	return comments;
+};

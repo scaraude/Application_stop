@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TimeAgo from "react-timeago";
 import { RenderRating } from "./RenderRating";
 import { Card } from "../styled/Card";
-import { Comment } from '../get-comments.hook'
+import { Comment } from "../get-comments.hook";
 
 const CommentSection = styled.div`
   width: 100%;
@@ -39,21 +39,21 @@ interface RenderCommentsProps {
 }
 
 export const RenderComments = ({ comments }: RenderCommentsProps) =>
-  <CommentSection>
-    <Separator>
+	<CommentSection>
+		<Separator>
       Avis & Commentaires ({comments.length})
-    </Separator>
-    {comments.map((comment) =>
-      <Card key={comment.id}>
-        <Header>
-          <RenderRating rating={comment.score} />
-          <StyledTime>
-            <TimeAgo date={comment.createdAt} />
-          </StyledTime>
-        </Header>
-        <UserName>{comment.userId}</UserName>
-        <Text>{comment.text}</Text>
-      </Card>
-    )}
-  </CommentSection>
+		</Separator>
+		{comments.map((comment) =>
+			<Card key={comment.id}>
+				<Header>
+					<RenderRating rating={comment.score} />
+					<StyledTime>
+						<TimeAgo date={comment.createdAt} />
+					</StyledTime>
+				</Header>
+				<UserName>{comment.userId}</UserName>
+				<Text>{comment.text}</Text>
+			</Card>
+		)}
+	</CommentSection>
   ;

@@ -21,7 +21,7 @@ interface RenderInfoProps {
 }
 
 export const RenderInfo = ({ label, content }: RenderInfoProps) => (
-  <Info>
-    <Label>{label}</Label>
-    <Content>{content}</Content>
-  </Info>)
+	<Info>
+		<Label>{label}</Label>
+		<Content>{content}</Content>
+	</Info>);

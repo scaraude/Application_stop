@@ -1,5 +1,5 @@
 import { LatLng } from "leaflet";
-import { requestPostAuthJson } from "../../../utils/api-request"
+import { requestPostAuthJson } from "../../../utils/api-request";
 import { GeoApiCity } from "../../useSuggestedCities";
 import { Emotion } from "../types";
 
@@ -13,9 +13,9 @@ export interface SpotInput {
 }
 
 export const useSpot = () => {
-    const createSpot = async (data: SpotInput) => {
-        return requestPostAuthJson("api/spot/create", data);
-    }
+	const createSpot = async (data: SpotInput) => {
+		return requestPostAuthJson("api/spot/create", data);
+	};
 
-    return { createSpot }
-}
+	return { createSpot };
+};

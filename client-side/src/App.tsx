@@ -5,27 +5,26 @@ import NavBar from "./components/NavBar/NavBar";
 import Login from "./pageAuth/Login";
 import SignUp from "./pageAuth/SignUp";
 import Profile from "./pageUser/Profile";
-import { Sidebar } from "./components/Sidebar/Sidebar";
 
 const App = () =>
-  <Router>
-    <NavBar disabled />
-    <Switch>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/signup">
-        <SignUp />
-      </Route>
-      <Route path="/profile">
-        <Profile />
-      </Route>
-      <Route path="/">
-        <Map />
-      </Route>
-      <Redirect to='/' />
-    </Switch>
-  </Router>
+	<Router>
+		<NavBar disabled />
+		<Switch>
+			<Route path="/login">
+				<Login />
+			</Route>
+			<Route path="/signup">
+				<SignUp />
+			</Route>
+			<Route path="/profile">
+				<Profile />
+			</Route>
+			<Route path="/">
+				<Map />
+			</Route>
+			<Redirect to='/' />
+		</Switch>
+	</Router>
   ;
 
 export default App;

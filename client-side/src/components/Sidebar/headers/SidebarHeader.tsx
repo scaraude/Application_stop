@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import ArrowRightAltRoundedIcon from "@material-ui/icons/ArrowRightAltRounded";
 import IconButton from "@material-ui/core/IconButton";
-import { Header, StyledIconButtons } from './sidebarHeader.styled';
+import { Header, StyledIconButtons } from "./sidebarHeader.styled";
 
 interface SidebarHeaderProps {
   rightChildren?: React.ReactNode;
@@ -10,16 +10,16 @@ interface SidebarHeaderProps {
 }
 
 export const SidebarHeader = ({ rightChildren, bottomChildren, handleDrawerClose }: SidebarHeaderProps) => {
-  return (
-    <Header>
-      <StyledIconButtons>
-        <IconButton onClick={handleDrawerClose}>
-          <ArrowRightAltRoundedIcon />
-        </IconButton>
-        {rightChildren}
-      </StyledIconButtons>
+	return (
+		<Header>
+			<StyledIconButtons>
+				<IconButton onClick={handleDrawerClose}>
+					<ArrowRightAltRoundedIcon />
+				</IconButton>
+				{rightChildren}
+			</StyledIconButtons>
 
-      {bottomChildren}
-    </Header>
-  );
+			{bottomChildren}
+		</Header>
+	);
 };

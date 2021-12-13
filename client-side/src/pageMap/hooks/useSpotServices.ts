@@ -16,12 +16,12 @@ export type Spot = {
 
 export const useSpotServices = () => {
 
-  const addSpot = async (spotInfos: Spot) => {
+	const addSpot = async (spotInfos: Spot) => {
 
-    return await requestPostAuthJson("api/spot/create", spotInfos);
-  };
+		return await requestPostAuthJson("api/spot/create", spotInfos);
+	};
 
-  return {
-    addSpot,
-  };
+	return {
+		addSpot,
+	};
 };

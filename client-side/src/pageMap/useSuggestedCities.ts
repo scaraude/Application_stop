@@ -11,27 +11,27 @@ export type GeoApiCity = {
 }
 
 export default function useSuggestedCities(inputValue: string | undefined) {
-  const [cities, setCities] = useState<GeoApiCity[] | undefined>(undefined);
-  useEffect(() => {
-    let active = true;
+	const [cities, setCities] = useState<GeoApiCity[] | undefined>(undefined);
+	useEffect(() => {
+		let active = true;
 
-    if (!inputValue) {
-      return undefined;
-    }
+		if (!inputValue) {
+			return undefined;
+		}
 
-    (async () => {
-      const cities = <GeoApiCity[] | undefined>await requestGetJson(
-        `https://geo.api.gouv.fr/communes?nom=${inputValue}&fields=nom,centre,departement,codesPostaux&boost=population&limit=5`
-      );
+		(async () => {
+			const cities = <GeoApiCity[] | undefined>await requestGetJson(
+				`https://geo.api.gouv.fr/communes?nom=${inputValue}&fields=nom,centre,departement,codesPostaux&boost=population&limit=5`
+			);
 
-      if (active) {
-        setCities(cities);
-      }
-    })();
+			if (active) {
+				setCities(cities);
+			}
+		})();
 
-    return () => {
-      active = false;
-    };
-  }, [inputValue]);
-  return cities;
+		return () => {
+			active = false;
+		};
+	}, [inputValue]);
+	return cities;
 }

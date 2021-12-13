@@ -94,7 +94,7 @@
     "css-loader": "^5.2.0",
     "domain-browser": "^4.22.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.26.0",
+    "eslint-plugin-react": "^7.27.1",
     "eslint-watch": "^7.0.0",
     "https-browserify": "^1.0.0",
     "mocha": "^8.2.1",
@@ -110,10 +110,10 @@
     "webpack-node-externals": "^3.0.0"
   },
   "scripts": {
-    "lint:front": "eslint --config ./client-side/.eslintrc.json ./client-side/**/*.js",
-    "lint:front:fix": "eslint --fix --config ./client-side/.eslintrc.json ./client-side/**/*.js",
+    "lint:front": "eslint --config ./client-side/.eslintrc.json ./client-side/src",
+    "lint:front:fix": "eslint --fix --config ./client-side/.eslintrc.json ./client-side/src",
     "lint:back": "eslint --config ./server-side/.eslintrc.json ./server-side/src",
-    "lint:back:fix": "eslint --fix --config ./server-side/.eslintrc.json ./server-side/**/*.js",
+    "lint:back:fix": "eslint --fix --config ./server-side/.eslintrc.json ./server-side/src",
     "test": "mocha",
     "build:front": "webpack build --mode=development --config ./client-side/webpack.config.js",
     "serve:front": "webpack serve --mode=development --config ./client-side/webpack.config.js --port 3000",

@@ -16,27 +16,27 @@ const StyledIconButton = styled.div`
 
 
 export const AddSpotButton = () => {
-  const history = useHistory();
-  const notification = useNotification();
-  const { isUserLogged } = useAuthServices();
+	const history = useHistory();
+	const notification = useNotification();
+	const { isUserLogged } = useAuthServices();
 
-  const handleClick = () => {
-    if (!isUserLogged) {
-      notification.warning("Connectez vous pour ajouter un spot !")
-      return;
-    }
-    history.push("/create")
-  }
+	const handleClick = () => {
+		if (!isUserLogged) {
+			notification.warning("Connectez vous pour ajouter un spot !");
+			return;
+		}
+		history.push("/create");
+	};
 
-  return (
-    <StyledIconButton>
-      <IconButton
-        onClick={handleClick}
-        aria-label="delete"
-        style={{ backgroundColor: "white", border: "1px solid grey" }}
-      >
-        <AddLocationIcon fontSize="large" />
-      </IconButton>
-    </StyledIconButton>
-  );
+	return (
+		<StyledIconButton>
+			<IconButton
+				onClick={handleClick}
+				aria-label="delete"
+				style={{ backgroundColor: "white", border: "1px solid grey" }}
+			>
+				<AddLocationIcon fontSize="large" />
+			</IconButton>
+		</StyledIconButton>
+	);
 };

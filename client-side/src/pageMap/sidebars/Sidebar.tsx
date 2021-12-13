@@ -24,35 +24,28 @@ interface SidebarProps {
 }
 
 const Sidebar = ({
-  open = false,
-  spot = null,
-  handleDrawerClose,
-  isOpenToAddSpot,
+	open = false,
+	spot = null,
+	handleDrawerClose,
+	isOpenToAddSpot,
 }: SidebarProps) => {
-  return (
-    <StyledContainer>
-      <StyledDrawer
-        anchor="right"
-        open={open || isOpenToAddSpot}
-        onClose={() => handleDrawerClose()}
-        variant={isOpenToAddSpot ? "persistent" : "temporary"}
-      >
-        <Panel>
-          {spot &&
-            <SidebarSpotInfos
-              handleDrawerClose={handleDrawerClose}
-              spot={spot}
-            />
-          }
-          {isOpenToAddSpot &&
-            <AddSpotForm
-              handleDrawerClose={handleDrawerClose}
-            />
-          }
-        </Panel>
-      </StyledDrawer>
-    </StyledContainer>
-  );
+	return (
+		<StyledContainer>
+			<StyledDrawer
+				anchor="right"
+				open={open || isOpenToAddSpot}
+				onClose={() => handleDrawerClose()}
+				variant={isOpenToAddSpot ? "persistent" : "temporary"}
+			>
+				<Panel>
+					{spot &&
+						<SidebarSpotInfos handleDrawerClose={handleDrawerClose} spot={spot} />
+					}
+					{isOpenToAddSpot && <AddSpotForm handleDrawerClose={handleDrawerClose} />}
+				</Panel>
+			</StyledDrawer>
+		</StyledContainer>
+	);
 };
 
 export default Sidebar;

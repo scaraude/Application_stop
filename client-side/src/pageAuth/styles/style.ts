@@ -11,6 +11,6 @@ export const AuthCard = styled(Paper)`
   max-width: 450px;
   min-width: 350px;
   padding: 3rem 0rem;
-`
+`;
 
 export const inputStyle = { width: "100%", marginLeft: "0.5rem" };

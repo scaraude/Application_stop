@@ -8,4 +8,4 @@ export const SidebarDrawer = styled(Drawer)`
         width: 33vw;
         background-color: ${COMPONENT_BACKGROUND};
     }
-`
+`;
