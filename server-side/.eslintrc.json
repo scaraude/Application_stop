@@ -16,7 +16,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "space-in-brackets": ["error", "always"],
+        "object-curly-spacing": ["error", "always"],
         "indent": [
             "error",
             "tab"

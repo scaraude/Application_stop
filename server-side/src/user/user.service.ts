@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import { User, userModel } from "./user.model";
 import { roleModel } from "../role/role.model";
+import { User, userModel } from "./user.model";
 
 const createUser = async ({ username, email, password, roles }: User): Promise<User> => {
 	const user = new userModel({
