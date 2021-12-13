@@ -13,7 +13,7 @@ export interface Role {
 export interface RoleSchema extends Document, Role { }
 
 const roleSchema = new Schema<RoleSchema>({
-  name: String,
+	name: String,
 }, { timestamps: true });
 
 export const roleModel = model<RoleSchema>("Role", roleSchema);

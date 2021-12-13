@@ -15,91 +15,91 @@ interface JwtAuthPayload extends JwtPayload {
 }
 
 const verifyToken = (req: RequestWithMaybeAuthInformation, res: Response, next: NextFunction): Response | void => {
-  const token = req.headers["x-access-token"] as string | undefined;
+	const token = req.headers["x-access-token"] as string | undefined;
 
-  if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
-  }
+	if (!token) {
+		return res.status(403).send({ message: "No token provided!" });
+	}
 
-  const tokenPayload = <JwtAuthPayload>verify(token, config.secret);
+	const tokenPayload = <JwtAuthPayload>verify(token, config.secret);
 
-  if (!tokenPayload) {
-    return res.status(401).send({ message: "Unauthorized!" });
-  }
+	if (!tokenPayload) {
+		return res.status(401).send({ message: "Unauthorized!" });
+	}
 
-  req.userId = tokenPayload.id;
-  next();
+	req.userId = tokenPayload.id;
+	next();
 };
 
 const checkDuplicateUsername = async (req: Request, res: Response, next: NextFunction) => {
-  const { username } = req.body;
+	const { username } = req.body;
 
-  try {
-    const user = await userService.getUserByUsername(username);
-    if (user) {
-      res.status(403).send("Failed : Username is already use !");
-      return;
-    }
-  } catch (error) {
-    logger.error(`error ${error}`);
-    res.status(500).send(error);
-  }
+	try {
+		const user = await userService.getUserByUsername(username);
+		if (user) {
+			res.status(403).send("Failed : Username is already use !");
+			return;
+		}
+	} catch (error) {
+		logger.error(`error ${error}`);
+		res.status(500).send(error);
+	}
 
-  next();
+	next();
 };
 
 const checkDuplicateEmail = async (req: Request, res: Response, next: NextFunction) => {
-  const { email } = req.body;
+	const { email } = req.body;
 
-  try {
-    const user = await userService.getUserIdByEmail(email);
+	try {
+		const user = await userService.getUserIdByEmail(email);
 
-    if (user) {
-      res.status(403).send("Failed! Email is already in use!");
-      return;
-    }
-  } catch (error) {
-    logger.error(`error ${error}`);
-    res.status(500).send(error);
-  }
+		if (user) {
+			res.status(403).send("Failed! Email is already in use!");
+			return;
+		}
+	} catch (error) {
+		logger.error(`error ${error}`);
+		res.status(500).send(error);
+	}
 
-  next();
+	next();
 };
 
 const validatePassword = (inputPassword: string, userPassword: User["password"]) => {
-  return bcrypt.compareSync(inputPassword, userPassword);
+	return bcrypt.compareSync(inputPassword, userPassword);
 };
 
 const generateJwtToken = (payload: JwtAuthPayload) => {
-  const oneDayInSecond = 60 * 60 * 24;
-  return sign(payload, config.secret, {
-    expiresIn: oneDayInSecond,
-  });
+	const oneDayInSecond = 60 * 60 * 24;
+	return sign(payload, config.secret, {
+		expiresIn: oneDayInSecond,
+	});
 };
 
 const validateAuthInput = (req: Request, res: Response, next: NextFunction) => {
-  const { username, email } = req.body;
+	const { username, email } = req.body;
 
-  if (email && !validator.isEmail(email)) {
-    res.status(403).send("Email is not valid !");
-  }
+	if (email && !validator.isEmail(email)) {
+		res.status(403).send("Email is not valid !");
+	}
 
-  if (username && !validator.isAlphanumeric(username)) {
-    res.status(403).send("username can only contain letters and numbers");
-  }
+	if (username && !validator.isAlphanumeric(username)) {
+		res.status(403).send("username can only contain letters and numbers");
+	}
 
-  if (username && !validator.isLength(username, { min: 3, max: 20 })) {
-    res.status(403).send("username must be between 3 and 20 charaters");
-  }
+	if (username && !validator.isLength(username, { min: 3, max: 20 })) {
+		res.status(403).send("username must be between 3 and 20 charaters");
+	}
 
-  next();
+	next();
 };
 
 export const authService = {
-  generateJwtToken,
-  validateAuthInput,
-  verifyToken,
-  checkDuplicateEmail,
-  checkDuplicateUsername,
-  validatePassword,
+	generateJwtToken,
+	validateAuthInput,
+	verifyToken,
+	checkDuplicateEmail,
+	checkDuplicateUsername,
+	validatePassword,
 };

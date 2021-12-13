@@ -14,18 +14,18 @@ export interface Spot extends Document {
 }
 
 const spotSchema = new Schema<Spot>(
-  {
-    gps: {
-      type: pointSchema,
-      required: true
-    },
-    authorId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    name: { type: String, required: "name can't be empty" },
-    emotion: { type: String, enum: Emotion, required: "Emotion can't be empty" },
-    imageUrl: { type: String, required: "URL can't be empty" },
-    destinations: { type: GeoCitySchema, required: "Destinations can't be empty" }
-  },
-  { timestamps: true }
+	{
+		gps: {
+			type: pointSchema,
+			required: true
+		},
+		authorId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+		name: { type: String, required: "name can't be empty" },
+		emotion: { type: String, enum: Emotion, required: "Emotion can't be empty" },
+		imageUrl: { type: String, required: "URL can't be empty" },
+		destinations: { type: GeoCitySchema, required: "Destinations can't be empty" }
+	},
+	{ timestamps: true }
 );
 
 export const spotModel = model<Spot>("Spot", spotSchema);

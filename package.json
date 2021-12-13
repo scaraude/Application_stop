@@ -83,6 +83,8 @@
     "@types/react-timeago": "^4.1.3",
     "@types/styled-components": "^5.1.15",
     "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
     "@webpack-cli/generators": "^2.4.1",
     "babel-eslint": "^10.1.0",
     "buffer": "^6.0.3",
@@ -110,7 +112,7 @@
   "scripts": {
     "lint:front": "eslint --config ./client-side/.eslintrc.json ./client-side/**/*.js",
     "lint:front:fix": "eslint --fix --config ./client-side/.eslintrc.json ./client-side/**/*.js",
-    "lint:back": "eslint --config ./server-side/.eslintrc.json ./server-side/**/*.js",
+    "lint:back": "eslint --config ./server-side/.eslintrc.json ./server-side/src",
     "lint:back:fix": "eslint --fix --config ./server-side/.eslintrc.json ./server-side/**/*.js",
     "test": "mocha",
     "build:front": "webpack build --mode=development --config ./client-side/webpack.config.js",

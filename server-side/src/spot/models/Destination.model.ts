@@ -9,9 +9,9 @@ export interface GeoApiCity extends Document {
 }
 
 export const GeoCitySchema = new Schema<GeoApiCity>({
-    nom: String,
-    centre: { type: String, coordinates: [Number] },
-    codesPostaux: [String],
-    code: String,
-    departement: { code: String, nom: String }
+	nom: String,
+	centre: { type: String, coordinates: [Number] },
+	codesPostaux: [String],
+	code: String,
+	departement: { code: String, nom: String }
 });

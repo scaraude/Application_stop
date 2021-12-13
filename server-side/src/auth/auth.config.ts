@@ -1,1 +1,1 @@
-export const config = { secret: process.env.TOKEN_KEY ?? "" }
+export const config = { secret: process.env.TOKEN_KEY ?? "" };

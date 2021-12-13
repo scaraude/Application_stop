@@ -6,13 +6,13 @@ export interface Point extends Document {
 }
 
 export const pointSchema = new Schema<Point>({
-    type: {
-        type: String,
-        enum: ['Point'],
-        required: true
-    },
-    coordinates: {
-        type: [Number],
-        required: true
-    }
+	type: {
+		type: String,
+		enum: ["Point"],
+		required: true
+	},
+	coordinates: {
+		type: [Number],
+		required: true
+	}
 });
