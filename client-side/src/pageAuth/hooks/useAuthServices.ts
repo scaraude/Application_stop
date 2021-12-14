@@ -1,5 +1,6 @@
+import jwtDecode, { JwtPayload } from "jwt-decode";
 import { requestPostJson } from "../../utils/api-request";
-import { isItemStored, ItemEnum, removeStoredItem, setStoredItem } from "../../utils/local-storage-API";
+import { getStoredItem, isItemStored, ItemEnum, removeStoredItem, setStoredItem } from "../../utils/local-storage-API";
 import { User } from "../types";
 
 const login = async (username: string, password: string) => {
@@ -25,7 +26,18 @@ const register = async (username: string, email: string, password: string) => {
 	});
 };
 
-const isUserLogged = isItemStored(ItemEnum.USER);
+const isTokenExpired = (): boolean => {
+	const { accessToken } = getStoredItem(ItemEnum.USER);
+	const decodedToken = jwtDecode<JwtPayload>(accessToken);
+	if (!decodedToken.exp) return true;
+	if( new Date(decodedToken.exp * 1000) < new Date()) {
+		return true;
+	}
+	return false;
+};
+const isUserLogged = () => {
+	return isItemStored(ItemEnum.USER) && !isTokenExpired();
+};
 
 export const useAuthServices = () => {
 	return {

@@ -1,23 +1,17 @@
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useAuthServices } from "./hooks/useAuthServices";
-import { useHistory } from "react-router-dom";
-import {
-	Container,
-	StyledForm,
-	Frame,
-	Label,
-	Title,
-	InputControl,
-} from "./styles/styledComponents";
-import { paperStyle, inputStyle, AuthCard } from "./styles/style";
-import PasswordFieldProps from "./components/PasswordField";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useNotification } from "../hooks/useNotification";
+import PasswordFieldProps from "./components/PasswordField";
+import { useAuthServices } from "./hooks/useAuthServices";
+import { AuthCard, inputStyle, paperStyle } from "./styles/style";
+import {
+	Container, Frame, InputControl, Label, StyledForm, Title
+} from "./styles/styledComponents";
 
 type FieldErrors = {
   username?: string;
@@ -33,7 +27,7 @@ const Login = () => {
 	const history = useHistory();
 
 	useEffect(() => {
-		if (isUserLogged) {
+		if (isUserLogged()) {
 			history.push("/");
 			notification.info("You are already connected !");
 		}

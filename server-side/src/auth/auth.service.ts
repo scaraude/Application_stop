@@ -1,12 +1,12 @@
-import { verify, sign, JwtPayload } from "jsonwebtoken";
-import { config } from "./auth.config";
 import bcrypt from "bcryptjs";
-import { userService } from "../user/user.service";
+import { NextFunction, Request, Response } from "express";
+import { JwtPayload, sign, verify } from "jsonwebtoken";
 import validator from "validator";
-import { Request, Response, NextFunction } from "express";
 import { RoleEnum } from "../role/role.model";
-import { logger } from "../utils/logger";
 import { User } from "../user/user.model";
+import { userService } from "../user/user.service";
+import { logger } from "../utils/logger";
+import { config } from "./auth.config";
 import { RequestWithMaybeAuthInformation } from "./types";
 
 interface JwtAuthPayload extends JwtPayload {
@@ -20,15 +20,18 @@ const verifyToken = (req: RequestWithMaybeAuthInformation, res: Response, next: 
 	if (!token) {
 		return res.status(403).send({ message: "No token provided!" });
 	}
-
-	const tokenPayload = <JwtAuthPayload>verify(token, config.secret);
-
-	if (!tokenPayload) {
-		return res.status(401).send({ message: "Unauthorized!" });
+	try {
+		const tokenPayload = <JwtAuthPayload>verify(token, config.secret);
+		if (!tokenPayload) {
+			return res.status(401).send({ message: "Unauthorized!" });
+		}
+	
+		req.userId = tokenPayload.id;
+		next();
+	} catch (error: any) {
+		return res.status(401).send({ message: error.message });
 	}
-
-	req.userId = tokenPayload.id;
-	next();
+	
 };
 
 const checkDuplicateUsername = async (req: Request, res: Response, next: NextFunction) => {
