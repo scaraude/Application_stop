@@ -59,6 +59,13 @@ export const CreateSpot = () => {
 		if (!emotion) setFormErrors(Object.assign(formErrors, { emotion: "Dis nous ce que t'en penses !" }));
 		if (!selectedCities.length) setFormErrors(Object.assign(formErrors, { destination: "Il nous faut au moins une destination !" }));
 
+		console.log("name", name);
+		console.log("mapCenter", mapCenter);
+		console.log("emotion", emotion);
+		console.log("photo", photo);
+		console.log("destinations", selectedCities);
+		console.log("comment", comment);
+		
 		if (Object.keys(formErrors).length === 0) {
 			await createSpot({
 				name: name ?? defaultName,
@@ -69,12 +76,6 @@ export const CreateSpot = () => {
 				comment
 			});
 		}
-		console.log("name", name);
-		console.log("mapCenter", mapCenter);
-		console.log("emotion", emotion);
-		console.log("photo", photo);
-		console.log("destinations", selectedCities);
-		console.log("comment", comment);
 	};
 
 	return (

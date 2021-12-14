@@ -35,6 +35,7 @@ const isTokenExpired = (): boolean => {
 	}
 	return false;
 };
+
 const isUserLogged = () => {
 	return isItemStored(ItemEnum.USER) && !isTokenExpired();
 };

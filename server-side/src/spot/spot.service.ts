@@ -3,6 +3,7 @@ import { Spot, spotModel } from "./models/Spot.model";
 import { SpotInput } from "./spot.types";
 
 export const createAndSaveSpot = async (spot: SpotInput, authorId: string): Promise<Spot> => {
+	console.log("spot", spot);
 	const imageDownloadedUrl = await uploadFile(spot.image, spot.id);
 	console.log("imageDownloadedUrl", imageDownloadedUrl);
 	const spotDocument = await spotModel.create({

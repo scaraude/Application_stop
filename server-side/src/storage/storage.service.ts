@@ -1,7 +1,8 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { firebaseApp } from "../config/storage.config";
 
 export const uploadFile = async (file: File, refFile: string) => {
+	console.log("file", file);
 	const storage = getStorage(firebaseApp);
 	const storageRef = ref(storage, `spot-photos/${refFile}`);
 

@@ -1,8 +1,8 @@
-import { spotModel } from "./models/Spot.model";
 import { Request, Response } from "express";
-import { SpotInput } from "./spot.types";
-import { createAndSaveSpot } from "./spot.service";
 import { RequestWithMaybeAuthInformation } from "../auth/types";
+import { spotModel } from "./models/Spot.model";
+import { createAndSaveSpot } from "./spot.service";
+import { SpotInput } from "./spot.types";
 
 export const createSpot = async (req: RequestWithMaybeAuthInformation, res: Response) => {
 	const spot: SpotInput = req.body;

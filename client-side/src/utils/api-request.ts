@@ -18,6 +18,16 @@ export const requestPostAuthJson = async (url: string, jsonBody: any) => {
 	});
 };
 
+export const requestPostAuthFormData = async (url: string, formData: any) => {
+	const authHeader = useAuthHeader();
+
+	return fetch(url, {
+		method: "POST",
+		headers: { ...authHeader, "Content-Type": "multipart/form-data" },
+		body: formData,
+	});
+};
+
 export const requestGetJson = async (url: string) => {
 	const response = await fetch(url);
 	return response.json();
