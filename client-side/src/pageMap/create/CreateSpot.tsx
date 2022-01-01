@@ -5,7 +5,6 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import { Marker, useMapEvent } from "react-leaflet";
 import styled from "styled-components";
-import { PhotoUploader } from "../../components/form-components/UploadPhoto";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import useSuggestedCities, { GeoApiCity } from "../useSuggestedCities";
 import { EmotionSelector } from "./components/EmotionSelector";
@@ -33,7 +32,6 @@ export const CreateSpot = () => {
 	});
 	const [mapCenter, setMapCenter] = useState(map.getCenter());
 	const [name, setName] = useState<string | undefined>(undefined);
-	const [photo, setPhoto] = useState<File | undefined>(undefined);
 	const [emotion, setEmotion] = useState<Emotion | undefined>(undefined);
 	const [selectedCities, setSelectedCities] = useState<GeoApiCity[]>([]);
 	const [cityInput, setCityInput] = useState<string | undefined>(undefined);
@@ -58,21 +56,14 @@ export const CreateSpot = () => {
 
 		if (!emotion) setFormErrors(Object.assign(formErrors, { emotion: "Dis nous ce que t'en penses !" }));
 		if (!selectedCities.length) setFormErrors(Object.assign(formErrors, { destination: "Il nous faut au moins une destination !" }));
-
-		console.log("name", name);
-		console.log("mapCenter", mapCenter);
-		console.log("emotion", emotion);
-		console.log("photo", photo);
-		console.log("destinations", selectedCities);
-		console.log("comment", comment);
 		
+		const selectedCitiesCodes = selectedCities.map((city) => city.code);
 		if (Object.keys(formErrors).length === 0) {
 			await createSpot({
 				name: name ?? defaultName,
 				gps: mapCenter,
 				emotion: emotion as Emotion,
-				image: photo,
-				destinations: selectedCities,
+				destinations: selectedCitiesCodes,
 				comment
 			});
 		}
@@ -95,7 +86,7 @@ export const CreateSpot = () => {
 							autoFocus
 						/>
 						<EmotionSelector emotion={emotion} handleChange={handleEmotionChange} error={formErrors.emotion} />
-						<PhotoUploader handleFileChange={(file: File | undefined) => setPhoto(file)} />
+						{/* <PhotoUploader handleFileChange={(file: File | undefined) => setPhoto(file)} /> */}
 						<Autocomplete
 							id="spot-destinations"
 							multiple

@@ -1,4 +1,4 @@
-import { requestPostAuthJson } from "../../utils/api-request";
+import { requestPostAuthFormData } from "../../utils/api-request";
 
 export type Spot = {
   _id?: string;
@@ -18,7 +18,7 @@ export const useSpotServices = () => {
 
 	const addSpot = async (spotInfos: Spot) => {
 
-		return await requestPostAuthJson("api/spot/create", spotInfos);
+		return await requestPostAuthFormData("api/spot/create", spotInfos);
 	};
 
 	return {

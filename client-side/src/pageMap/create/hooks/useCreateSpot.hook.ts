@@ -7,14 +7,14 @@ export interface SpotInput{
     gps: LatLng;
     name: string;
     emotion: Emotion;
-    destinations: GeoApiCity[];
+    destinations: GeoApiCity["code"][];
     image?: File;
     comment?: string;
 }
 
 export const useSpot = () => {
 	const createSpot = async (data: SpotInput) => {
-		return requestPostAuthFormData("api/spot/create", data);
+		return requestPostAuthFormData("api/spot/create", { ...data, selectedCities: JSON.stringify(data.destinations) });
 	};
 
 	return { createSpot };

@@ -6,4 +6,4 @@ export enum Emotion {
     DANGEROUS = "DANGEROUS",
 }
 
-export type SpotInput = Omit<Spot, "author" | "imageUrl"> & { authorId: string, image: File }
+export type SpotInput = Pick<Spot, "location" | "authorId" | "name" | "emotion" | "destinations"> & { authorId: string}

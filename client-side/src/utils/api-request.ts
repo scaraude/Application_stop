@@ -18,12 +18,16 @@ export const requestPostAuthJson = async (url: string, jsonBody: any) => {
 	});
 };
 
-export const requestPostAuthFormData = async (url: string, formData: any) => {
+export const requestPostAuthFormData = async (url: string, data: any) => {
 	const authHeader = useAuthHeader();
+	const formData  = new FormData();
 
+	for(const name in data) {
+		formData.append(name, data[name]);
+	}
 	return fetch(url, {
 		method: "POST",
-		headers: { ...authHeader, "Content-Type": "multipart/form-data" },
+		headers: { ...authHeader },
 		body: formData,
 	});
 };

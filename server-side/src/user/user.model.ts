@@ -2,10 +2,10 @@ import { Document, model, Schema } from "mongoose";
 import { Role } from "../role/role.model";
 
 export interface User {
-  username: string;
-  email: string;
-  password: string;
-  roles: Role[];
+	username: string;
+	email: string;
+	password: string;
+	roles: Role[];
 }
 
 export interface UserSchema extends Document, User { }

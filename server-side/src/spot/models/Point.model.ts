@@ -1,11 +1,15 @@
-import { Schema, Document } from "mongoose";
+import { Document, Schema } from "mongoose";
 
-export interface Point extends Document {
-    latitude: number;
-    longitude: number;
+type Longitude = number;
+type Latitude = number;
+export interface Point {
+	type: "Point",
+	coordinates: [ Longitude, Latitude ]
 }
 
-export const pointSchema = new Schema<Point>({
+export interface PointSchema extends Point, Document {}
+
+export const pointSchema = new Schema<PointSchema>({
 	type: {
 		type: String,
 		enum: ["Point"],
