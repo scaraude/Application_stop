@@ -1,9 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import Map from "./pageMap/Map";
+import { Redirect, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Login from "./pageAuth/Login";
 import SignUp from "./pageAuth/SignUp";
+import Map from "./pageMap/Map";
 import Profile from "./pageUser/Profile";
 
 const App = () =>
