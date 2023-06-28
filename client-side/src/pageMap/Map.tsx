@@ -26,7 +26,7 @@ const SearchFieldHolder = styled.div`
 `;
 
 const renderMarker = (spot: Spot, setCurrentSpot: React.Dispatch<React.SetStateAction<Spot | null>>) => {
-	if (!spot.gps.lat || !spot.gps.lon) return null;
+	if (!spot.gps?.lat || !spot.gps?.lon) return null;
 	return (
 		<Marker
 			key={spot._id}

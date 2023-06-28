@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import styled from "styled-components";
-import Rating from "@material-ui/lab/Rating";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import Box from "@material-ui/core/Box";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { useSpotServices } from "../../hooks/useSpotServices";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import Rating from "@material-ui/lab/Rating";
+import React, { useState } from "react";
 import { Marker, useMapEvent } from "react-leaflet";
+import styled from "styled-components";
 import { SidebarHeader } from "../../../components/Sidebar/headers/SidebarHeader";
+import { useSpotServices } from "../../hooks/useSpotServices";
 
 const StyledAddSpotForm = styled.form`
   display: flex;

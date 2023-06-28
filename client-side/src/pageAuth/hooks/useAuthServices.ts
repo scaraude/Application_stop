@@ -27,8 +27,10 @@ const register = async (username: string, email: string, password: string) => {
 };
 
 const isTokenExpired = (): boolean => {
-	const { accessToken } = getStoredItem(ItemEnum.USER);
-	const decodedToken = jwtDecode<JwtPayload>(accessToken);
+	const user = getStoredItem(ItemEnum.USER);
+	if(!user) return true;
+
+	const decodedToken = jwtDecode<JwtPayload>(user.accessToken);
 	if (!decodedToken.exp) return true;
 	if( new Date(decodedToken.exp * 1000) < new Date()) {
 		return true;

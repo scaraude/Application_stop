@@ -9,12 +9,10 @@ export const isItemStored = (item: ItemEnum): boolean => {
 	return !!storedItem;
 };
 
-export const getStoredItem = (item: ItemEnum): User => {
+export const getStoredItem = (item: ItemEnum): User | undefined => {
 	const storedItem = localStorage.getItem(item);
 
-	if (!storedItem) throw new Error("getStoredItem > User not found !");
-
-	return JSON.parse(storedItem);
+	return storedItem ? JSON.parse(storedItem) : undefined;
 };
 
 export const setStoredItem = (itemType: ItemEnum, item: User): void => {

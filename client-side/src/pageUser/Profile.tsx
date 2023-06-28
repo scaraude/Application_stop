@@ -12,6 +12,10 @@ const Profile = () => {
 	const { deleteCurrentUser } = useUserServices();
 	const history = useHistory();
 
+	if(!currentUser){
+		history.push("/login");
+		return null;
+	}
 	const logOutUser = () => {
 		logout();
 		//TODO: message a l'utilisateur
