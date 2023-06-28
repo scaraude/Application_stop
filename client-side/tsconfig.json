@@ -1,0 +1,28 @@
+{
+  "include": [
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "index.d.ts",
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "allowJs": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "jsx": "react",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+  },
+  "paths": {
+    "@mui/styled-engine": [
+      ".././node_modules/@mui/styled-engine-sc"
+    ]
+  }
+}

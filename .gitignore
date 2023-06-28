@@ -1,3 +1,5 @@
 .env
 /node_modules
 package-lock.json
+/public/bundle.js
+/server-side/dist
